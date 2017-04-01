@@ -1,0 +1,9 @@
+{:uriI"•file://app/assets/javascripts/components/register/register.html?type=text/ng-html&id=a28d1dd1e654b2071d5602941c45baef5d465ae5f88e1d8f19a021c022685ab4:ET:load_pathI"app/assets/javascripts;T:filenameI"=app/assets/javascripts/components/register/register.html;T:	nameI"!components/register/register;T:logical_pathI"&components/register/register.html;T:content_typeI"text/ng-html;T:sourceI"¥<div ng-controller="RegisterController as registerCtrl">
+    <registertrainer ng-hide="false"></registertrainer>
+	<registeruser ng-hide="true"></registeruser>
+</div>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Kfile-digest://app/assets/javascripts/components/register/register.html;TTF:charsetI"
+utf-8;F:digest"%ÓÃ‚$X“^š˜[“Y9Ôú×üòzEGÁRìÙzK°j:lengthi¥:dependencies_digest"%e£'Ò6¥ÄjNå\ß"½ù‡'v
+ ›[@Å˜:idI"Ea28d1dd1e654b2071d5602941c45baef5d465ae5f88e1d8f19a021c022685ab4;F:
+mtimel+­½X

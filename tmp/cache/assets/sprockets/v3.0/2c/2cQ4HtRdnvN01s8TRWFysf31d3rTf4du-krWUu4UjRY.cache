@@ -1,0 +1,15 @@
+{:uriI"file://app/assets/javascripts/components/home/_home.html?type=text/ng-html&id=520cf7bd1a18c6e42307ef2307972cdfd0ad093fbe4583657a2a88fc63267cd9:ET:load_pathI"app/assets/javascripts;T:filenameI"6app/assets/javascripts/components/home/_home.html;T:	nameI"components/home/_home;T:logical_pathI"components/home/_home.html;T:content_typeI"text/ng-html;T:sourceI"<div>
+   <h2> On Demand Races </h2>
+   <table>
+       <tr ng-repeat="event in events">
+           <td>event.title</td>
+       </tr>
+   </table>
+   
+   
+</div>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Dfile-digest://app/assets/javascripts/components/home/_home.html;TTF:charsetI"
+utf-8;F:digest"%"“Q·t€FëfpœHÁ“îÂ¾€2wLWœÍà:lengthi:dependencies_digest"%ãçò#w#äßñö2£œ
+]!bS˜uş²7È“õ:idI"E520cf7bd1a18c6e42307ef2307972cdfd0ad093fbe4583657a2a88fc63267cd9;F:
+mtimel+U-X

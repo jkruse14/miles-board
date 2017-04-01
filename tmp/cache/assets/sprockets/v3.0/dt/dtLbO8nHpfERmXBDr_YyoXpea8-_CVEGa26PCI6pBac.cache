@@ -1,0 +1,14 @@
+{:uriI"šfile://app/assets/javascripts/components/events/partials/_index.html?type=text/ng-html&id=86298fb0c9828e2778ad1cec83aa64d603a8177056813d938e945ac92b04829e:ET:load_pathI"app/assets/javascripts;T:filenameI"Bapp/assets/javascripts/components/events/partials/_index.html;T:	nameI"&components/events/partials/_index;T:logical_pathI"+components/events/partials/_index.html;T:content_typeI"text/ng-html;T:sourceI"…<div>
+    Events
+    <table>
+       <tr ng-repeat="event in events">
+           <td>{{event.id}}</td>
+       </tr>
+   </table>
+</div>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Pfile-digest://app/assets/javascripts/components/events/partials/_index.html;TTF:charsetI"
+utf-8;F:digest"%¿A $¤D^°‡¤—î¹rŸV~Ÿhé«˜t)7«×
+¬c:lengthi…:dependencies_digest"%í¶>‹gq(tXhÏÉÌ
+†`3x¬øÈ£ÌZo0Ñ:idI"E86298fb0c9828e2778ad1cec83aa64d603a8177056813d938e945ac92b04829e;F:
+mtimel+R×œX

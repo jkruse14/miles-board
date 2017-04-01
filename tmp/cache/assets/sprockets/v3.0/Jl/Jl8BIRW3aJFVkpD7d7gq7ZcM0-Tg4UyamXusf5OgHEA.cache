@@ -1,0 +1,15 @@
+{:uriI"°file://app/assets/javascripts/directives/resultsUploadForm/resultsUploadForm.template.html?type=text/ng-html&id=fa413f9d2a373a9cd7a54dbc8deb044aaaa6a56ed5d3805a37e14cccde899dbb:ET:load_pathI"app/assets/javascripts;T:filenameI"Xapp/assets/javascripts/directives/resultsUploadForm/resultsUploadForm.template.html;T:	nameI"<directives/resultsUploadForm/resultsUploadForm.template;T:logical_pathI"Adirectives/resultsUploadForm/resultsUploadForm.template.html;T:content_typeI"text/ng-html;T:sourceI"¾<div>
+    <form>
+        <label for="result-file" class="col-sm-2 control-label">Upload Results (.gpx file)</label>
+        <div class="col-sm-10">
+            <input id="result-file" class="form-conrol" type="file"
+                        ng-model="resultsFile"
+                        file-change="loadFile" />
+            <button type="submit" class="btn btn-primary" ng-click="handleSubmit()">Submit</button>
+        </div>
+    </form>
+</div>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"ffile-digest://app/assets/javascripts/directives/resultsUploadForm/resultsUploadForm.template.html;TTF:charsetI"
+utf-8;F:digest"%‚GF·Q°)ƒ…n¶ÝèòÒéî—ùñ`ôLûlEÝ:lengthi¾:dependencies_digest"%“Ë<öa31´þ]­ÅhÀ?Lw˜îÂ~ýV2 ¬šŸ:idI"Efa413f9d2a373a9cd7a54dbc8deb044aaaa6a56ed5d3805a37e14cccde899dbb;F:
+mtimel+½s¦X

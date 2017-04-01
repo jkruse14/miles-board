@@ -1,0 +1,21 @@
+{:uriI"œfile://app/assets/javascripts/directives/odrForm/odrForm.template.html?type=text/ng-html&id=cc10ed4f9e65afe0dac7fdac50cf66fe179879b75f9b528cad86aea8b3f27356:ET:load_pathI"app/assets/javascripts;T:filenameI"Dapp/assets/javascripts/directives/odrForm/odrForm.template.html;T:	nameI"(directives/odrForm/odrForm.template;T:logical_pathI"-directives/odrForm/odrForm.template.html;T:content_typeI"text/ng-html;T:sourceI"N<form class="form-horizontal">
+    <div ng-repeat="(key, formItem) in formObject" class="form-group row">
+        <label for="{{formItem.id}}" class="col-sm-2 control-label">{{formItem.label}}</label>
+        <div class="col-sm-10">
+            <!--<input id="{{formItem.id}}" class="form-conrol" type="{{formItem.type}}" ng-if="formItem.hasChangeAction" 
+                                                                                     ng-model="ngModel[key]"   
+                                                                                     ng-change="formItem.changeAction" placeholder="" />-->
+            <input ng-if="formItem.type == 'file'" id="{{formItem.id}}" class="form-conrol" type="{{formItem.type}}"
+                    ng-model="ngModel[key]"
+                    file-change="loadFile" />
+
+            <input id="{{formItem.id}}" class="form-conrol" type="{{formItem.type}}" ng-model="ngModel[key]" ng-if="!formItem.hasChangeAction" placeholder="" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" ng-click="submitAction()">Submit</button>
+</form>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Rfile-digest://app/assets/javascripts/directives/odrForm/odrForm.template.html;TTF:charsetI"
+utf-8;F:digest"%D UÜ%Ö8ú„—/xÁß’á*ù?í{¤s–QÏM:lengthiN:dependencies_digest"%›’euF:Ü
+í&ä1epÖĞ`Â/íıÜæ¼½h˜6:idI"Ecc10ed4f9e65afe0dac7fdac50cf66fe179879b75f9b528cad86aea8b3f27356;F:
+mtimel+=“ X

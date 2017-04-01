@@ -1,0 +1,26 @@
+{
+  "name": "borntorun",
+  "homepage": "https://github.com/jkruse14/borntorun",
+  "authors": [
+    "Justin Kruse <kruser14@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.2",
+    "angular-ui-router": "^0.4.2",
+    "bootstrap": "^3.3.7",
+    "mapbox.js": "^2.4.0",
+    "ng-token-auth": "^0.0.29",
+    "angular-cookie": "^4.1.0",
+    "less": "^2.7.2"
+  }
+}

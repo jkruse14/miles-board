@@ -1,0 +1,8 @@
+{:uriI" file://app/assets/javascripts/components/courses/partials/_coursesNew.html?type=text/ng-html&id=9890cec77183ade59390939f691c4e39f7ccbab3120c0d8ebdf20e531db26e74:ET:load_pathI"app/assets/javascripts;T:filenameI"Happ/assets/javascripts/components/courses/partials/_coursesNew.html;T:	nameI",components/courses/partials/_coursesNew;T:logical_pathI"1components/courses/partials/_coursesNew.html;T:content_typeI"text/ng-html;T:sourceI"<div>
+    <h2>Create New Course</h2>
+    <odr-form formObj="coursesSchema" submit-action="addCourse()" ng-model="newCourse"></odr-form>
+</div>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Vfile-digest://app/assets/javascripts/components/courses/partials/_coursesNew.html;TTF:charsetI"
+utf-8;F:digest"%‡ä@;(O@%§ğÇ0RÛ\ÌÎ·ºï>*²k4\¶:lengthi:dependencies_digest"%8›Ø/­8¢j'&´²óßd¬øàıÛi8|ÊÙ»¦ÉE:idI"E9890cec77183ade59390939f691c4e39f7ccbab3120c0d8ebdf20e531db26e74;F:
+mtimel+MX

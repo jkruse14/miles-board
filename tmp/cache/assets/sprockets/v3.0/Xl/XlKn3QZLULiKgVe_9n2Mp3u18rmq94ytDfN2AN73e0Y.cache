@@ -1,0 +1,9 @@
+{:uriI"žfile://app/assets/javascripts/components/events/partials/_viewEvent.html?type=text/ng-html&id=65c13dcdc1791685d1a235a29f464ffa6c7238b7981e6a824e0265851f2c6df1:ET:load_pathI"app/assets/javascripts;T:filenameI"Fapp/assets/javascripts/components/events/partials/_viewEvent.html;T:	nameI"*components/events/partials/_viewEvent;T:logical_pathI"/components/events/partials/_viewEvent.html;T:content_typeI"text/ng-html;T:sourceI"<div class="full-height">
+    <mapbox callback="callback" course="event.geoJSONCourse" results-file-data="resultsFileData" ></mapbox>
+    <odr-event event="event" result="result"></odr-event>
+    <results-upload-form ng-model="resultsFileData" event="event"></results-upload-form>
+</div>;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Tfile-digest://app/assets/javascripts/components/events/partials/_viewEvent.html;TTF:charsetI"
+utf-8;F:digest"%|‚©9D‹b1¤û¾iÀ}¶pü.‰ôæÏ	Û»>Š:lengthi:dependencies_digest"%ê³õüEHê™ÊI15×•Sõ"	Öý¹‚7âçÜ9:idI"E65c13dcdc1791685d1a235a29f464ffa6c7238b7981e6a824e0265851f2c6df1;F:
+mtimel+¾kÚX
