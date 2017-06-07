@@ -1,20 +1,0 @@
-{:uriI" file://app/assets/javascripts/components/events/partials/_eventHeader.html?type=text/ng-html&id=f17c9f06c3330ba6b0d7b7db05593b1c0bd4c106e43d0860524edbaba5dc689f:ET:load_pathI"app/assets/javascripts;T:filenameI"Happ/assets/javascripts/components/events/partials/_eventHeader.html;T:	nameI",components/events/partials/_eventHeader;T:logical_pathI"1components/events/partials/_eventHeader.html;T:content_typeI"text/ng-html;T:sourceI"m<div class="row">
-    <div class="row spans-half">
-        <div class="event-summary avatar avatar-host">
-            <img src="/images/empty-logo.jpg" />
-        </div>
-        <h2>{{event.title}}</h2>
-        <span>{{event.description}}</span>
-    </div>
-    <div class="row spans-half event-details">
-        <h3 class="section">Open 3/30/2017 to 4/30/2017</h3>
-        <span class="section">{{event.distance + " miles | " + event.city + ", " + event.state}}</span>
-        <span class="details inline">Type: {{event.type}}</span>
-        <span class="details inline">Cost: {{event.entry_fee}}</span>
-    </div>
-</div>;T:metadata{	:dependencieso:Set:
-@hash}
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Vfile-digest://app/assets/javascripts/components/events/partials/_eventHeader.html;TTF:charsetI"
-utf-8;F:digest"%ìü	qTòlŽÍé­JýBa± 7ø	–_/ž¢¹€/"Ñ:lengthim:dependencies_digest"%WNRJö"Û´Á¬Í I@‡’>!V™°
-0ÅaýQ:idI"Ef17c9f06c3330ba6b0d7b7db05593b1c0bd4c106e43d0860524edbaba5dc689f;F:
-mtimel+_ÜX

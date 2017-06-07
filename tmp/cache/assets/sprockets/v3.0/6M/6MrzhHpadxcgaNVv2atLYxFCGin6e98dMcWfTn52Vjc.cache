@@ -1,8 +1,0 @@
-{:uriI"úfile://app/assets/javascripts/components/hosts/partials/_hostsNew.html?type=text/ng-html&id=58e4857cad4129d3a53fb5a22b379068baf82f76820420d82dcf5b315581971f:ET:load_pathI"app/assets/javascripts;T:filenameI"Dapp/assets/javascripts/components/hosts/partials/_hostsNew.html;T:	nameI"(components/hosts/partials/_hostsNew;T:logical_pathI"-components/hosts/partials/_hostsNew.html;T:content_typeI"text/ng-html;T:sourceI"ä<div>
-    <h2>Create New Host</h2>
-    <odr-form form-object="hostsSchema" submit-action="addHost()" ng-model="newHost"></odr-form>
-</div>;T:metadata{	:dependencieso:Set:
-@hash}
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Rfile-digest://app/assets/javascripts/components/hosts/partials/_hostsNew.html;TTF:charsetI"
-utf-8;F:digest"%%!ã¢=7ZHrCB„£çÏâùzc-*wnY˚‹vA<:lengthiä:dependencies_digest"%µƒ“ëgã∫e1Úîõ≥f£UxÌæEü◊(âó“˛¥æ:idI"E58e4857cad4129d3a53fb5a22b379068baf82f76820420d82dcf5b315581971f;F:
-mtimel+2ÊùX

@@ -1,11 +1,0 @@
-{:uriI"¢file://app/assets/javascripts/components/courses/partials/_coursesIndex.html?type=text/ng-html&id=ac565f91411c9805b4abe8708b8f892c321165e04de81414fa4159b147b5cfa3:ET:load_pathI"app/assets/javascripts;T:filenameI"Japp/assets/javascripts/components/courses/partials/_coursesIndex.html;T:	nameI".components/courses/partials/_coursesIndex;T:logical_pathI"3components/courses/partials/_coursesIndex.html;T:content_typeI"text/ng-html;T:sourceI"•<div>
-    <h2>Courses Index</h2>
-    <table>
-        <tr ng-repeat="course in courses">
-            <td>{{course.id}}</td>
-        </tr>
-    </table>;T:metadata{	:dependencieso:Set:
-@hash}
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Xfile-digest://app/assets/javascripts/components/courses/partials/_coursesIndex.html;TTF:charsetI"
-utf-8;F:digest"%(›6é×„üûeÛ‹@B‡Œ±¤H¡yXŠÔdÕcÕC:lengthi•:dependencies_digest"%(ñŠi³\ ReZ#ôóçMù¯§hpMÛ‘Í"¤¶l:idI"Eac565f91411c9805b4abe8708b8f892c321165e04de81414fa4159b147b5cfa3;F:
-mtimel+WKX

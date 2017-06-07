@@ -13,7 +13,8 @@ gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'responders'
 
-#gem 'less-rails', '~> 2.7.0'
+gem 'less-rails', '~> 2.7.0'
+gem "twitter-bootstrap-rails"
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets

@@ -1,5 +1,5 @@
 angular
-    .module('myApp')
+    .module('milesBoard')
     .controller('MainController',[function(){
         console.log("MainController: Hello World")
     }]);

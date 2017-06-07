@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require angular/angular
 //= require angular-ui-router
 //= require ng-token-auth
 //= require angular-cookie
 //= require angular-rails-templates
+//= require lodash/dist/lodash.min.js
+//= require restangular
 //= require_tree .

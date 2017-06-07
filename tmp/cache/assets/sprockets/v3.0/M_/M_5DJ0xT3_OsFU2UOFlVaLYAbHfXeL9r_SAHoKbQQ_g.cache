@@ -1,8 +1,0 @@
-{:uriI"file://app/assets/javascripts/components/events/partials/_eventsNew.html?type=text/ng-html&id=2210802949730613c4f92d57f3042e57fe418eff8001dcb10214f6731c9fdf17:ET:load_pathI"app/assets/javascripts;T:filenameI"Fapp/assets/javascripts/components/events/partials/_eventsNew.html;T:	nameI"*components/events/partials/_eventsNew;T:logical_pathI"/components/events/partials/_eventsNew.html;T:content_typeI"text/ng-html;T:sourceI"<div>
-    <h2>Create New Event</h2>
-    <odr-form form-object="eventSchema" submit-action="addEvent()"  ng-model="newEvent"></odr-form>
-<div>;T:metadata{	:dependencieso:Set:
-@hash}
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"Tfile-digest://app/assets/javascripts/components/events/partials/_eventsNew.html;TTF:charsetI"
-utf-8;F:digest"%	òîÆîC‚ XÑŸÒ¾ü!]Ç‘f™•R¶?æÊ¶ñ:lengthi:dependencies_digest"%ÉX¥ÛC`¦¶ô¿ÏS½‚©Oro1¢Ã[ZD‰)#:idI"E2210802949730613c4f92d57f3042e57fe418eff8001dcb10214f6731c9fdf17;F:
-mtimel+6t¦X
