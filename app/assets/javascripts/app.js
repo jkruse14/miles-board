@@ -1,46 +1,34 @@
-angular.module('milesBoard', [
-    'restangular',
-    'ui.router',
-    'templates',
-    
-])
-.config(['$stateProvider', '$urlRouterProvider',
-    function ($stateProvider, $urlRouterProvider) {
+(function(){
+    'use strict';
 
-        var homeState = {
-            name: 'home',
-            url: '/home',
-            templateUrl: 'components/home/_home.html',
-            controller: 'MainController',
-        }
+    angular.module('milesBoard', [
+        'restangular',
+        'ui.router',
+        'templates',
+        'ui.bootstrap',
+        'ng-token-auth',
+        'ngStorage'
+    ]).config(authConfig);
 
-        var boardState = {
-            name:'board',
-            url: '/teams/:teamId',
-            templateUrl: 'components/teams/_teams.html',
-            controller: 'TeamsController as vm',
-            resolve: {
-                team: function (TeamsApi, $stateParams) {
-                        return TeamsApi.get($stateParams.teamId);
+     authConfig.$inject = ['$authProvider'];
+
+    /** @ngInject */
+    function authConfig($authProvider) {
+        $authProvider.configure(
+            //[{
+              //  'default': {
+                {    apiUrl: 'http://localhost:8000',
+                    emailRegistrationPath: '/users',
+                    validateOnPageLoad: true,
+                    confirmationSuccessUrl: 'http://localhost:8080/#/users/31',
                 }
-            }
-        }
-
-        // w/o state param team id, show users' teams
-        var teamsState = {
-            name: 'user',
-            url: '/users/:userId',
-            templateUrl: 'components/users/_users.html',
-            controller: 'UsersController as vm',
-            //component: 'teams',
-            resolve: {
-                user: function (UsersApi, $stateParams) {
-                    return UsersApi.service.get($stateParams.userId);
-                }
-            }
-        }
-
-        $stateProvider.state(homeState);
-        $stateProvider.state(boardState);
-        $stateProvider.state(teamsState);
-    }]);
+            //     ,
+            //     'user': {
+            //         apiUrl: 'http://localhost:8000',
+            //         emailRegistrationPath: '/users',
+            //         validateOnPageLoad: true,
+            //     }
+            // }]
+        );
+    }
+})();

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605164034) do
+ActiveRecord::Schema.define(version: 20170620202851) do
 
   create_table "runs", force: :cascade do |t|
     t.decimal  "distance"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170605164034) do
     t.integer  "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "run_date"
   end
 
   create_table "team_member_lists", force: :cascade do |t|
@@ -28,9 +29,19 @@ ActiveRecord::Schema.define(version: 20170605164034) do
     t.integer  "team_id"
   end
 
+  create_table "team_members", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "team_owners", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string   "name"
-    t.integer  "owner_id"
+    t.integer  "team_owner_id"
     t.string   "location"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -38,13 +49,35 @@ ActiveRecord::Schema.define(version: 20170605164034) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
+    t.string   "provider",               default: "email", null: false
+    t.string   "uid",                    default: "",      null: false
+    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,       null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "nickname"
+    t.string   "image"
     t.string   "email"
-    t.string   "password_digest"
-    t.string   "user_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "type"
+    t.text     "tokens"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "teamId"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
 end

@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Borntorun
+module MilesBoard
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -16,7 +16,7 @@ module Borntorun
     config.assets.paths << Rails.root.join('bower_components', 'bootstrap', 'less')
     config.assets.paths << Rails.root.join('node_modules')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'bootstrap', 'less')
-
+    config.assets.paths << Rails.root.join('app', 'assets', 'stylesheets','teams.css.less')
 
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
 

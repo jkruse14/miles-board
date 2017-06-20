@@ -15,12 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.6.2",
     "bootstrap": "^3.3.7",
     "mapbox.js": "^2.4.0",
-    "ng-token-auth": "^0.0.29",
-    "angular-cookie": "^4.1.0",
     "less": "^2.7.2",
-    "restangular": "^1.6.1"
+    "angular-cookies": "^1.6.4",
+    "angular": "^1.6.4",
+    "angular-cookie": "^4.1.0"
   }
 }

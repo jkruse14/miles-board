@@ -15,9 +15,13 @@
 //= require twitter/bootstrap
 //= require angular/angular
 //= require angular-ui-router
-//= require ng-token-auth
 //= require angular-cookie
 //= require angular-rails-templates
-//= require lodash/dist/lodash.min.js
+//= require lodash/lodash.min.js
+//= require angular-ui-bootstrap/dist/ui-bootstrap.js
+//= require angular-ui-bootstrap/dist/ui-bootstrap-tpls.js
 //= require restangular
+//= require moment/min/moment.min.js
+//= require ng-token-auth/dist/ng-token-auth.min.js
+//= require ngstorage/ngStorage.min.js
 //= require_tree .

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 'Mill City Running'
+  team_owner_id: 1
+  location: 'Minneapolis'
+
+two:
+  name: 'Next Goal'
+  team_owner_id: 2
+  location: 'Everywhere'

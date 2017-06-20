@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  distance: 3.1 
+  event: 'training'
+  user_id: 1
+  team_id: 1
+
+two:
+  distance: 26.2
+  event: 'Twin Cities Marathon'
+  user_id: 1
+  team_id: 1

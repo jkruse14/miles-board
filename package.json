@@ -1,0 +1,35 @@
+{
+  "name": "miles-board",
+  "version": "1.0.0",
+  "description": "online resource for run clubs to track member miles",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@uirouter/angularjs": "latest",
+    "angular": "^1.6.4",
+    "angular-cookie": "^4.1.0",
+    "angular-cookies": "^1.6.4",
+    "angular-ui-bootstrap": "^2.5.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "ng-token-auth": "0.0.30",
+    "ngstorage": "^0.3.11",
+    "restangular": "^1.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkruse14/miles-board.git"
+  },
+  "author": "Justin Kruse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jkruse14/miles-board/issues"
+  },
+  "homepage": "https://github.com/jkruse14/miles-board#readme"
+}
