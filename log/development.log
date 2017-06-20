@@ -21478,3 +21478,238 @@ Processing by TeamsController#show as HTML
 Completed 200 OK in 12ms (Views: 0.6ms | ActiveRecord: 1.1ms)
 
 
+Started GET "/" for 127.0.0.1 at 2017-06-20 18:02:42 -0500
+Processing by ApplicationController#angular as HTML
+  Rendering layouts/application.html.erb within layouts/application
+  Rendered layouts/application.html.erb within layouts/application (1206.6ms)
+Completed 200 OK in 1311ms (Views: 1309.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/teams/1" for 127.0.0.1 at 2017-06-20 18:02:46 -0500
+Processing by TeamsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "team_member_lists" ON "users"."id" = "team_member_lists"."user_id" WHERE "team_member_lists"."team_id" = ?[0m  [["team_id", 1]]
+  [1m[36mRun Load (0.2ms)[0m  [1m[34mSELECT "runs".* FROM "runs" WHERE "runs"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mRun Load (0.1ms)[0m  [1m[34mSELECT "runs".* FROM "runs" WHERE "runs"."user_id" = ?[0m  [["user_id", 2]]
+  [1m[36mRun Load (0.1ms)[0m  [1m[34mSELECT "runs".* FROM "runs" WHERE "runs"."user_id" = ?[0m  [["user_id", 3]]
+Completed 200 OK in 8ms (Views: 0.4ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-06-20 18:02:51 -0500
+Processing by ApplicationController#angular as HTML
+  Rendering layouts/application.html.erb within layouts/application
+  Rendered layouts/application.html.erb within layouts/application (125.2ms)
+Completed 200 OK in 189ms (Views: 188.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2017-06-20 18:10:39 -0500
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+Completed 200 OK in 23ms (Views: 21.6ms | ActiveRecord: 0.5ms)
+
+
+Started DELETE "/users/33" for 127.0.0.1 at 2017-06-20 18:11:05 -0500
+Processing by UsersController#delete as */*
+  Parameters: {"team_owner_id"=>34, "name"=>"Next Goal Runners", "contact_email"=>"coachkruser@gmail.com", "id"=>"33", "user"=>{}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 33], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.1ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = ?[0m  [["id", 33]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 12ms (Views: 0.3ms | ActiveRecord: 7.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-06-20 18:11:13 -0500
+Processing by ApplicationController#angular as HTML
+  Rendering layouts/application.html.erb within layouts/application
+  Rendered layouts/application.html.erb within layouts/application (1056.7ms)
+Completed 200 OK in 1155ms (Views: 1153.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/team_owners" for 127.0.0.1 at 2017-06-20 18:11:39 -0500
+Processing by TeamOwnersController#create as HTML
+  Parameters: {"first_name"=>"Justin", "last_name"=>"Kruse", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "email"=>"justin.p.kruse@gmail.com", "confirm_success_url"=>"http://localhost:8000/#/login", "config_name"=>"team_owner", "team_owner"=>{"first_name"=>"Justin", "last_name"=>"Kruse", "email"=>"justin.p.kruse@gmail.com"}}
+Unpermitted parameters: confirm_success_url, config_name, team_owner
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."type" IN ('TeamOwner') AND "users"."provider" = ? AND "users"."email" = ?[0m  [["provider", "email"], ["email", "justin.p.kruse@gmail.com"]]
+  [1m[36mUser Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "justin.p.kruse@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "first_name", "last_name", "email", "type", "tokens", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["uid", "justin.p.kruse@gmail.com"], ["encrypted_password", "$2a$10$9.MblRdWHIxt01.EAzDGjOTaNZV3Ukf0O2J/B.V1S5T4wGoq3Db42"], ["confirmation_token", "nHh5ZA_d6JWbbN3WTdsS"], ["confirmation_sent_at", 2017-06-20 23:11:39 UTC], ["first_name", "Justin"], ["last_name", "Kruse"], ["email", "justin.p.kruse@gmail.com"], ["type", "TeamOwner"], ["tokens", "{}"], ["created_at", 2017-06-20 23:11:39 UTC], ["updated_at", 2017-06-20 23:11:39 UTC]]
+  [1m[35m (6.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND ("users"."id" != ?) LIMIT ?[0m  [["email", "justin.p.kruse@gmail.com"], ["id", 35], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Unpermitted parameters: confirm_success_url, config_name, team_owner
+  [1m[36mTeamOwner Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."type" IN ('TeamOwner') AND "users"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+  Rendering devise/mailer/confirmation_instructions.html.erb
+  Rendered devise/mailer/confirmation_instructions.html.erb (2.0ms)
+Devise::Mailer#confirmation_instructions: processed outbound mail in 156.9ms
+Completed 201 Created in 3067ms (Views: 0.7ms | ActiveRecord: 8.9ms)
+
+
+Started GET "/users/35" for 127.0.0.1 at 2017-06-20 18:11:57 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"35"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT SUM("runs"."distance") AS sum_distance, "runs"."team_id" AS runs_team_id FROM "runs" WHERE "runs"."user_id" = ? GROUP BY "runs"."team_id"[0m  [["user_id", 35]]
+  [1m[36mTeam Load (0.4ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."team_owner_id" = ?[0m  [["team_owner_id", 35]]
+  [1m[36mRun Load (0.3ms)[0m  [1m[34mSELECT "runs".* FROM "runs" WHERE "runs"."user_id" = ?[0m  [["user_id", 35]]
+Completed 200 OK in 22ms (Views: 0.7ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/auth/confirmation?confirmation_token=nHh5ZA_d6JWbbN3WTdsS" for 127.0.0.1 at 2017-06-20 18:13:02 -0500
+Processing by DeviseTokenAuth::ConfirmationsController#show as HTML
+  Parameters: {"confirmation_token"=>"nHh5ZA_d6JWbbN3WTdsS"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."confirmation_token" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["confirmation_token", "nHh5ZA_d6JWbbN3WTdsS"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "users" SET "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["confirmed_at", 2017-06-20 23:13:03 UTC], ["updated_at", 2017-06-20 23:13:03 UTC], ["id", 35]]
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND ("users"."id" != ?) LIMIT ?[0m  [["email", "justin.p.kruse@gmail.com"], ["id", 35], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 128ms (ActiveRecord: 6.6ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Password can't be blank, Password is too short (minimum is 6 characters), Password confirmation can't be blank, Password confirmation is too short (minimum is 6 characters)):
+  
+activerecord (5.0.1) lib/active_record/validations.rb:78:in `raise_validation_error'
+activerecord (5.0.1) lib/active_record/validations.rb:50:in `save!'
+activerecord (5.0.1) lib/active_record/attribute_methods/dirty.rb:30:in `save!'
+activerecord (5.0.1) lib/active_record/transactions.rb:324:in `block in save!'
+activerecord (5.0.1) lib/active_record/transactions.rb:395:in `block in with_transaction_returning_status'
+activerecord (5.0.1) lib/active_record/connection_adapters/abstract/database_statements.rb:232:in `block in transaction'
+activerecord (5.0.1) lib/active_record/connection_adapters/abstract/transaction.rb:189:in `within_new_transaction'
+activerecord (5.0.1) lib/active_record/connection_adapters/abstract/database_statements.rb:232:in `transaction'
+activerecord (5.0.1) lib/active_record/transactions.rb:211:in `transaction'
+activerecord (5.0.1) lib/active_record/transactions.rb:392:in `with_transaction_returning_status'
+activerecord (5.0.1) lib/active_record/transactions.rb:324:in `save!'
+activerecord (5.0.1) lib/active_record/suppressor.rb:45:in `save!'
+devise_token_auth (0.1.40) app/controllers/devise_token_auth/confirmations_controller.rb:18:in `show'
+actionpack (5.0.1) lib/action_controller/metal/basic_implicit_render.rb:4:in `send_action'
+actionpack (5.0.1) lib/abstract_controller/base.rb:188:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.0.1) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+activesupport (5.0.1) lib/active_support/callbacks.rb:126:in `call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:506:in `block (2 levels) in compile'
+activesupport (5.0.1) lib/active_support/callbacks.rb:455:in `call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:101:in `__run_callbacks__'
+activesupport (5.0.1) lib/active_support/callbacks.rb:750:in `_run_process_action_callbacks'
+activesupport (5.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.1) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.0.1) lib/active_support/notifications.rb:164:in `block in instrument'
+activesupport (5.0.1) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.0.1) lib/active_support/notifications.rb:164:in `instrument'
+actionpack (5.0.1) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/params_wrapper.rb:248:in `process_action'
+activerecord (5.0.1) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+actionpack (5.0.1) lib/abstract_controller/base.rb:126:in `process'
+actionview (5.0.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.0.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (5.0.1) lib/action_controller/metal.rb:262:in `dispatch'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.0.1) lib/action_dispatch/routing/mapper.rb:16:in `block in <class:Constraints>'
+actionpack (5.0.1) lib/action_dispatch/routing/mapper.rb:46:in `serve'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.1) lib/active_record/migration.rb:553:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.3ms)
+  Rendering /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
+  Rendering /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /home/jkruse/.gem/ruby/2.3.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (32.1ms)
+Started GET "/" for 127.0.0.1 at 2017-06-20 18:13:14 -0500
+Processing by ApplicationController#angular as HTML
+  Rendering layouts/application.html.erb within layouts/application
+  Rendered layouts/application.html.erb within layouts/application (175.6ms)
+Completed 200 OK in 222ms (Views: 220.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2017-06-20 18:13:24 -0500
+Processing by DeviseTokenAuth::SessionsController#create as HTML
+  Parameters: {"first_name"=>"", "last_name"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "email"=>"justin.p.kruse@gmail.com", "session"=>{"first_name"=>"", "last_name"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "email"=>"justin.p.kruse@gmail.com"}}
+Unpermitted parameters: first_name, last_name, password_confirmation, session
+Unpermitted parameters: first_name, last_name, password_confirmation, session
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE (email = 'justin.p.kruse@gmail.com' AND provider='email') ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Unpermitted parameters: first_name, last_name, password_confirmation, session
+Unpermitted parameters: first_name, last_name, password_confirmation, session
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND ("users"."id" != ?) LIMIT ?[0m  [["email", "justin.p.kruse@gmail.com"], ["id", 35], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[33mUPDATE "users" SET "tokens" = ?, "current_sign_in_at" = ?, "last_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["tokens", "{\"aYlRO4I8zqdUz5enlBXZ7w\":{\"token\":\"$2a$10$vm1zGhiyAPz5bo9D18hgPe9VUl/aVoO.ynfuLzGFOzeJ5WC9Hjnmi\",\"expiry\":1499210004}}"], ["current_sign_in_at", 2017-06-20 23:13:24 UTC], ["last_sign_in_at", 2017-06-20 23:13:24 UTC], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", 2017-06-20 23:13:24 UTC], ["id", 35]]
+  [1m[35m (5.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND ("users"."id" != ?) LIMIT ?[0m  [["email", "justin.p.kruse@gmail.com"], ["id", 35], ["LIMIT", 1]]
+Completed 200 OK in 218ms (Views: 0.5ms | ActiveRecord: 7.4ms)
+
+
+Started GET "/users/35" for 127.0.0.1 at 2017-06-20 18:13:24 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"35"}
+Started GET "/users/35" for 127.0.0.1 at 2017-06-20 18:13:24 -0500
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+Processing by UsersController#show as HTML
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT SUM("runs"."distance") AS sum_distance, "runs"."team_id" AS runs_team_id FROM "runs" WHERE "runs"."user_id" = ? GROUP BY "runs"."team_id"[0m  [["user_id", 35]]
+  Parameters: {"id"=>"35"}
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."team_owner_id" = ?[0m  [["team_owner_id", 35]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+  [1m[36mRun Load (0.4ms)[0m  [1m[34mSELECT "runs".* FROM "runs" WHERE "runs"."user_id" = ?[0m  [["user_id", 35]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT SUM("runs"."distance") AS sum_distance, "runs"."team_id" AS runs_team_id FROM "runs" WHERE "runs"."user_id" = ? GROUP BY "runs"."team_id"[0m  [["user_id", 35]]
+Completed 200 OK in 34ms (Views: 1.0ms | ActiveRecord: 1.3ms)
+
+
+  [1m[36mTeam Load (0.5ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."team_owner_id" = ?[0m  [["team_owner_id", 35]]
+  [1m[36mRun Load (0.4ms)[0m  [1m[34mSELECT "runs".* FROM "runs" WHERE "runs"."user_id" = ?[0m  [["user_id", 35]]
+Completed 200 OK in 34ms (Views: 1.2ms | ActiveRecord: 2.1ms)
+
+

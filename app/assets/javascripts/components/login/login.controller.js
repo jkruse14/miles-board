@@ -36,6 +36,7 @@
 
         function onInit(){
             vm.tab = 0;
+            vm.isOwner = false;
         }
 
         function setTab(index) {
@@ -81,7 +82,10 @@
                 password_confirmation: vm.user_info.password_confirmation,
                 email: vm.user_info.email
             }
-            $auth.submitRegistration(new_user)
+
+            let auth_config = vm.isOwner ? 'team_owner' : 'user';
+
+            $auth.submitRegistration(new_user, {config: auth_config})
                 .then(registraionSuccess, registrationFail);
         }
 

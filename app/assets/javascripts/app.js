@@ -15,20 +15,23 @@
     /** @ngInject */
     function authConfig($authProvider) {
         $authProvider.configure(
-            //[{
-              //  'default': {
-                {    apiUrl: 'http://localhost:8000',
+            [{
+               'default': {
+                    apiUrl: 'http://localhost:8000',
                     emailRegistrationPath: '/users',
                     validateOnPageLoad: true,
-                    confirmationSuccessUrl: 'http://localhost:8080/#/users/31',
+                },
+                'user': {
+                    apiUrl: 'http://localhost:8000',
+                    emailRegistrationPath: '/users',
+                    validateOnPageLoad: true,
+                },
+                'team_owner' : {
+                    apiUrl: 'http://localhost:8000',
+                    emailRegistrationPath: '/team_owners',
+                    validateOnPageLoad: true,
                 }
-            //     ,
-            //     'user': {
-            //         apiUrl: 'http://localhost:8000',
-            //         emailRegistrationPath: '/users',
-            //         validateOnPageLoad: true,
-            //     }
-            // }]
+            }]
         );
     }
 })();
