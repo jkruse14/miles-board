@@ -3,13 +3,13 @@
 
     angular
         .module('milesBoard', [
-            'environment',
-            'restangular',
-            'ui.router',
-            'templates',
-            'ui.bootstrap',
-            'ng-token-auth',
-            'ngStorage'
+            // 'environment',
+            // 'restangular',
+            // 'ui.router',
+            // 'templates',
+            // 'ui.bootstrap',
+            // 'ng-token-auth',
+            // 'ngStorage'
         ])
     //     .config(EnvironmentConfig)
     //     .config(authConfig);
