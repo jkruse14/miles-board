@@ -11,52 +11,53 @@
             'ng-token-auth',
             'ngStorage'
         ])
-        .config(EnvironmentConfig)
-        .config(authConfig);
+    //     .config(EnvironmentConfig)
+    //     .config(authConfig);
 
-    authConfig.$inject = ['$authProvider'];
+    // authConfig.$inject = ['$authProvider'];
 
-    /** @ngInject */
-    function authConfig($authProvider) {
-        $authProvider.configure(
-            [{
-                'default': {
-                    apiUrl: 'http://localhost:8000',
-                    emailRegistrationPath: '/users',
-                    validateOnPageLoad: true,
-                },
-                'user': {
-                    apiUrl: 'http://localhost:8000',
-                    emailRegistrationPath: '/users',
-                    validateOnPageLoad: true,
-                },
-                'team_owner': {
-                    apiUrl: 'http://localhost:8000',
-                    emailRegistrationPath: '/team_owners',
-                    validateOnPageLoad: true,
-                }
-            }]
-        );
-    }
+    // /** @ngInject */
+    // function authConfig($authProvider) {
+    //     $authProvider.configure(
+    //         [{
+    //             'default': {
+    //                 apiUrl: 'http://localhost:8000',
+    //                 emailRegistrationPath: '/users',
+    //                 validateOnPageLoad: true,
+    //             },
+    //             'user': {
+    //                 apiUrl: 'http://localhost:8000',
+    //                 emailRegistrationPath: '/users',
+    //                 validateOnPageLoad: true,
+    //             },
+    //             'team_owner': {
+    //                 apiUrl: 'http://localhost:8000',
+    //                 emailRegistrationPath: '/team_owners',
+    //                 validateOnPageLoad: true,
+    //             }
+    //         }]
+    //     );
+    // }
 
-    EnvironmentConfig.$inject = ['envServiceProvider'];
+    // EnvironmentConfig.$inject = ['envServiceProvider'];
 
-    function EnvironmentConfig(envServiceProvider) {
-        envServiceProvider.config({
-            domains: {
-                development: ['localhost'],
-                production: ['miles-board.herokuapp.com']
-            },
-            vars: {
-                development: {
-                    apiUrl: 'http://localhost:8000'
-                },
-                production: {
-                    apiUrl: 'https://miles-board.herokuapp.com'
-                },
-            }
-        })
+    // /** @ngInject */
+    // function EnvironmentConfig(envServiceProvider) {
+    //     envServiceProvider.config({
+    //         domains: {
+    //             development: ['localhost'],
+    //             production: ['miles-board.herokuapp.com']
+    //         },
+    //         vars: {
+    //             development: {
+    //                 apiUrl: 'http://localhost:8000'
+    //             },
+    //             production: {
+    //                 apiUrl: 'https://miles-board.herokuapp.com'
+    //             },
+    //         }
+    //     })
 
-        envServiceProvider.check();
-    }
+    //     envServiceProvider.check();
+    // }
 })();
