@@ -36,14 +36,30 @@
                     controller: 'LoginController as vm'
                 }
 
+                var teamsState = {
+                    name: 'teams',
+                    url: '/teams',
+                    templateUrl: 'components/teams/_teams.html',
+                    controller: 'TeamsController as vm',
+                    resolve: {
+                        team: function(){ return [] },
+                        teams: function (TeamsApi, $stateParams) {
+                            return TeamsApi.get('');
+                        }
+                    }
+                }
+
                 var teamState = {
                     name: 'team',
-                    url: '/teams/:team_id',
-                    templateUrl: 'components/teams/_teams.html',
+                    url: '/teams/{team_id}',
+                    templateUrl: 'components/teams/_team.html',
                     controller: 'TeamsController as vm',
                     resolve: {
                         team: function (TeamsApi, $stateParams) {
                             return TeamsApi.get($stateParams.team_id);
+                        },
+                        teams: function (TeamsApi, $stateParams) {
+                            return TeamsApi.get('');
                         }
                     }
                 }
@@ -63,6 +79,7 @@
                 $stateProvider.state(alphaState);
                 $stateProvider.state(homeState);
                 $stateProvider.state(loginState);
+                $stateProvider.state(teamsState);
                 $stateProvider.state(teamState);
                 $stateProvider.state(userState);
             }

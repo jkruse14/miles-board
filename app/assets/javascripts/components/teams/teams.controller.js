@@ -5,11 +5,12 @@ angular
     .module('milesBoard')
     .controller('TeamsController', TeamsController);
 
-TeamsController.$inject = ['$scope','$stateParams', 'RunsApi' , 'team','TeamsApi', 'TeamMemberListsApi', '$uibModal' ,'UsersApi','UsersDisplayConfig'];
+    TeamsController.$inject = ['$scope', '$stateParams', 'RunsApi', 'team', 'teams', 'TeamsApi', 'TeamsDisplayConfig', 'TeamMemberListsApi', '$uibModal' ,'UsersApi','UsersDisplayConfig'];
 
-    function TeamsController($scope, $stateParams, RunsApi, team, TeamsApi, TeamMemberListsApi, $uibModal , UsersApi, UsersDisplayConfig) {
+    function TeamsController($scope, $stateParams, RunsApi, team, teams, TeamsApi, TeamsDisplayConfig, TeamMemberListsApi, $uibModal , UsersApi, UsersDisplayConfig) {
         var vm = this;
         vm.team = team;
+        vm.teams = teams.plain();
         vm.displayConfig = UsersDisplayConfig;
 
         vm.$onInit = onInit;
@@ -19,11 +20,20 @@ TeamsController.$inject = ['$scope','$stateParams', 'RunsApi' , 'team','TeamsApi
         vm.showUserProfileModal = showUserProfileModal;
 
         function onInit() {
-            vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+            if ($stateParams.team_id) {
+                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+            } else {
+                vm.displayObjData = buildDisplayObject(vm.teams, TeamsDisplayConfig)
+            }
+            
         }
 
         function onChanges(changes) {
-            vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+            if ($stateParams.team_id) {
+                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+            } else {
+                vm.displayObjData = buildDisplayObject(vm.teams, TeamsDisplayConfig)
+            }
         }
 
         function buildDisplayObject(obj, config) {
@@ -44,7 +54,10 @@ TeamsController.$inject = ['$scope','$stateParams', 'RunsApi' , 'team','TeamsApi
                         displayObj[j][config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + config.paramName + ':' + obj[j].id + '})';
                     }
                 }
-                displayObj[j]['Name'].text = obj[j].first_name + ' ' +obj[j].last_name
+
+                if($stateParams.team_id){
+                    displayObj[j]['Name'].text = obj[j].first_name + ' ' +obj[j].last_name
+                }
             }
 
             return displayObj;
