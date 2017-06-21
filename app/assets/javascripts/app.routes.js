@@ -23,7 +23,7 @@
                 }
 
                 var homeState = {
-                    name: 'index.home',
+                    name: 'home',
                     url: '/home',
                     templateUrl: 'components/home/_home.html',
                     controller: 'MainController',
