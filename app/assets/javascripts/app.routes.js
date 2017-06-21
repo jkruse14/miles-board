@@ -55,7 +55,7 @@
                     controller: 'UsersController as vm',
                     resolve: {
                         user: function (UsersApi, $stateParams) {
-                            return UsersApi.service.get($stateParams.userId);
+                            return UsersApi.get($stateParams.userId);
                         }
                     }
                 }

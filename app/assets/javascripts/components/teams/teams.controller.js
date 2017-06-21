@@ -70,7 +70,7 @@ TeamsController.$inject = ['$scope','$stateParams', 'RunsApi' , 'team','TeamsApi
             });
 
             modalInstance.result.then(function (result) {
-                UsersApi.service.get('',{email:result.email}).then(function(response){
+                UsersApi.get('',{email:result.email}).then(function(response){
                     if(response.id) {
                         let user = {
                             id: response.id,
@@ -99,7 +99,7 @@ TeamsController.$inject = ['$scope','$stateParams', 'RunsApi' , 'team','TeamsApi
                             }
                         }
 
-                        UsersApi.service.post(newUser).then(function(result){
+                        UsersApi.post(newUser).then(function(result){
                             let user = {
                                 id: result.id,
                                 first_name: newUser.user.first_name,

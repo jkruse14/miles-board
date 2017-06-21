@@ -1,14 +1,13 @@
-angular
+(function() {
+    'use strict';
+    
+    angular
     .module('milesBoard')
-    .factory('UsersApi', function (Restangular) {
-        let self = this;
-        self.service = Restangular.service('users');
+    .factory('UsersApi', UsersApi)
 
-        self.getUserTeams = getUserTeams;
+    UsersApi.$inject = ['Restangular'];
 
-        function getUserTeams(userId) {
-            //self.service.customGET
-        }
-
-        return self;
-    })
+    function UsersApi(Restangular) {
+        return Restangular.service('users');
+    }
+})();
