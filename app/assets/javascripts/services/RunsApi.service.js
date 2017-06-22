@@ -8,6 +8,6 @@
     RunsApi.$inject = ['Restangular'];
 
     function RunsApi(Restangular) {
-        return Restangular.service('runs')
+        return Restangular.service('runs');
     }
 })();

@@ -3,7 +3,7 @@
     
     angular
     .module('milesBoard')
-    .factory('UsersApi', UsersApi)
+    .factory('UsersApi', UsersApi);
 
     UsersApi.$inject = ['Restangular'];
 

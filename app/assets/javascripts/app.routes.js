@@ -3,7 +3,7 @@
 
     angular
         .module('milesBoard')
-        .config(RouterConfig)
+        .config(RouterConfig);
 
     RouterConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
@@ -20,21 +20,21 @@
                             return $auth.validateUser();
                         }
                     }
-                }
+                };
 
                 var homeState = {
                     name: 'home',
                     url: '/home',
                     templateUrl: 'components/home/_home.html',
                     controller: 'MainController',
-                }
+                };
 
                 var loginState = {
                     name: 'login',
                     url: '/login',
                     templateUrl: 'components/login/_login.html',
                     controller: 'LoginController as vm'
-                }
+                };
 
                 var teamState = {
                     name: 'team',
@@ -46,7 +46,7 @@
                             return TeamsApi.get($stateParams.team_id);
                         }
                     }
-                }
+                };
 
                 var userState = {
                     name: 'user',
@@ -58,7 +58,7 @@
                             return UsersApi.get($stateParams.userId);
                         }
                     }
-                }
+                };
 
                 $stateProvider.state(alphaState);
                 $stateProvider.state(homeState);

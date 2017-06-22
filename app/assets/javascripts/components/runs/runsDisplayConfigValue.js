@@ -1,4 +1,7 @@
-angular
+(function(){
+    'use strict';
+    
+    angular
     .module('milesBoard')
     .value('RunsDisplayConfig', {
         'objcode': 'RUN',
@@ -9,3 +12,4 @@ angular
                     {text:'Team', hidden:false, uiSref:'team'}],
         'rowCallbackText': 'Edit Run'
     });
+})();

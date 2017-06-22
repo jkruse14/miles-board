@@ -11,13 +11,13 @@
             first_name:'',
             last_name:'',
             email:''
-        }
+        };
 
         vm.save = save;
         vm.cancel = cancel;
 
         function save() {
-            $uibModalInstance.close(vm.newMember)
+            $uibModalInstance.close(vm.newMember);
         }
 
         function cancel() {
@@ -26,4 +26,4 @@
 
     }
 
-})()
+})();

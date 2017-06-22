@@ -1,4 +1,7 @@
-angular
+(function(){
+    'use strict';
+
+    angular
     .module('milesBoard')
     .value('UsersDisplayConfig', {
         'objcode': 'USER',
@@ -10,3 +13,4 @@ angular
         'showCallback':true,
         'rowCallbackText': 'Add Run'
     });
+})();

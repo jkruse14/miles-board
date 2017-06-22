@@ -56,7 +56,7 @@
                     apiUrl: 'https://miles-board.herokuapp.com'
                 },
             }
-        })
+        });
 
         envServiceProvider.check();
     }

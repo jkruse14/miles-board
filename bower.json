@@ -16,10 +16,10 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "mapbox.js": "^2.4.0",
     "less": "^2.7.2",
     "angular-cookies": "^1.6.4",
     "angular": "^1.6.4",
-    "angular-cookie": "^4.1.0"
+    "angular-cookie": "^4.1.0",
+    "angular-ui-router": "^1.0.4"
   }
 }
