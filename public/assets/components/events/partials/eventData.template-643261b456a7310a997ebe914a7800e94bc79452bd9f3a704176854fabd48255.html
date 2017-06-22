@@ -1,9 +1,0 @@
-<table>
-    <tr><th>{{event.title}}</th></tr>
-    <tr>
-        <th ng-repeat="(key, value) in event.event" ng-if="key!='title'">{{key}}</th>
-    </tr>
-    <tr>
-        <td ng-repeat="(key, value) in event.event" ng-if="key!='title'">{{value}}</td>
-    </tr>
-</table>
