@@ -5,7 +5,7 @@ angular
     .module('milesBoard')
     .controller('BoardController', BoardController);
 
-BoardController.$inject = [];//'displayObj','displayObjConfig'];
+BoardController.$inject = ['$scope'];//'displayObj','displayObjConfig'];
 
 function BoardController($scope) {
     var vm = this;

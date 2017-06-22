@@ -1,5 +1,13 @@
-angular
-    .module('milesBoard')
-    .controller('MainController',[function(){
-        console.log("MainController: Hello World")
-    }]);
+(function() {
+    'use strict';
+
+    angular
+        .module('milesBoard')
+        .controller('MainController',MainController);
+
+    MainController.$inject = []
+
+    function MainController() {
+        let vm = this;
+    }
+})();

@@ -73,11 +73,12 @@
                         } else if ((config.headers[i].text.toLowerCase()).replace(/\s/g, '_') === 'team') {
                             displayObj[j][config.headers[i].text].text = obj[j][(config.headers[i].text.toLowerCase()).replace(/\s/g, '_')].name
                             displayObj[j][config.headers[i].text].team_id = obj[j].team_id;
+                            displayObj[j][config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + 'team_id:' + obj[j].team_id + '})';
                         }
                         displayObj[j][config.headers[i].text].hidden = config.headers[i].hidden;
 
-                        if (config.headers[i].uiSref) {
-                            displayObj[j][config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + config.paramName + ':' + obj[j].id + '})';
+                        if (config.headers[i].uiSref && !displayObj[j][config.headers[i].text].uiSref) {
+                            displayObj[j][config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + config.headers[i].uiSref + '_id:' + obj[j].id + '})';
                         }
                     }
                 }

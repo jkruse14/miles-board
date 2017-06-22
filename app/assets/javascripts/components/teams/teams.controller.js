@@ -83,7 +83,7 @@ angular
             });
 
             modalInstance.result.then(function (result) {
-                UsersApi.service.get('',{email:result.email}).then(function(response){
+                UsersApi.get('',{email:result.email}).then(function(response){
                     if(response.id) {
                         let user = {
                             id: response.id,
@@ -112,7 +112,7 @@ angular
                             }
                         }
 
-                        UsersApi.service.post(newUser).then(function(result){
+                        UsersApi.post(newUser).then(function(result){
                             let user = {
                                 id: result.id,
                                 first_name: newUser.user.first_name,

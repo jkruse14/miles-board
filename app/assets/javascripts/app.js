@@ -1,16 +1,20 @@
 (function(){
     'use strict';
 
-    angular.module('milesBoard', [
-        'restangular',
-        'ui.router',
-        'templates',
-        'ui.bootstrap',
-        'ng-token-auth',
-        'ngStorage'
-    ]).config(authConfig);
+    angular
+        .module('milesBoard', [
+            'environment',
+            'restangular',
+            'ui.router',
+            'templates',
+            'ui.bootstrap',
+            'ng-token-auth',
+            'ngStorage'
+        ])
+        .config(EnvironmentConfig)
+        .config(authConfig);
 
-     authConfig.$inject = ['$authProvider'];
+    authConfig.$inject = ['$authProvider'];
 
     /** @ngInject */
     function authConfig($authProvider) {
@@ -33,5 +37,26 @@
                 }
             }]
         );
+    }
+
+    EnvironmentConfig.$inject = ['envServiceProvider'];
+
+    function EnvironmentConfig(envServiceProvider) {
+        envServiceProvider.config({
+            domains: {
+                development: ['localhost'],
+                production: ['miles-board.herokuapp.com']
+            },
+            vars: {
+                development: {
+                    apiUrl: 'http://localhost:8000'
+                },
+                production: {
+                    apiUrl: 'https://miles-board.herokuapp.com'
+                },
+            }
+        });
+
+        envServiceProvider.check();
     }
 })();

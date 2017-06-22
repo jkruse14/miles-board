@@ -64,7 +64,7 @@
         }
 
         function loginSuccess(resp) {
-            UsersApi.service.get(resp.id).then(function(response) {
+            UsersApi.get(resp.id).then(function(response) {
                 $localStorage.user = response.user;
             });
             $state.go('user',{userId: resp.id})

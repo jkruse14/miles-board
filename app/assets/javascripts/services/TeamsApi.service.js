@@ -1,5 +1,13 @@
-angular
-    .module('milesBoard')
-    .factory('TeamsApi', function(Restangular){
-        return Restangular.service('teams')
-    })
+(function(){
+    'use strict';
+
+    angular
+        .module('milesBoard')
+        .factory('TeamsApi', TeamsApi);
+
+    TeamsApi.$inject = ['Restangular'];
+
+    function TeamsApi(Restangular) {
+        return Restangular.service('teams');
+    }
+})();
