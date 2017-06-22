@@ -5,6 +5,7 @@
     <uib-tabset>
         <uib-tab index="$index" ng-repeat="tab in vm.tabs" heading="{{tab.title}}" ng-if="true" select="vm.setTab($index)"></uib-tab>
         <span id="createTeamButton" class="btn btn-primary" 
+                ng-click="vm.showCreateTeamModal()"
                 ng-show="vm.showCreateTeamButton">
                 Create Team
         </span>
