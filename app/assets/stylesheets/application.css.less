@@ -58,6 +58,27 @@
     content: " ";
 }
 
+///// COMMON /////
+.board-title {
+    text-align: center;
+        margin-bottom: 10px;
+        >span {
+            font-size: 2.5rem;
+        }
+}
+
+///// Nav /////
+#nav-container {
+    >miles-header {
+        >.site-header>.navbar>.navbar-collapse>.nav {
+            width: 90%;
+            >.login-link {
+                float: right;
+            }
+        }
+    }
+}
+
 ///// FORM VALIDATION ////
 
 field-invalid {
@@ -100,19 +121,48 @@ field-invalid {
                 margin: 0px auto;
                 width: 75px;
             }
+
+            >.tab-pane {
+                >ng-include {
+                    >#newMemberForm {
+                        >.form-control>#owner_tick {
+                            width: 20px;
+                            display: inline;
+                            padding: 0;
+                            margin: 0;
+                            vertical-align: bottom;
+                            position: relative;
+                            top: -1px;
+                            overflow: hidden
+                        }
+                        >.form-control>#owner_tick_label {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
+ #owner_tick {
+    width: 20px;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    overflow: hidden
+}
+#owner_tick_label {
+    display: inline-block;
+}
+                    
+
 //// TEAMS /////
 #team {
     >#team_header{
-        text-align: center;
-        margin-bottom: 10px;
-        >span {
-            font-size: 2.5rem;
-        }
-
         >.addMemberBtn {
             float:right;
         }

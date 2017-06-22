@@ -10,6 +10,7 @@ angular
         bindings: {
             displayObjData: '<',
             displayObjConfig: '<',
+            isOwner: '<',
             rowCallback: '&'
         }
     });

@@ -33,9 +33,16 @@
         vm.$onInit = onInit;
         vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
+        vm.handleLogin = handleLogin;
+        vm.handleSubmitRegistration = handleSubmitRegistration;
+        vm.loginSuccess = loginSuccess;
+        vm.loginFail = loginFail;
+        vm.registraionSuccess = registraionSuccess;
+        vm.registrationFail = registrationFail;
 
         function onInit(){
             vm.tab = 0;
+            vm.isOwner = false;
         }
 
         function setTab(index) {
@@ -59,7 +66,7 @@
         function handleLogin() {
             
             $auth.submitLogin(vm.user_info)
-                .then(loginSuccess, loginFail)
+                .then(vm.loginSuccess, vm.loginFail)
         }
 
         function loginSuccess(resp) {
@@ -81,8 +88,11 @@
                 password_confirmation: vm.user_info.password_confirmation,
                 email: vm.user_info.email
             }
-            $auth.submitRegistration(new_user)
-                .then(registraionSuccess, registrationFail);
+
+            let auth_config = vm.isOwner ? 'team_owner' : 'user';
+
+            $auth.submitRegistration(new_user, {config: auth_config})
+                .then(vm.registraionSuccess, vm.registrationFail);
         }
 
         function registraionSuccess(resp) {
@@ -92,7 +102,6 @@
         function registrationFail(resp) {
 
         }
-
     }
 
 })();

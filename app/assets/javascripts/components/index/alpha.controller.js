@@ -5,11 +5,10 @@
         .module('milesBoard')
         .controller('AlphaController', AlphaController);
 
-    AlphaController.$inject = ['$window'];
+    AlphaController.$inject = ['$window', '$state'];
 
-    function AlphaController($window) {
+    function AlphaController($window, $state) {
         let vm = this;
 
-        vm.hideNav = $window.location.hash === '#/login' ? true : false;
     }
 })();

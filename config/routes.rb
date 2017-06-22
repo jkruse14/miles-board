@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'invitation_codes/index'
+
+  get 'invitation_codes/show'
+
+  get 'invitation_codes/create'
+
+  get 'invitation_codes/update'
+
+  get 'invitation_codes/delete'
+
   mount_devise_token_auth_for 'User', at: 'auth'
 
   get 'team_member_lists',      to: 'team_member_lists#index',  as: 'team_member_lists_path'
