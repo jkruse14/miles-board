@@ -10,6 +10,7 @@
     function UsersController($localStorage, $scope, $uibModal, RunsApi, RunsDisplayConfig, TeamsDisplayConfig, user, UsersDisplayConfig) {
             let vm = this;
             vm.user = user.user;
+            vm.loggedIn = $localStorage.user ? true : false;
 
             vm.tabs = [
                 { title: 'Teams'},
@@ -52,7 +53,7 @@
             }
 
             function getShowCreateTeamButton() {
-                return vm.tab === 0 && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner'
+                return vm.tab === 0 && vm.loggedIn && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner'
             }
 
             function buildDisplayObject(obj, config) {

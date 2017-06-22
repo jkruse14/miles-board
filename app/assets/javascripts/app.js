@@ -14,24 +14,26 @@
         .config(EnvironmentConfig)
         .config(authConfig);
 
-    authConfig.$inject = ['$authProvider'];
+    authConfig.$inject = ['$authProvider','envServiceProvider'];
 
     /** @ngInject */
-    function authConfig($authProvider) {
+    function authConfig($authProvider,envServiceProvider) {
+        let url = envServiceProvider.is('development') ? 'http://localhost:8000' : 'https://miles-board.herokuapp.com';
+        
         $authProvider.configure(
             [{
                'default': {
-                    apiUrl: 'http://localhost:8000',
+                    apiUrl: url,
                     emailRegistrationPath: '/users',
                     validateOnPageLoad: true,
                 },
                 'user': {
-                    apiUrl: 'http://localhost:8000',
+                    apiUrl: url,
                     emailRegistrationPath: '/users',
                     validateOnPageLoad: true,
                 },
                 'team_owner' : {
-                    apiUrl: 'http://localhost:8000',
+                    apiUrl: url,
                     emailRegistrationPath: '/team_owners',
                     validateOnPageLoad: true,
                 }

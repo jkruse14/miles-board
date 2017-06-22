@@ -1,4 +1,7 @@
 <div id="userProfile">
+    <div class="board-title">
+        <span>{{vm.user.first_name + ' ' + vm.user.last_name}}</span>
+    </div>
     <uib-tabset>
         <uib-tab index="$index" ng-repeat="tab in vm.tabs" heading="{{tab.title}}" ng-if="true" select="vm.setTab($index)"></uib-tab>
         <span id="createTeamButton" class="btn btn-primary" 

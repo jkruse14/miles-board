@@ -5,11 +5,14 @@ angular
     .module('milesBoard')
     .controller('BoardController', BoardController);
 
-BoardController.$inject = ['$scope'];//'displayObj','displayObjConfig'];
+BoardController.$inject = ['$localStorage','$scope', '$stateParams'];//'displayObj','displayObjConfig'];
 
-function BoardController($scope) {
+function BoardController($localStorage, $scope) {
     var vm = this;
     vm.$onInit = onInit;
+
+    vm.showActions = $localStorage.user ? true : false;
+    vm.loggedInUserId = $localStorage.user ? $localStorage.user.id : null;
 
     vm.callback = callback;
 

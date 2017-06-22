@@ -5,13 +5,15 @@ angular
     .module('milesBoard')
     .controller('TeamsController', TeamsController);
 
-    TeamsController.$inject = ['$scope', '$stateParams', 'RunsApi', 'team', 'teams', 'TeamsApi', 'TeamsDisplayConfig', 'TeamMemberListsApi', '$uibModal' ,'UsersApi','UsersDisplayConfig'];
+    TeamsController.$inject = ['$localStorage','$scope', '$stateParams', 'RunsApi', 'team', 'teams', 'TeamsApi', 'TeamsDisplayConfig', 'TeamMemberListsApi', '$uibModal' ,'UsersApi','UsersDisplayConfig'];
 
-    function TeamsController($scope, $stateParams, RunsApi, team, teams, TeamsApi, TeamsDisplayConfig, TeamMemberListsApi, $uibModal , UsersApi, UsersDisplayConfig) {
+    function TeamsController($localStorage, $scope, $stateParams, RunsApi, team, teams, TeamsApi, TeamsDisplayConfig, TeamMemberListsApi, $uibModal , UsersApi, UsersDisplayConfig) {
         var vm = this;
         vm.team = team;
         vm.teams = teams.plain();
-        vm.displayConfig = UsersDisplayConfig;
+        vm.loggedIn = $localStorage.user ? true : false;
+        vm.isTeamOwner = $localStorage.user.id === vm.team.team_owner_id
+        vm.showAddMemberButton =  vm.loggedIn && vm.isTeamOwner ? true : false;
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
@@ -20,18 +22,19 @@ angular
         vm.showUserProfileModal = showUserProfileModal;
 
         function onInit() {
-            if ($stateParams.team_id) {
-                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
-            } else {
-                vm.displayObjData = buildDisplayObject(vm.teams, TeamsDisplayConfig)
-            }
-            
+            setUpTable();
         }
 
         function onChanges(changes) {
+            setUpTable();
+        }
+
+        function setUpTable() {
             if ($stateParams.team_id) {
+                vm.displayConfig = UsersDisplayConfig;
                 vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
             } else {
+                vm.displayConfig = TeamsDisplayConfig;
                 vm.displayObjData = buildDisplayObject(vm.teams, TeamsDisplayConfig)
             }
         }
@@ -50,7 +53,7 @@ angular
                     displayObj[j][config.headers[i].text].text = obj[j][(config.headers[i].text.toLowerCase()).replace(/\s/g, '_')];
                     displayObj[j][config.headers[i].text].hidden = config.headers[i].hidden;
 
-                    if (config.headers[i].uiSref) {
+                    if (config.headers[i].uiSref && vm.loggedIn) {
                         displayObj[j][config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + config.paramName + ':' + obj[j].id + '})';
                     }
                 }
