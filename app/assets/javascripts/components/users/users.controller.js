@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$localStorage','$scope', '$uibModal', 'RunsApi', 'RunsDisplayConfig', 'TeamsDisplayConfig', 'user', 'UsersDisplayConfig'];
+    UsersController.$inject = ['$localStorage', '$scope', '$uibModal', 'RunsApi', 'RunsDisplayConfig', 'TeamsApi', 'TeamsDisplayConfig', 'user', 'UsersDisplayConfig'];
 
-    function UsersController($localStorage, $scope, $uibModal, RunsApi, RunsDisplayConfig, TeamsDisplayConfig, user, UsersDisplayConfig) {
+    function UsersController($localStorage, $scope, $uibModal, RunsApi, RunsDisplayConfig, TeamsApi, TeamsDisplayConfig, user, UsersDisplayConfig) {
             let vm = this;
             vm.user = user.user;
             vm.loggedIn = $localStorage.user ? true : false;
@@ -19,6 +19,7 @@
 
             vm.$onInit = onInit;
             vm.setTab = setTab;
+            vm.showCreateTeamModal = showCreateTeamModal;
 
             function onInit() {
                 vm.tab = 0;
@@ -128,6 +129,41 @@
                         }
                         vm.displayObjData = buildDisplayObject(vm.user.runs, RunsDisplayConfig)
                     })
+                }, function () { });
+            }
+
+            function showCreateTeamModal(data) {
+                $scope.editing_run = data;
+                // var parentElem = parentSelector ?
+                //     angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'components/modals/CreateTeamModal/_createTeamModal.html',
+                    controller: 'CreateTeamModalController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    //appendTo: parentElem,
+                    scope: $scope
+                    // resolve: {
+                    //     items: function () {
+                    //         return vm.items;
+                    //     }
+                    // }
+                });
+
+                modalInstance.result.then(function (result) {
+                    TeamsApi.post(result).then(
+                        function (response) {
+                            vm.user.teams.push(result);
+                            vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
+                            vm.displayConfig = TeamsDisplayConfig;
+                        },
+                        function (response) {
+                            console.error(response);
+                        }
+                    );
                 }, function () { });
             }
         }
