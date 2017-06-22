@@ -3,11 +3,11 @@
 
     angular
         .module('milesBoard')
-        .factory('TeamsApi', TeamsApi)
+        .factory('TeamsApi', TeamsApi);
 
     TeamsApi.$inject = ['Restangular'];
 
     function TeamsApi(Restangular) {
-        return Restangular.service('teams')
+        return Restangular.service('teams');
     }
 })();

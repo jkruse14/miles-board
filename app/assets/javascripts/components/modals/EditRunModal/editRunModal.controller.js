@@ -18,7 +18,7 @@
             $uibModalInstance.close({id:parseInt($scope.editing_run.id.text),
                                      team_id: parseInt($scope.editing_run.Team.team_id),
                                      distance: vm.distance,
-                                     run_date: vm.run_date})
+                                     run_date: vm.run_date});
         }
 
         function cancel() {
@@ -32,7 +32,7 @@
             vm.today = moment();
             vm.dateOptions = {
                 maxDate: new Date(),
-            }
+            };
         }
     }
 })();

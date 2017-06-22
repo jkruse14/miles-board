@@ -1,4 +1,5 @@
 Devise.setup do |config|
+  config.secret_key = '0b6120653dc32167b7611933f097980bcbce42cd91cb4ea9c56b32f8c9562503a624573cdedb239e2db667e7557e6d204c7435c0fff1263cbc58ef5c587516ec'
   #config.mailer = "Devise::Mailer"
   # The e-mail address that mail will appear to be sent from
   # If absent, mail is sent from "please-change-me-at-config-initializers-devise@example.com"
