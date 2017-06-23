@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
   get    'users',       to: 'users#index',  as: 'users_path'
   get    'users/:id',   to: 'users#show',   as: 'users_show', constraints: { id: /[0-9]+/ }
+  get    'users/resend_confirmation', to:'users#resend_confirmation', as:'users_resend_confirmation'
   post   'users',       to: 'users#create', as: 'users_create'
   put    'users/:id',   to: 'users#update', as: 'users_update', constraints: { id: /[0-9]+/ }
   put    'users',       to: 'users#update', as: 'users_bulk_update'
