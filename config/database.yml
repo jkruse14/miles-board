@@ -41,4 +41,4 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  url: <%= ENV['miles-board_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
