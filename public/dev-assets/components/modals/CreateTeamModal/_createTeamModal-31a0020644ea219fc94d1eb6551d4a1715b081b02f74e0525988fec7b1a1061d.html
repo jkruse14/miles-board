@@ -1,0 +1,37 @@
+<div id="newTeamModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="vm.cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create New Team</h4>
+            </div>
+            <div class="modal-body">
+                <form id="newTeamForm" name="newTeamForm" novalidate>
+                    <div class="form-group">
+                        <label for="name">Team Name</label>
+                        <input type="text" id="name" name="name" class="form-control" 
+                                            ng-class="{'field-invalid': !newTeamForm.name.$pristine && newTeamForm.name.$invalid}"
+                                            ng-model="vm.newTeam.name" placeholder="Enter Team Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Team Location (City, State)</label>
+                        <input type="text" class="form-control" id="location" ng-model="vm.newTeam.location" placeholder="Enter Location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_email">Email address</label>
+                        <input type="email" class="form-control" id="contact_email" aria-describedby="emailHelp" ng-model="vm.newTeam.contact_email"
+                            placeholder="Enter Contact Email" required>
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Cancel</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.save()">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
