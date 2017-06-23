@@ -18,8 +18,8 @@
 
     /** @ngInject */
     function authConfig($authProvider,envServiceProvider) {
-        let url = envServiceProvider.is('development') ? 'http://localhost:8000' : 'http://localhost:8000';
-        
+        let url = envServiceProvider.is('development') ? 'http://localhost:8000' : 'https://miles-board.herokuapp.com';
+        console.log('is dev: ', envServiceProvider.is('development'))
         $authProvider.configure(
             [{
                'default': {
