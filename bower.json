@@ -20,6 +20,7 @@
     "angular-cookies": "^1.6.4",
     "angular": "^1.6.4",
     "angular-cookie": "^4.1.0",
-    "angular-ui-router": "^1.0.4"
+    "angular-ui-router": "^1.0.4",
+    "lodash": "^4.17.4"
   }
 }
