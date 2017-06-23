@@ -12,6 +12,7 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'responders'
+gem 'pg', '0.20.0'
 
 gem 'less-rails', '~> 2.7.0'
 gem "twitter-bootstrap-rails"
@@ -45,8 +46,6 @@ gem 'figaro'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 end
@@ -65,7 +64,6 @@ group :production, :staging do
   gem "rails_12factor"
   gem "rails_stdout_logging"
   gem "rails_serve_static_assets"
-  gem 'pg', '0.20.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
