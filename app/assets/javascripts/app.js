@@ -24,17 +24,20 @@
             [{
                'default': {
                     apiUrl: url,
-                    emailRegistrationPath: '/users',
+                    emailRegistrationPath: '/uses',
+                    confirmationSuccessUrl: 'http://localhost:8000/#!/login',
                     validateOnPageLoad: true,
                 },
                 'user': {
                     apiUrl: url,
                     emailRegistrationPath: '/users',
+                    confirmationSuccessUrl: 'http://localhost:8000/#!/login',
                     validateOnPageLoad: true,
                 },
                 'team_owner' : {
                     apiUrl: url,
                     emailRegistrationPath: '/team_owners',
+                    confirmationSuccessUrl: 'http://localhost:8000/#!/login',
                     validateOnPageLoad: true,
                 }
             }]
