@@ -75,6 +75,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def resend_confirmation
+    if !params[:email].nil?
+      @user = User.find_by_email(params[:email])
+      @user.send_confirmation_instructions
+      render json: { status: 'success' }, status: :ok
+    else
+      render json: { error: 'no email address present', id: params[:id] }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_user

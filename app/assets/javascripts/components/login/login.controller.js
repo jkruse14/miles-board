@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('LoginController', LoginController);
     
-    LoginController.$inject = ['$auth', '$localStorage', '$scope', '$state', 'UsersApi'];
+    LoginController.$inject = ['$auth', '$localStorage', '$scope', '$state', 'Restangular', 'UsersApi'];
 
-    function LoginController($auth, $localStorage, $scope, $state, UsersApi) {
+    function LoginController($auth, $localStorage, $scope, $state, Restangular, UsersApi) {
         let vm = this;
         let PW_CONF_MSG = {
             MATCH: {text: 'They match!', className: 'pwMatch'},
@@ -22,14 +22,6 @@
                    {title: 'Register',
                     content:'<ng-include src="'+registerFormUrl+'"></ng-include>'}];
 
-        vm.user_info = {
-            first_name: '',
-            last_name: '',
-            password: '',
-            password_confirmation: '',
-            email: ''
-        };
-
         vm.$onInit = onInit;
         vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
@@ -39,14 +31,30 @@
         vm.loginFail = loginFail;
         vm.registraionSuccess = registraionSuccess;
         vm.registrationFail = registrationFail;
+        vm.resendEmailConfirmation = resendEmailConfirmation;
 
         function onInit(){
+            vm.user_info = {
+                first_name: '',
+                last_name: '',
+                password: '',
+                password_confirmation: '',
+                email: ''
+            };
+
             vm.tab = 0;
             vm.isOwner = false;
         }
 
         function setTab(index) {
             vm.tab = index;
+            vm.user_info = {
+                first_name: '',
+                last_name: '',
+                password: '',
+                password_confirmation: '',
+                email: vm.user_info.email
+            };
         }
 
         function handleSubmitClick() {
@@ -101,6 +109,10 @@
 
         function registrationFail(resp) {
 
+        }
+
+        function resendEmailConfirmation() {
+           Restangular.all('users').customGET('resend_confirmation',{email: vm.user_info.email})
         }
     }
 

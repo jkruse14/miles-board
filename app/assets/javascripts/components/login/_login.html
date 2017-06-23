@@ -5,6 +5,7 @@
         <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)">
             <ng-include src="'components/login/_loginForm.html'"></ng-include>
             <span class='btn btn-primary' ng-click='vm.handleSubmitClick()'>Submit</span>
+            <span ng-click="vm.resendEmailConfirmation()"><a>Resend Confirmation Email</a></span>
         </uib-tab>
         <uib-tab index="1" heading="Register" ng-if="true" select="vm.setTab(1)">
             <ng-include src="'components/login/_registerForm.html'"></ng-include>
