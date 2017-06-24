@@ -6,18 +6,22 @@
                 <h4 class="modal-title">Log In</h4>
             </div>
             <div class="modal-body login-container">
-                <uib-tabset id="tabs-container">
+                <uib-tabset active="vm.tab" id="tabs-container">
                     <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)">
                         <ng-include src="'components/login/_loginForm.html'"></ng-include>
                     </uib-tab>
                     <uib-tab index="1" heading="Register" ng-if="true" select="vm.setTab(1)">
                         <ng-include src="'components/login/_registerForm.html'"></ng-include>
                     </uib-tab>
+                    <uib-tab index="2" ng-if="true" heading="" class="hidden-tab">
+                        <ng-include src="'components/login/_resendConfirmationEmail.html'"></ng-include>
+                    </uib-tab>
                 </uib-tabset>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.handleCancel()">Cancel</button>
                 <button type="button" class="btn btn-primary" ng-click="vm.handleSubmitClick()">Submit</button>
+                <span ng-show="vm.tab === 0" ng-click="vm.setTab(2)" class="pull-left"><a>Resend Confirmation Email</a></span>
             </div>
         </div>
         <!-- /.modal-content -->

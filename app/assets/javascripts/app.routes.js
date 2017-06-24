@@ -17,11 +17,6 @@
             url: '/',
             templateUrl: 'components/index/_index.html',
             controller: 'AlphaController as vm',
-            resolve: {
-                auth: function ($auth) {
-                    return $auth.validateUser();
-                }
-            }
         };
 
         var homeState = {

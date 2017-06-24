@@ -11,9 +11,18 @@
         let vm = this;
         angular.extend(vm, $controller('LoginController', { $scope: $scope }));
 
+        vm.user_info = {
+            first_name: '',
+            last_name: '',
+            password: '',
+            password_confirmation: '',
+            email: ''
+        };
+
         vm.handleSubmitClick = handleSubmitClick;
         vm.handleLogin = handleLogin;
         vm.handleCancel = handleCancel;
+        vm.handleSubmitRegistration = handleSubmitRegistration;
 
         function handleSubmitClick() {
             switch (vm.tab) {
@@ -44,6 +53,21 @@
 
         function handleCancel() {
             $uibModalInstance.dismiss('cancel');
+        }
+
+        function handleSubmitRegistration() {
+            let new_user = {
+                first_name: vm.user_info.first_name,
+                last_name: vm.user_info.last_name,
+                password: vm.user_info.password,
+                password_confirmation: vm.user_info.password_confirmation,
+                email: vm.user_info.email
+            }
+
+            let auth_config = vm.isOwner ? 'team_owner' : 'user';
+
+            $auth.submitRegistration(new_user, { config: auth_config })
+                .then(vm.registraionSuccess, vm.registrationFail);
         }
     }
 

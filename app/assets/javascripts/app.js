@@ -19,29 +19,29 @@
     /** @ngInject */
     function authConfig($authProvider,envServiceProvider) {
         let url = envServiceProvider.is('development') ? 'http://localhost:8000' : 'https://miles-board.herokuapp.com';
-        console.log('is dev: ', envServiceProvider.is('development'))
-        $authProvider.configure(
-            [{
+        
+        $authProvider.configure([{
                'default': {
                     apiUrl: url,
-                    emailRegistrationPath: '/uses',
-                    confirmationSuccessUrl: 'http://localhost:8000/#!/login',
+                    emailRegistrationPath: '/users',
+                    confirmationSuccessUrl: window.location.href,
                     validateOnPageLoad: true,
-                },
-                'user': {
+                }},
+                {'user': {
                     apiUrl: url,
                     emailRegistrationPath: '/users',
-                    confirmationSuccessUrl: 'http://localhost:8000/#!/login',
+                    confirmationSuccessUrl: window.location.href,
                     validateOnPageLoad: true,
-                },
-                'team_owner' : {
+                }},
+                {'team_owner' : {
                     apiUrl: url,
                     emailRegistrationPath: '/team_owners',
-                    confirmationSuccessUrl: 'http://localhost:8000/#!/login',
+                    confirmationSuccessUrl: window.location.href,
                     validateOnPageLoad: true,
                 }
             }]
         );
+        console.log('is dev: ', envServiceProvider.is('development'))
     }
 
     EnvironmentConfig.$inject = ['envServiceProvider'];

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get 'invitation_codes/delete'
 
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {confirmations: 'confirmations'}
 
   get 'team_member_lists',      to: 'team_member_lists#index',  as: 'team_member_lists_path'
   get 'team_member_lists/:id',  to: 'team_member_lists#show',   as: 'team_member_lists_show'
