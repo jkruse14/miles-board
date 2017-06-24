@@ -23,6 +23,10 @@
 @import "twitter/bootstrap/navs.less";
 @import "twitter/bootstrap/navbar.less";
 
+@red: red;
+@lightgray: lightgray;
+@white: white;
+
 .page-container {
     height:100%;
     position: relative;
@@ -46,6 +50,9 @@
     display: block;
     height: 100vh;
     min-height: 300px;
+}
+.modal-content {
+    border: none;
 }
 .modal-body:before,
 .modal-body:after {
@@ -105,13 +112,24 @@
 
 ///// FORM VALIDATION ////
 
-field-invalid {
+.field-invalid {
     border-color: red !important;
     -webkit-box-shadow: inset 0 1px 1px red;
      box-shadow: inset 0 1px 1px red !important;
     -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+
+.text-error {
+    color:red;
+}
+
+.input-and-message {
+    >small {
+        display: inline;
+        margin-left: 5px;
+    }
 }
 
 ///// LOGIN AND REGISTRATION /////
@@ -137,6 +155,9 @@ field-invalid {
         >.hidden-tab {
             opacity: 0;
             visibility: hidden;
+            webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border:none;
         }
 
         >.tab-content {
@@ -186,6 +207,48 @@ field-invalid {
 }
 #owner_tick_label {
     display: inline-block;
+}
+
+#loginModal {
+    >.modal-dialog>.modal-content {
+        background-color: transparent;
+        webkit-box-shadow: none;
+        box-shadow: none;
+        >.modal-body {
+            padding: 0;
+            >#tabs-container{
+                >.nav {
+                    >li {
+                        webkit-box-shadow: -1px -4px 5px 1px rgba(0, 0, 0, 0.25);
+                        box-shadow: -2px -4px 5px 1px rgba(0, 0, 0, 0.25);
+                    }
+                    >.inactive {
+                        background-color: @lightgray;
+                        border-top-right-radius: 3px;
+                        border-top-left-radius: 3px;
+                    }
+                    >.hidden-tab {
+                        opacity: 0;
+                        visibility: hidden;
+                        webkit-box-shadow: none !important;
+                        box-shadow: none !important;
+                        border: none;
+                    }
+                }
+                >.tab-content {
+                    background-color: white;
+                    padding: 10px;
+                    border-bottom-left-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                    border-top-right-radius: 3px;
+                    @media(min-width: 768px) {
+                        webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                    }
+                }
+            }
+        }
+    }
 }
                     
 
