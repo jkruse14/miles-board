@@ -70,10 +70,34 @@
 ///// Nav /////
 #nav-container {
     >miles-header {
-        >.site-header>.navbar>.navbar-collapse>.nav {
-            width: 90%;
-            >.login-link {
+        >.site-header>.navbar{
+            >.navbar-header>.login-link{
+                display: none;
+                //visibility: hidden;
                 float: right;
+                @media(max-width: 767px) {
+                    display: block;
+                    >a {
+                        position: relative;
+                        display: block;
+                        padding: 15px 15px;
+                        line-height: 20px;
+                    }
+                }
+            }
+            >.navbar-collapse {
+                >.login-link {
+                    float: right;
+                    >a {
+                        position: relative;
+                        display: block;
+                        padding: 15px 15px;
+                        line-height: 20px;
+                    }
+                    @media(max-width: 767px) {
+                        display: none;
+                    }
+                }
             }
         }
     }
@@ -109,6 +133,11 @@ field-invalid {
         margin: 0px auto;
         margin-top: 30px;
         width: 30%;
+
+        >.hidden-tab {
+            opacity: 0;
+            visibility: hidden;
+        }
 
         >.tab-content {
             border: 1px solid lightgrey;
@@ -166,5 +195,17 @@ field-invalid {
         >.addMemberBtn {
             float:right;
         }
+    }
+}
+
+@media(max-width: 1024px) {
+    #login-container>#tabs-container {
+        width:60%;
+    }
+}
+
+@media(max-width: 667px) {
+    #login-container>#tabs-container {
+        width:97%;
     }
 }

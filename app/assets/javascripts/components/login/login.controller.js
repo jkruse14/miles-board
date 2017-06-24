@@ -65,6 +65,9 @@
                 case 1:
                     handleSubmitRegistration();
                     break;
+                case 2:
+                    resendEmailConfirmation();
+                    break;
                 default:
                     handleLogin();
                     break;
