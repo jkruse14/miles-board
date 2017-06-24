@@ -9,6 +9,7 @@
 
     function LoginController($auth, $localStorage, $scope, $state, Restangular, UsersApi) {
         let vm = this;
+
         let PW_CONF_MSG = {
             MATCH: {text: 'They match!', className: 'pwMatch'},
             NO_MATCH: {text: 'Your passwords do not match...', className: 'pwNoMatch'}
@@ -32,8 +33,11 @@
         vm.registraionSuccess = registraionSuccess;
         vm.registrationFail = registrationFail;
         vm.resendEmailConfirmation = resendEmailConfirmation;
+        vm.resetFocusedField = resetFocusedField;
+        vm.setFocusedField = setFocusedField;
 
         function onInit(){
+            vm.inModal = false;
             vm.user_info = {
                 first_name: '',
                 last_name: '',
@@ -44,6 +48,8 @@
 
             vm.tab = 0;
             vm.isOwner = false;
+
+            resetFocusedField();
         }
 
         function setTab(index) {
@@ -116,6 +122,29 @@
 
         function resendEmailConfirmation() {
            Restangular.all('users').customGET('resend_confirmation',{email: vm.user_info.email})
+        }
+
+        function setFocusedField(form, field) {
+            vm.focused_field[form][field] = true;
+        }
+
+        function resetFocusedField() {
+            vm.focused_field = {
+                loginForm: {
+                    email: false,
+                    password: false
+                },
+                newMemberForm: {
+                    email: false,
+                    first_name: false,
+                    last_name: false,
+                    password: false,
+                    password_confirmation: false
+                },
+                resendEmailForm: {
+                    email: false
+                }
+            };
         }
     }
 

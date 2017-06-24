@@ -9,6 +9,24 @@
 
     function LoginModalController($auth, $controller, $localStorage, $scope, $state, $uibModalInstance, UsersApi){
         let vm = this;
+        vm.inModal = true;
+        
+        vm.focused_field = {
+            loginForm: {
+                email: false,
+                password: false
+            },
+            newMemberForm: {
+                email: false,
+                first_name: false,
+                last_name: false,
+                password: false,
+                password_confirmation: false
+            },
+            resendEmailForm: {
+                email: false
+            }
+        };
         angular.extend(vm, $controller('LoginController', { $scope: $scope }));
 
         vm.user_info = {
@@ -19,10 +37,24 @@
             email: ''
         };
 
+        vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
         vm.handleLogin = handleLogin;
         vm.handleCancel = handleCancel;
         vm.handleSubmitRegistration = handleSubmitRegistration;
+        vm.resetFocusedField = resetFocusedField;
+        vm.setFocusedField = setFocusedField;
+
+        function setTab(index) {
+            vm.tab = index;
+            vm.user_info = {
+                first_name: '',
+                last_name: '',
+                password: '',
+                password_confirmation: '',
+                email: vm.user_info.email
+            };
+        }
 
         function handleSubmitClick() {
             switch (vm.tab) {
@@ -68,6 +100,29 @@
 
             $auth.submitRegistration(new_user, { config: auth_config })
                 .then(vm.registraionSuccess, vm.registrationFail);
+        }
+
+        function setFocusedField(form, field) {
+            vm.focused_field[form][field] = true;
+        }
+
+        function resetFocusedField() {
+            vm.focused_field = {
+                loginForm: {
+                    email: false,
+                    password: false
+                },
+                registraionForm: {
+                    email: false,
+                    first_name: false,
+                    last_name: false,
+                    password: false,
+                    password_confirmation: false
+                },
+                resendEmailForm: {
+                    resend_email: false
+                }
+            };
         }
     }
 

@@ -1,27 +1,18 @@
-<div id="newMemberModal" class="modal" tabindex="-1" role="dialog">
+<div id="loginModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="vm.handleCancel()"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Log In</h4>
-            </div>
             <div class="modal-body login-container">
                 <uib-tabset active="vm.tab" id="tabs-container">
-                    <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)">
+                    <uib-tab index="0" heading="Login" ng-hide="vm.tab === 2 && vm.inModal === true" select="vm.setTab(0)" class="{{vm.tab === 1 ? 'inactive' : ''}}">
                         <ng-include src="'components/login/_loginForm.html'"></ng-include>
                     </uib-tab>
-                    <uib-tab index="1" heading="Register" ng-if="true" select="vm.setTab(1)">
+                    <uib-tab index="1" heading="Register" ng-hide="vm.tab === 2 && vm.inModal === true" select="vm.setTab(1)" class="{{vm.tab === 0 ? 'inactive' : ''}}">
                         <ng-include src="'components/login/_registerForm.html'"></ng-include>
                     </uib-tab>
                     <uib-tab index="2" ng-if="true" heading="" class="hidden-tab">
                         <ng-include src="'components/login/_resendConfirmationEmail.html'"></ng-include>
                     </uib-tab>
                 </uib-tabset>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.handleCancel()">Cancel</button>
-                <button type="button" class="btn btn-primary" ng-click="vm.handleSubmitClick()">Submit</button>
-                <span ng-show="vm.tab === 0" ng-click="vm.setTab(2)" class="pull-left"><a>Resend Confirmation Email</a></span>
             </div>
         </div>
         <!-- /.modal-content -->

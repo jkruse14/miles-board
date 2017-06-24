@@ -1,7 +1,19 @@
 <form id="resendEmailForm" name="resendEmailForm">
     <div class="form-group">
-        <label for="resend_email">Email</label>
-        <input type="email" class="form-control" id="resend_email" aria-describedby="emailHelp" ng-model="vm.user_info.email" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">Enter the email associated with your account</small>
+        <label for="email">Email address</label>
+        <div class="form-group input-and-message">
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" ng-focus="vm.setFocusedField('resendEmailForm', 'email')"
+                ng-blur="vm.resetFocusedField()" ng-class="[{'field-invalid': resendEmailForm.email.$invalid
+                                                            && (!resendEmailForm.email.$pristine || resendEmailForm.email.$touched)
+                                                            && vm.focused_field['resendEmailForm']['email'] === false}]" ng-model="vm.user_info.email"
+                placeholder="Enter email" required>
+            <small id="emailError" class="form-text text-error" ng-show="resendEmailForm.email.$invalid && 
+                             (!resendEmailForm.email.$pristine || resendEmailForm.email.$touched) && 
+                            vm.focused_field['resendEmailForm']['email'] === false">
+                    Invalid Email
+            </small>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
+    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.setTab(0)' >Cancel</span>
 </form>

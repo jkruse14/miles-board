@@ -4,12 +4,9 @@
     <uib-tabset active="vm.tab" id="tabs-container">
         <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)">
             <ng-include src="'components/login/_loginForm.html'"></ng-include>
-            <span class='btn btn-primary' ng-click='vm.handleSubmitClick()'>Submit</span>
-            <span ng-click="vm.setTab(2)" class="pull-right"><a>Resend Confirmation Email</a></span>
         </uib-tab>
         <uib-tab index="1" heading="Register" ng-if="true" select="vm.setTab(1)">
             <ng-include src="'components/login/_registerForm.html'"></ng-include>
-            <span class='btn btn-primary' ng-click='vm.handleSubmitClick()'>Submit</span>
         </uib-tab>
         <uib-tab index="2" ng-if="true" heading="" class="hidden-tab">
             <ng-include src="'components/login/_resendConfirmationEmail.html'"></ng-include>
