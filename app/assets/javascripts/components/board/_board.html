@@ -1,10 +1,11 @@
 <div id="board-container">
+    <span>Filter Table</span><input type='text' ng-model="query" ng-model-options="{ debounce: 200 }"/>
     <table id="board" class="table table-responsive table-striped">
         <tr>
             <th ng-repeat-start="header in vm.displayObjConfig.headers" ng-hide="header.hidden">{{header.text}}</th>
             <th ng-repeat-end ng-if="$last"></th>
         </tr>
-        <tr ng-repeat="row in vm.displayObjData">
+        <tr ng-repeat="row in vm.displayObjData | namesFilter:query">
             <td ng-repeat-start="item in row" ng-hide="item.hidden">
                 <a ng-if="item.uiSref" ui-sref="{{item.uiSref}}" ui-sref-acitve="active">{{item.text}}</a>
                 <span ng-if="!item.uiSref">{{item.text}}</span>
