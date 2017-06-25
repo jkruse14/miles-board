@@ -1,5 +1,5 @@
 <div id="board-container">
-    <span>Filter Table</span><input type='text' ng-model="query" ng-model-options="{ debounce: 200 }"/>
+    <span>Search By Name:</span><input type='text' ng-model="query" ng-model-options="{ debounce: 200 }"/>
     <table id="board" class="table table-responsive table-striped">
         <tr>
             <th ng-repeat-start="header in vm.displayObjConfig.headers" ng-hide="header.hidden">{{header.text}}</th>
