@@ -7,16 +7,22 @@ class ConfirmationsController < Devise::ConfirmationsController
         puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
         puts resource.inspect
         puts 'EMPTY'
-        puts resource.errors.inspect
+        puts resource.errors.messages.inspect
 
-        #if resource.errors.empty?
-        set_flash_message!(:notice, :confirmed)
-        #respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
-        puts root_path.inspect
-        redirect_to root_path + '#!/users/' + resource.id.to_s
-        #else
-        #respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
-        #end
+        if resource.errors.messages.empty?
+            set_flash_message!(:notice, :confirmed)
+            #respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
+            #puts root_path.inspect
+            #redirect_to root_path + '#!/users/' + resource.id.to_s
+            if signed_in?(resource_name)
+                #signed_in_root_path(root_path)
+                redirect_to root_path + '#!/users/' + resource.id.to_s
+            else
+                redirect_to root_path + '#!/login'
+            end
+        else
+            respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
+        end
     end
 
     protected

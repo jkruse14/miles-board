@@ -1,3 +1,4 @@
+<flash-message name="resendform_flash"></flash-message>
 <form id="resendEmailForm" name="resendEmailForm">
     <div class="form-group">
         <label for="email">Email address</label>
@@ -15,5 +16,6 @@
         </div>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
-    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.setTab(0)' >Cancel</span>
+    <span class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.registered === true">Submit</span>
+    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.registered === true ? vm.handleCancel() : vm.setTab(0)'> {{vm.registered === true ? Close : Cancel}}</span>
 </form>

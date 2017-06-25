@@ -1,3 +1,4 @@
+<flash-message name="regform_flash"></flash-message>
 <form id="newMemberForm" name="newMemberForm">
     <div class="form-group">
         <label for="first_name">First Name</label>
@@ -65,7 +66,7 @@
                                     ng-focus="vm.setFocusedField('newMemberForm', 'password')" 
                                     ng-blur="vm.resetFocusedField()" 
                                     ng-class="[{'field-invalid': newMemberForm.password.$invalid
-                                                                && (!newMemberForm.email.$pristine || newMemberForm.email.$touched)
+                                                                && (!newMemberForm.password.$pristine || newMemberForm.password.$touched)
                                                                 && vm.focused_field['newMemberForm']['password'] === false}]"
                                     ng-model="vm.user_info.password"
                                     placeholder="Enter Password"
@@ -85,7 +86,7 @@
                                  ng-focus="vm.setFocusedField('newMemberForm', 'password_confirmation')" 
                                  ng-blur="vm.resetFocusedField()" 
                                  ng-class="[{'field-invalid': newMemberForm.password_confirmation.$invalid
-                                                              && (!newMemberForm.email.$pristine || newMemberForm.email.$touched)
+                                                              && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched)
                                                               && vm.focused_field['newMemberForm']['password_confirmation'] === false}]"
                                 ng-model="vm.user_info.password_confirmation"
                                 placeholder="Confirm Password"
@@ -103,5 +104,5 @@
         <input type="checkbox" class="form-control" id="owner_tick" ng-model="vm.isOwner">
         <label id="owner_tick_label" for="owner_tick">I am a Team Owner</label>
     </div>
-    <span class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.tab === 1 && newMemberForm.$invalid">Submit</span>
+    <span class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="(vm.tab === 1 && newMemberForm.$invalid) || vm.registered === true">Submit</span>
 </form>
