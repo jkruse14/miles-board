@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'imported_user_data/index'
+
+  get 'imported_user_data/show'
+
+  get 'imported_user_data/create'
+
+  get 'imported_user_data/update'
+
+  get 'imported_user_data/delete'
+
   get 'invitation_codes/index'
 
   get 'invitation_codes/show'

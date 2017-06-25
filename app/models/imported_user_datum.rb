@@ -1,0 +1,2 @@
+class ImportedUserDatum < ApplicationRecord
+end
