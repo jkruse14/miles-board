@@ -1,7 +1,7 @@
 class Team < ApplicationRecord
     before_save { contact_email.downcase! }
 
-    has_many :team_member_lists
+    has_many :team_member_lists, dependent: :destroy
     has_many :users, through: :team_member_lists
     has_many :runs, through: :users
 

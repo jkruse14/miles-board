@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   protect_from_forgery with: :null_session
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i(show update destroy)
   skip_before_action :verify_authenticity_token
 
   def index
@@ -10,30 +10,33 @@ class UsersController < ApplicationController
     # - if user_type = user, show friends
     if !params['email'].nil?
       @user = User.find_by_email(params[:email])
+      render json: @users, status: 200 && return
     else
-      @user = User.all
+      all_users = if !params[:team_id].nil?
+                    Team.find(params[:team_id]).users
+                  else
+                    User.all
+                  end
+
+      users = []
+      all_users.each do |user|
+        @user = user
+        users << user_return_obj
+      end
+      render json: users, status: 200 && return
     end
-    render json: @user, status: 200 and return
   end
 
   def show
-    team_miles = Run.where(:user_id => params['id']).group(:team_id).calculate(:sum,:distance)
-    
+    team_miles = Run.where(user_id: params['id']).group(:team_id).calculate(:sum, :distance)
+
     @user.teams.each do |team|
       puts team.inspect
       # team[:team_distance] = team_miles[team.id]
     end
-    
-    render json: {:user => @user.as_json(:only => [:id, :first_name, :last_name, :email, :type],
-                                :include => {
-                                  :teams => {
-                                    :only => [:id, :name, :location, :contact_email, :team_owner_id]
-                                  },
-                                  :runs =>{ :include => { :team => { :only => :name }}},
-                                }), 
-                            :team_distance => team_miles
-                  },
-                  status: 200 and return
+
+    render(json: { user: user_return_obj},
+           status: 200) && return
   end
 
   def create
@@ -43,7 +46,7 @@ class UsersController < ApplicationController
 
     if @user.save!
       unless user_params[:team_id].nil?
-        TeamMemberList.create(:user_id => @user.id, :team_id => user_params[:team_id])
+        TeamMemberList.create(user_id: @user.id, team_id: user_params[:team_id])
       end
 
       @user = User.find(@user.id)
@@ -51,11 +54,10 @@ class UsersController < ApplicationController
       puts @user.inspect
       # RegistrationMailer.registration_success(@user).deliver!
       Devise::Mailer.confirmation_instructions(@user, @user.confirmation_token).deliver!
-      render json: { id: @user.id }, status: :created and return
+      render(json: { id: @user.id }, status: :created) && return
     else
-      render json: @user.errors, status: :unprocessable_entity and return
+      render(json: @user.errors, status: :unprocessable_entity) && return
     end
-
   end
 
   def update
@@ -71,7 +73,7 @@ class UsersController < ApplicationController
     if @user.destroyed?
       render json: { id: params[:id] }, status: :ok
     else
-      render json: { error: 'failed to destroy', id: params[:id] }, status: :unprocessable_entity 
+      render json: { error: 'failed to destroy', id: params[:id] }, status: :unprocessable_entity
     end
   end
 
@@ -91,6 +93,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def user_return_obj
+    @user.as_json(only: %i(id first_name last_name email type),
+                          include: {
+                            teams: {
+                              only: %i(id name location contact_email team_owner_id)
+                            },
+                            runs: { include: { team: { only: :name } } },
+                            imported_user_data: { only: %i(team_miles num_team_runs) }
+                          })
+  end
+
   def user_params
     params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :team_id)
   end
@@ -98,5 +111,4 @@ class UsersController < ApplicationController
   def users_params
     params.require('users').permit(:first_name, :last_name, :email, :password, :password_confirmation, :team_id)
   end
-
 end

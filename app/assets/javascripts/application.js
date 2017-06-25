@@ -25,4 +25,5 @@
 //= require ng-token-auth/dist/ng-token-auth.min.js
 //= require ngstorage/ngStorage.min.js
 //= require angular-environment/dist/angular-environment.min.js
+//= require angular-flash-alert/dist/angular-flash.min.js
 //= require_tree .

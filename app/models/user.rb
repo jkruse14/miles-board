@@ -8,9 +8,10 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
   before_save { email.downcase! }
 
-  has_many :team_member_lists
-  has_many :teams, through: :team_member_lists
-  has_many :runs
+  has_many :team_member_lists, dependent: :destroy
+  has_many :teams, through: :team_member_lists, dependent: :destroy
+  has_many :runs, dependent: :destroy
+  has_many :imported_user_data, dependent: :destroy
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }

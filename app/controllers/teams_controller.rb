@@ -1,10 +1,10 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :update, :destroy]
-  skip_before_action  :verify_authenticity_token
+  before_action :set_team, only: %i(show update destroy)
+  skip_before_action :verify_authenticity_token
 
   def index
     @teams = Team.all
-    render json: @teams, status: 200 and return
+    render(json: @teams, status: 200) && return
   end
 
   def show
@@ -22,25 +22,35 @@ class TeamsController < ApplicationController
           team_run_count += 1
         end
       end
-      tmp[:team_distance] = team_distance
-      tmp[:team_run_count] = team_run_count
+
+      imported = ImportedUserDatum.where(user_id: user.id, team_id: @team.id).order(created_at: :asc).first
+      if !imported.nil?
+        base_miles = imported[:team_miles].to_i
+        base_runs = imported[:num_team_runs].to_i
+      else
+        base_miles = 0
+        base_runs = 0
+      end
+
+      tmp[:team_distance] = team_distance + base_miles
+      tmp[:team_run_count] = team_run_count + base_runs
       users.push(tmp)
     end
-    render json: {:name => @team.name, :users => users, :team_owner_id => @team.team_owner_id, :location => @team.location},
-                  status: 200 and return
+    render(json: { name: @team.name, users: users, team_owner_id: @team.team_owner_id, location: @team.location },
+           status: 200) && return
   end
 
   def create
     @owner = User.find_by_id(team_params[:team_owner_id])
     if @owner.nil?
-      render json: { errors: 'no user with submitted owner id'}, status: :unprocessable_entity and return
+      render(json: { errors: 'no user with submitted owner id' }, status: :unprocessable_entity) && return
     end
 
     @team = Team.create(team_params.except(:id))
     if @team.valid?
-      render json: { id: @team.id }, status: :created and return
+      render(json: { id: @team.id }, status: :created) && return
     else
-      render json: @team.errors, status: :unprocessable_entity and return
+      render(json: @team.errors, status: :unprocessable_entity) && return
     end
   end
 
@@ -57,7 +67,7 @@ class TeamsController < ApplicationController
     if @team.destroyed?
       render json: { id: params[:id] }, status: :ok
     else
-      render json: { error: 'failed to destroy', id: params[:id] }, status: :unprocessable_entity 
+      render json: { error: 'failed to destroy', id: params[:id] }, status: :unprocessable_entity
     end
   end
 

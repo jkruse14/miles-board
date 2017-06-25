@@ -9,7 +9,8 @@
             'templates',
             'ui.bootstrap',
             'ng-token-auth',
-            'ngStorage'
+            'ngStorage',
+            'ngFlash'
         ])
         .config(EnvironmentConfig)
         .config(authConfig);

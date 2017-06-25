@@ -20,7 +20,6 @@
         });
 
         $rootScope.$on('auth:session-expired', function (ev, reason) {
-            //alert('Login Failed: '+reason);
             console.error('session-expired', ev, reason[0]);
         });
 

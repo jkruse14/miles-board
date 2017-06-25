@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('LoginController', LoginController);
     
-    LoginController.$inject = ['$auth', '$localStorage', '$scope', '$state', 'Restangular', 'UsersApi'];
+    LoginController.$inject = ['$auth', '$localStorage', '$scope', '$state', 'Flash', 'Restangular', 'UsersApi'];
 
-    function LoginController($auth, $localStorage, $scope, $state, Restangular, UsersApi) {
+    function LoginController($auth, $localStorage, $scope, $state, Flash, Restangular, UsersApi) {
         let vm = this;
 
         let PW_CONF_MSG = {
@@ -30,7 +30,7 @@
         vm.handleSubmitRegistration = handleSubmitRegistration;
         vm.loginSuccess = loginSuccess;
         vm.loginFail = loginFail;
-        vm.registraionSuccess = registraionSuccess;
+        vm.registrationSuccess = registrationSuccess;
         vm.registrationFail = registrationFail;
         vm.resendEmailConfirmation = resendEmailConfirmation;
         vm.resetFocusedField = resetFocusedField;
@@ -38,13 +38,8 @@
 
         function onInit(){
             vm.inModal = false;
-            vm.user_info = {
-                first_name: '',
-                last_name: '',
-                password: '',
-                password_confirmation: '',
-                email: ''
-            };
+            vm.submitting = false;
+            resetUserInfo()
 
             vm.tab = 0;
             vm.isOwner = false;
@@ -53,6 +48,7 @@
         }
 
         function setTab(index) {
+            Flash.clear();
             vm.tab = index;
             vm.user_info = {
                 first_name: '',
@@ -64,6 +60,7 @@
         }
 
         function handleSubmitClick() {
+            vm.submitting = true;
             switch(vm.tab) {
                 case 0:
                     handleLogin();
@@ -89,6 +86,7 @@
         function loginSuccess(resp) {
             UsersApi.get(resp.id).then(function(response) {
                 $localStorage.user = response.user;
+                vm.submitting = false;
             });
             $state.go('user',{userId: resp.id})
         }
@@ -98,6 +96,7 @@
         }
 
         function handleSubmitRegistration() {
+            Flash.clear();
             let new_user = {
                 first_name: vm.user_info.first_name,
                 last_name: vm.user_info.last_name,
@@ -109,19 +108,49 @@
             let auth_config = vm.isOwner ? 'team_owner' : 'user';
 
             $auth.submitRegistration(new_user, {config: auth_config})
-                .then(vm.registraionSuccess, vm.registrationFail);
+                .then(vm.registrationSuccess, vm.registrationFail);
         }
 
-        function registraionSuccess(resp) {
-
+        function registrationSuccess(resp) {
+            let email = vm.user_info.email
+            let message = 'Success!<br /> A confirmation email has been sent to ' + vm.user_info.email;
+            let container = 'regform_flash';
+            if(vm.tab === 2) {
+                container = 'resendform_flash'
+            }
+            Flash.create('success', message, 5000, {container: container});
+            vm.registered = true;
+            vm.submitting = false;
         }
 
         function registrationFail(resp) {
-
+            let message = 'Whoops... something went wrong while submitting your registration'
+            Flash.create('danger',message,0,{container: 'regform_flash'}, true);
+            vm.submitting = false;
         }
 
         function resendEmailConfirmation() {
            Restangular.all('users').customGET('resend_confirmation',{email: vm.user_info.email})
+            .then(registrationSuccess(resp),
+                function(resp){
+                    let message = 'Whoops... something went wrong while sending your confirmation email'
+                    Flash.create('danger', message, 0, { container: 'regform_flash' }, true);
+                    vm.registered = true;
+                });
+        }
+
+        function resetUserInfo() {
+            let email = '';
+            if (vm.user_info && vm.user_info.email) {
+                email = vm.user_info.email;
+            }
+            vm.user_info = {
+                first_name: '',
+                last_name: '',
+                password: '',
+                password_confirmation: '',
+                email: email
+            };
         }
 
         function setFocusedField(form, field) {
