@@ -1,11 +1,18 @@
 <div id="board-container">
-    <span>Search By Name:</span><input type='text' ng-model="query" ng-model-options="{ debounce: 200 }"/>
+    <input id="table_filter" type='text' 
+                             placeholder="Search By Name..."
+                             ng-model="query" 
+                             ng-model-options="{ debounce: 200 }"/>
     <table id="board" class="table table-responsive table-striped">
         <tr>
-            <th ng-repeat-start="header in vm.displayObjConfig.headers" ng-hide="header.hidden">{{header.text}}</th>
+            <th ng-repeat-start="header in vm.displayObjConfig.headers" ng-click="vm.setOrdering(header.text)" ng-hide="header.hidden">
+                {{header.text}}<i class="fa" ng-class="[{'fa-sort-up':vm.ordering.dir !== vm.DSC && vm.ordering.col === header.text, 
+                                                         'fa-sort-down': vm.ordering.dir === vm.DSC && vm.ordering.col === header.text,
+                                                         'fa-sort': vm.ordering.col !== header.text}]" aria-hidden="true"></i>
+            </th>
             <th ng-repeat-end ng-if="$last"></th>
         </tr>
-        <tr ng-repeat="row in vm.displayObjData | namesFilter:query">
+        <tr ng-repeat="row in vm.displayObjData | namesFilter:query | orderBy:vm.getValueForOrdering:vm.ordering.dir === vm.DSC track by $index">
             <td ng-repeat-start="item in row" ng-hide="item.hidden">
                 <a ng-if="item.uiSref" ui-sref="{{item.uiSref}}" ui-sref-acitve="active">{{item.text}}</a>
                 <span ng-if="!item.uiSref">{{item.text}}</span>
