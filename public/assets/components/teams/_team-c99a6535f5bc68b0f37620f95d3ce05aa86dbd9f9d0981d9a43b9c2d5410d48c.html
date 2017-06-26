@@ -1,0 +1,9 @@
+<div id="team">
+    <div id="team_header" class="board-title">
+        <span>{{vm.team.name}}</span>
+        <button type="button" class="btn btn-primary addMemberBtn" ng-click="vm.showAddTeamMemberModal()" ng-show='vm.isTeamOwner'>
+            Add Team Member
+        </button>
+    </div>
+    <board display-obj-data="vm.displayObjData" display-obj-config="vm.displayConfig" row-callback="vm.showAddRunToUser" is-owner="vm.isTeamOwner"></board>
+</div>
