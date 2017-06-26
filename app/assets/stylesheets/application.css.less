@@ -88,7 +88,7 @@
         letter-spacing: .5px;
         text-align: right;
 
-        @media(max-width: 375px) {
+        @media(max-width: 412px) {
             left: 80%;
             top: 19%;
         }
@@ -113,7 +113,7 @@
 #nav-container {
     >miles-header {
         >.site-header>.navbar{
-            >.navbar-header>.login-link{
+            >.navbar-header>.user-nav{
                 display: none;
                 //visibility: hidden;
                 float: right;
@@ -128,7 +128,7 @@
                 }
             }
             >.navbar-collapse {
-                >.login-link {
+                >.user-nav {
                     float: right;
                     >a {
                         position: relative;
@@ -137,7 +137,7 @@
                         line-height: 20px;
                     }
                     @media(max-width: 767px) {
-                        display: none;
+                        float:none;
                     }
                 }
             }
@@ -285,6 +285,81 @@
         }
     }
 }
+
+///// PROFILE /////
+#userProfile {
+    >.board-title {
+        position: relative;
+        width: 65%;
+        float: right;
+        margin-bottom: 25px;
+    }
+
+    >section {
+        display: inline-block;
+        
+        >board{
+            
+            >#board-container {
+                margin-top: 5px;
+            }
+        }
+    }
+    >#user-info {
+        width: 30%;
+        margin: 5px 5px 0px 0px;
+        padding-right: 14px;
+        
+        >#profile_image {
+            max-width:100%;
+            height: auto;
+        }
+
+        >#createTeamButton {
+            margin-bottom: 15px;
+        }
+    }
+
+    >#user-runs-board {
+        width: 69%;
+    }
+
+    
+
+    
+}
+
+@media(orientation: portrait) and (max-width: 414px)  {
+        
+        #userProfile {
+            >#user-info {
+                max-width: 150px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+@media(max-width: 768px) {
+        #userProfile>{
+            .board-title {
+                float: none;
+            }
+
+            >#user-info {
+                width: 100%;
+                margin-bottom: 15px;
+                >#profile_image {
+                    width: 150px;
+                }
+            }
+
+            >#user-runs-board {
+                width: 100%;
+            }
+        }
+    }
+
+    
                     
 
 //// TEAMS /////

@@ -8,25 +8,37 @@
     HeaderController.$inject = ['$auth','$document','$localStorage','$rootScope','$state','$uibModal'];
 
     function HeaderController($auth, $document, $localStorage, $rootScope, $state, $uibModal) {
-        let ctrl = this;
+        let vm = this;
         
-        ctrl.showLoginLink = $localStorage.user ? false : true;
-        
-        ctrl.nav = [
-            { uiSref: 'home', display: 'Home' },
-            { uiSref: 'teams', display: 'Teams' },
+        vm.showLoginLink = $localStorage.user ? false : true;
+        let user_id = vm.showLoginLink ? $localStorage.user.id : null;
+
+        vm.site_nav = [
+            { uiSref: 'home', display: 'Home', icon: 'fa-road' },
+            { uiSref: 'teams', display: 'Teams', icon:'fa-group' },
         ];
 
-        ctrl.showLoginModal = showLoginModal;
-        ctrl.logout = logout;
+
+        vm.user_nav = [
+            { uiSref: 'users/' + user_id, display: 'Profile', show: !vm.showLoginLink, icon: 'fa-user-circle-o' },
+            { click: vm.showLoginModal, display:'Login', show:vm.showLoginLink, icon: 'fa-sign-in'},
+            { click: vm.logout, display: 'Logout', show: !vm.showLoginLink, icon: 'fa-sign-out' }
+        ]
+
+        vm.showLoginModal = showLoginModal;
+        vm.logout = logout;
 
         $rootScope.$on('auth:login-success', function(){
-            ctrl.showLoginLink = false;
+            vm.showLoginLink = false;
         });
 
         $rootScope.$on('auth:logout-success', function () {
-            ctrl.showLoginLink = true;
+            vm.showLoginLink = true;
         });
+
+        function profileClick() {
+            $state.go('users',user_id)
+        }
 
         function showLoginModal(parentSelector) {
             var parentElem = parentSelector ?
@@ -57,13 +69,13 @@
                 .then(
                     function(resp){
                         $localStorage.$reset();
-                        ctrl.showLoginLink = true;
+                        vm.showLoginLink = true;
                         $state.go('home');
                     },
                     function(resp){
                         $localStorage.$reset();
                         $state.go('home');
-                        ctrl.showLoginLink = true;
+                        vm.showLoginLink = true;
                         console.error(resp);
                     });
         }
