@@ -78,14 +78,20 @@
 
 #board-container {
     >#table_filter {
-        margin-bottom:5px;
-        float:right;
+        position: absolute;
+        left: 75%;
+        top: 25%;
         width: 25%;
-        padding: 5px 5px;
+        padding: 6px 5px;
         border-radius: 3px;
         border: 1px solid @darkgray;
         letter-spacing: .5px;
         text-align: right;
+
+        @media(max-width: 412px) {
+            left: 80%;
+            top: 19%;
+        }
 
         &::placeholder {
             text-align:right;
@@ -107,7 +113,7 @@
 #nav-container {
     >miles-header {
         >.site-header>.navbar{
-            >.navbar-header>.login-link{
+            >.navbar-header>.user-nav{
                 display: none;
                 //visibility: hidden;
                 float: right;
@@ -122,8 +128,12 @@
                 }
             }
             >.navbar-collapse {
-                >.login-link {
+                >ul>li>a>i{
+                    padding-left: 5px;
+                }
+                >.user-nav {
                     float: right;
+                    margin-right: 5%;
                     >a {
                         position: relative;
                         display: block;
@@ -131,7 +141,7 @@
                         line-height: 20px;
                     }
                     @media(max-width: 767px) {
-                        display: none;
+                        float:none;
                     }
                 }
             }
@@ -279,6 +289,81 @@
         }
     }
 }
+
+///// PROFILE /////
+#userProfile {
+    >.board-title {
+        position: relative;
+        width: 65%;
+        float: right;
+        margin-bottom: 25px;
+    }
+
+    >section {
+        display: inline-block;
+        
+        >board{
+            
+            >#board-container {
+                margin-top: 5px;
+            }
+        }
+    }
+    >#user-info {
+        width: 30%;
+        margin: 5px 5px 0px 0px;
+        padding-right: 14px;
+        
+        >#profile_image {
+            max-width:100%;
+            height: auto;
+        }
+
+        >#createTeamButton {
+            margin-bottom: 15px;
+        }
+    }
+
+    >#user-runs-board {
+        width: 69%;
+    }
+
+    
+
+    
+}
+
+@media(orientation: portrait) and (max-width: 414px)  {
+        
+        #userProfile {
+            >#user-info {
+                max-width: 150px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+@media(max-width: 768px) {
+        #userProfile>{
+            .board-title {
+                float: none;
+            }
+
+            >#user-info {
+                width: 100%;
+                margin-bottom: 15px;
+                >#profile_image {
+                    width: 150px;
+                }
+            }
+
+            >#user-runs-board {
+                width: 100%;
+            }
+        }
+    }
+
+    
                     
 
 //// TEAMS /////

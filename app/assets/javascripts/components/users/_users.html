@@ -1,14 +1,21 @@
-<div id="userProfile">
-    <div class="board-title">
+<div id="userProfile" class="row">
+    <div class="board-title" class="col-sm-12">
         <span>{{vm.user.first_name + ' ' + vm.user.last_name}}</span>
     </div>
-    <uib-tabset>
-        <uib-tab index="$index" ng-repeat="tab in vm.tabs" heading="{{tab.title}}" ng-if="true" select="vm.setTab($index)"></uib-tab>
-        <span id="createTeamButton" class="btn btn-primary" 
-                ng-click="vm.showCreateTeamModal()"
-                ng-show="vm.showCreateTeamButton">
-                Create Team
+    <section id="user-info" class="col-sm-3">
+        <div id='profile_image'>
+            <img ng-src="{{vm.profileImageSrc}}" />
+        </div>
+        <span id="createTeamButton" class="btn btn-primary" ng-click="vm.showCreateTeamModal()" ng-show="vm.showCreateTeamButton">
+            Create Team
         </span>
-        <board display-obj-data="vm.displayObjData" display-obj-config="vm.displayConfig" row-callback="vm.rowCallback">
-    </uib-tabset>
+        <uib-tabset>
+            <uib-tab ng-repeat="tab in vm.tabs" ng-click="vm.setTab($index)" heading="{{tab.title}}"></uib-tab>
+            <board class="small" display-obj-data="vm.teams_board_display.displayObjData" display-obj-config="vm.teams_board_display.displayConfig" row-callback="vm.rowCallback">
+            </uib-tab>
+
+    </section>
+    <section id='user-runs-board' class="col-sm-9">
+        <board display-obj-data="vm.runs_board_display.displayObjData" display-obj-config="vm.runs_board_display.displayConfig" row-callback="vm.rowCallback">
+    </section>
 </div>
