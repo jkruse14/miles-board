@@ -8,13 +8,12 @@ angular
     TeamsController.$inject = ['$localStorage','$scope', '$stateParams', 'RunsApi', 'team', 'teams', 'TeamsApi', 'TeamsDisplayConfig', 'TeamMemberListsApi', '$uibModal' ,'UsersApi','UsersDisplayConfig'];
 
     function TeamsController($localStorage, $scope, $stateParams, RunsApi, team, teams, TeamsApi, TeamsDisplayConfig, TeamMemberListsApi, $uibModal , UsersApi, UsersDisplayConfig) {
-        var vm = this;
+        let vm = this;
         vm.team = team;
         vm.teams = teams.plain();
         vm.loggedIn = $localStorage.user ? true : false;
-        vm.isTeamOwner = $localStorage.user.id === vm.team.team_owner_id
-        vm.showAddMemberButton =  vm.loggedIn && vm.isTeamOwner ? true : false;
-
+        vm.isTeamOwner = vm.loggedIn && ($localStorage.user.id === vm.team.team_owner_id)
+        
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
         vm.showAddRunToUser = showAddRunToUser;
@@ -40,27 +39,27 @@ angular
         }
 
         function buildDisplayObject(obj, config) {
-            let displayObj = {};
+            let displayObj = [];
+            
             for (let j = 0; j < obj.length; j++) {
+                let item = {};
                 for (let i = 0; i < config.headers.length; i++) {
-                    if (!displayObj.hasOwnProperty(j)) {
-                        displayObj[j] = {};
-                    }
-                    if(!displayObj[j].hasOwnProperty(config.headers[i].text)){
-                        displayObj[j][config.headers[i].text] = { text: '', hidden: false };
+                    if(!item.hasOwnProperty(config.headers[i].text)){
+                        item[config.headers[i].text] = { text: '', hidden: false };
                     }
                     
-                    displayObj[j][config.headers[i].text].text = obj[j][(config.headers[i].text.toLowerCase()).replace(/\s/g, '_')];
-                    displayObj[j][config.headers[i].text].hidden = config.headers[i].hidden;
+                    item[config.headers[i].text].text = obj[j][(config.headers[i].text.toLowerCase()).replace(/\s/g, '_')];
+                    item[config.headers[i].text].hidden = config.headers[i].hidden;
 
                     if (config.headers[i].uiSref && vm.loggedIn) {
-                        displayObj[j][config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + config.paramName + ':' + obj[j].id + '})';
+                        item[config.headers[i].text].uiSref = config.headers[i].uiSref + '({' + config.paramName + ':' + obj[j].id + '})';
                     }
                 }
 
                 if($stateParams.team_id){
-                    displayObj[j]['Name'].text = obj[j].first_name + ' ' +obj[j].last_name
+                    item['Name'].text = obj[j].first_name + ' ' +obj[j].last_name
                 }
+                displayObj.push(item);
             }
 
             return displayObj;

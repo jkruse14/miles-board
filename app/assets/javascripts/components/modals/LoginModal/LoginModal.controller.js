@@ -136,7 +136,7 @@
                     email: false,
                     password: false
                 },
-                registraionForm: {
+                newMemberForm: {
                     email: false,
                     first_name: false,
                     last_name: false,
