@@ -11,7 +11,7 @@
         let vm = this;
         
         vm.showLoginLink = $localStorage.user ? false : true;
-        let user_id = vm.showLoginLink ? $localStorage.user.id : null;
+        let user_id = vm.showLoginLink ? null : $localStorage.user.id;
 
         vm.site_nav = [
             { uiSref: 'home', display: 'Home', icon: 'fa-road' },
@@ -20,7 +20,7 @@
 
 
         vm.user_nav = [
-            { uiSref: 'users/' + user_id, display: 'Profile', show: !vm.showLoginLink, icon: 'fa-user-circle-o' },
+            { uiSref: 'user({userId: '+user_id+'})', display: 'Profile', show: !vm.showLoginLink, icon: 'fa-user-circle-o' },
             { click: vm.showLoginModal, display:'Login', show:vm.showLoginLink, icon: 'fa-sign-in'},
             { click: vm.logout, display: 'Logout', show: !vm.showLoginLink, icon: 'fa-sign-out' }
         ]

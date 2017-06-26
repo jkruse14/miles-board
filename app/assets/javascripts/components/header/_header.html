@@ -27,7 +27,7 @@
                         {{uelt.display}}
                         <i class="fa" ng-class="[{'{{uelt.icon}}': uelt.icon !== undefinded}]" ng-if="uelt.icon !== undefined" aria-hidden="true"></i>
                     </a>
-                    <a class="nav-link" ng-click="uelt.click" ng-if="uelt.uiSref === undefined" ui-sref-active="active">
+                    <a class="nav-link" ng-click="uelt.click()" ng-if="uelt.uiSref === undefined" ui-sref-active="active">
                         {{uelt.display}}
                         <i class="fa" ng-class="[{'{{uelt.icon}}': uelt.icon !== undefinded}]" ng-if="uelt.icon !== undefined" aria-hidden="true"></i>
                     </a>
