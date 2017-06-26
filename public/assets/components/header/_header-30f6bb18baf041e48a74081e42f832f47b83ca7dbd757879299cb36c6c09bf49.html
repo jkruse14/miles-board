@@ -1,0 +1,39 @@
+<div class="site-header">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header" id="navbarNav">
+            
+            <button type="button" class="navbar-toggle" ng-click="vm.isNavCollapsed = !vm.isNavCollapsed">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+            <a class="navbar-brand" href="#">Miles Board</a>
+        </div>
+        <div class="collapse navbar-collapse" uib-collapse="vm.isNavCollapsed">
+            <ul class="nav navbar-nav">
+                <li class="nav-item" ng-repeat="elt in vm.site_nav">
+                    <a class="nav-link" ui-sref="{{elt.uiSref}}"  ui-sref-active="active">
+                        {{elt.display}}
+                        <i class="fa" ng-class="[{'{{elt.icon}}': elt.icon !== undefined}]" ng-if="elt.icon" aria-hidden="true"></i>
+                    </a>
+                    
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav user-nav">
+                <li class="nav-item" ng-repeat="uelt in vm.user_nav" ng-show="uelt.show" >
+                    <a class="nav-link" ui-sref="{{uelt.uiSref}}" ng-if="uelt.uiSref !== undefined"  ui-sref-active="active">
+                        {{uelt.display}}
+                        <i class="fa" ng-class="[{'{{uelt.icon}}': uelt.icon !== undefinded}]" ng-if="uelt.icon !== undefined" aria-hidden="true"></i>
+                    </a>
+                    <a class="nav-link" ng-click="uelt.click" ng-if="uelt.uiSref === undefined" ui-sref-active="active">
+                        {{uelt.display}}
+                        <i class="fa" ng-class="[{'{{uelt.icon}}': uelt.icon !== undefinded}]" ng-if="uelt.icon !== undefined" aria-hidden="true"></i>
+                    </a>
+                    
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
