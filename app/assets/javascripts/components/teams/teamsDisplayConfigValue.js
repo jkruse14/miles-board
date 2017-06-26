@@ -4,9 +4,9 @@ angular
         'objcode': 'TEAM',
         'paramName': 'team_id',
         'headers': [{text:'id',hidden:true},
-                    {text:'name', hidden:false, uiSref:'team'}, 
-                    {text:'location', hidden: false},
-                    {text:'contact email', hidden:false}],
+                    {text:'Name', hidden:false, uiSref:'team'}, 
+                    {text:'Location', hidden: false},
+                    {text:'Contact Email', hidden:false}],
         'title': 'Teams',
         'rowCallbackText':'Add Run',
         'showCallback': true
