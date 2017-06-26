@@ -78,14 +78,20 @@
 
 #board-container {
     >#table_filter {
-        margin-bottom:5px;
-        float:right;
+        position: absolute;
+        left: 75%;
+        top: 25%;
         width: 25%;
-        padding: 5px 5px;
+        padding: 6px 5px;
         border-radius: 3px;
         border: 1px solid @darkgray;
         letter-spacing: .5px;
         text-align: right;
+
+        @media(max-width: 375px) {
+            left: 80%;
+            top: 19%;
+        }
 
         &::placeholder {
             text-align:right;
