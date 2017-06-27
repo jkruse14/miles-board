@@ -1,0 +1,21 @@
+<flash-message name="resendform_flash"></flash-message>
+<form id="resendEmailForm" name="resendEmailForm">
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <div class="form-group input-and-message">
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" ng-focus="vm.setFocusedField('resendEmailForm', 'email')"
+                ng-blur="vm.resetFocusedField()" ng-class="[{'field-invalid': resendEmailForm.email.$invalid
+                                                            && (!resendEmailForm.email.$pristine || resendEmailForm.email.$touched)
+                                                            && vm.focused_field['resendEmailForm']['email'] === false}]" ng-model="vm.user_info.email"
+                placeholder="Enter email" required>
+            <small id="emailError" class="form-text text-error" ng-show="resendEmailForm.email.$invalid && 
+                             (!resendEmailForm.email.$pristine || resendEmailForm.email.$touched) && 
+                            vm.focused_field['resendEmailForm']['email'] === false">
+                    Invalid Email
+            </small>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.registered === true">Submit</button>
+    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.registered === true ? vm.handleCancel() : vm.setTab(0)'> {{vm.registered === true ? Close : Cancel}}</span>
+</form>

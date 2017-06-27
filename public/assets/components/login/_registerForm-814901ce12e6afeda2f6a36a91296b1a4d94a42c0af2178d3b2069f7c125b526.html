@@ -1,0 +1,116 @@
+<flash-message name="regform_flash"></flash-message>
+<form id="newMemberForm" name="newMemberForm">
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <div class="form-group input-and-message">
+            <input type="text" class="form-control" id="first_name" name="first_name"
+                                ng-focus="vm.setFocusedField('newMemberForm', 'first_name')" 
+                                ng-blur="vm.resetFocusedField()" 
+                                ng-class="[{'field-invalid': newMemberForm.first_name.$invalid
+                                                            && newMemberForm.first_name.$touched
+                                                            && vm.focused_field['newMemberForm']['first_name'] === false}]"
+                                ng-model="vm.user_info.first_name" 
+                                placeholder="Enter first name"
+                                required>
+            <small id="fnameError" class="form-text text-error" ng-show="newMemberForm.first_name.$invalid && 
+                            newMemberForm.first_name.$touched && 
+                            vm.focused_field['newMemberForm']['first_name'] === false">
+                    Please Enter Your First Name
+            </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <div class="form-group input-and-message">
+            <input type="text" class="form-control" id="last_name" name="last_name"
+                                ng-focus="vm.setFocusedField('newMemberForm', 'last_name')" 
+                                ng-blur="vm.resetFocusedField()" 
+                                ng-class="[{'field-invalid': newMemberForm.last_name.$invalid
+                                                            && newMemberForm.last_name.$touched 
+                                                            && vm.focused_field['newMemberForm']['last_name'] === false}]"
+                                ng-model="vm.user_info.last_name" 
+                                placeholder="Enter last name"
+                                required>
+            <small id="lnameError" class="form-text text-error" 
+                            ng-show="newMemberForm.last_name.$invalid && 
+                                     newMemberForm.last_name.$touched && 
+                                     vm.focused_field['newMemberForm']['last_name'] === false">
+                    Please Enter Your Last Name
+            </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="form-group input-and-message">
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" 
+                                ng-focus="vm.setFocusedField('newMemberForm', 'email')" 
+                                ng-blur="vm.resetFocusedField()" 
+                                ng-class="[{'field-invalid': newMemberForm.email.$invalid
+                                                            && (!newMemberForm.email.$pristine || newMemberForm.email.$touched)
+                                                            && vm.focused_field['newMemberForm']['email'] === false}]"
+                                ng-model="vm.user_info.email"
+                                placeholder="Enter email"
+                                required>
+            <small id="emailError" class="form-text text-error" ng-show="newMemberForm.email.$invalid && 
+                             (!newMemberForm.email.$pristine || newMemberForm.email.$touched) && 
+                            vm.focused_field['newMemberForm']['email'] === false">
+                    Invalid Email Format
+            </small>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="form-group input-and-message">
+            <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" 
+                                    ng-focus="vm.setFocusedField('newMemberForm', 'password')" 
+                                    ng-blur="vm.resetFocusedField()" 
+                                    ng-class="[{'field-invalid': newMemberForm.password.$invalid
+                                                                && (!newMemberForm.password.$pristine || newMemberForm.password.$touched)
+                                                                && vm.focused_field['newMemberForm']['password'] === false}]"
+                                    ng-model="vm.user_info.password"
+                                    placeholder="Enter Password"
+                                    required>
+            <small id="passwordError" class="form-text text-error" ng-show="newMemberForm.password.$invalid && 
+                             (!newMemberForm.password.$pristine || newMemberForm.password.$touched) && 
+                            vm.focused_field['newMemberForm']['password'] === false">
+                    Invalid Password
+            </small>
+        </div>
+        <small id="passwordHelp" class="form-text text-muted">Minimum of 6 characters</small>
+    </div>
+    <div class="form-group">
+        <label for="password_confirmation">Password Confirmation</label>
+        <div class="form-group input-and-message">
+        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" 
+                                 ng-focus="vm.setFocusedField('newMemberForm', 'password_confirmation')" 
+                                 ng-blur="vm.resetFocusedField()" 
+                                 ng-class="[{'field-invalid': newMemberForm.password_confirmation.$invalid
+                                                              && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched)
+                                                              && vm.focused_field['newMemberForm']['password_confirmation'] === false}]"
+                                ng-model="vm.user_info.password_confirmation"
+                                placeholder="Confirm Password"
+                                required>
+            <small id="pwConfError" class="form-text text-error" 
+                                    ng-show="(newMemberForm.password_confirmation.$invalid || vm.user_info.password !== vm.user_info.password_confirmation)
+                                    && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched) && 
+                            vm.focused_field['newMemberForm']['password_confirmation'] === false">
+                    Invalid Password Confirmation or Password and Confirmation do not Match
+            </small>
+        </div>
+        <!--<small id="passwordConfHelp" class="form-text text-muted">{{vm.passwordConfMessage}}</small>-->
+    </div>
+    <div class="form-group">
+        <input type="checkbox" class="form-control" id="owner_tick" ng-model="vm.isOwner" />
+        <label id="owner_tick_label" for="owner_tick" ng-click="vm.isOwner = true">I am a Team Owner</label>
+    </div>
+    <div class="form-group">
+        <label id="ower_code_label" for="owner_code" ng-show="vm.isOwner === true"> Enter Owner Invitation Code</label>
+        <input type="text" class="form-control" id="owner_code" ng-show="vm.isOwner === true" ng-model="vm.user_info.owner_confirmation_code"/>
+    </div>
+    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="(vm.tab === 1 && newMemberForm.$invalid) || 
+                                                                                                  vm.registered === true || 
+                                                                                                  (vm.isOwner && !vm.user_info.owner_confirmation_code)">
+            Submit
+    </button>
+</form>
