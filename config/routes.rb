@@ -9,9 +9,9 @@ Rails.application.routes.draw do
 
   get 'imported_user_data/delete'
 
-  get 'invitation_codes/index'
+  get 'invitation_codes', to: 'invitation_codes#index'
 
-  get 'invitation_codes/show'
+  get 'invitation_codes/:code', to: 'invitation_codes#show'
 
   get 'invitation_codes/create'
 

@@ -26,9 +26,9 @@ namespace :import_data do
         end
 
         begin
-          @user = User.create!(new_user)
+          @user = User.create(new_user)
 
-          @tml = TeamMemberList.create!([user_id: @user.id, team_id: args[:team_id]])
+          @tml = TeamMemberList.create([user_id: @user.id, team_id: args[:team_id]])
 
           base_data = {}
           if row.key?(:num_team_runs)

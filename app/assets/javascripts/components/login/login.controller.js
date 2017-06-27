@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('LoginController', LoginController);
     
-    LoginController.$inject = ['$auth', '$localStorage', '$scope', '$state', 'Flash', 'Restangular', 'UsersApi'];
+    LoginController.$inject = ['$auth', '$localStorage', '$scope', '$state', 'Flash', 'InvitationCodesApi', 'Restangular', 'UsersApi'];
 
-    function LoginController($auth, $localStorage, $scope, $state, Flash, Restangular, UsersApi) {
+    function LoginController($auth, $localStorage, $scope, $state, Flash, InvitationCodesApi, Restangular, UsersApi) {
         let vm = this;
 
         let PW_CONF_MSG = {
@@ -106,9 +106,28 @@
             }
 
             let auth_config = vm.isOwner ? 'team_owner' : 'user';
+            if(vm.isOwner) {
+                InvitationCodesApi.get(vm.user_info.owner_confirmation_code).then(function (response){
+                    response = response.plain();
+                    if(response.email === vm.user_info.email && response.used === false) {
+                        vm.user_info.code_id = response.id;
+                        $auth.submitRegistration(new_user, { config: auth_config })
+                            .then(vm.registrationSuccess, vm.registrationFail);
+                    } else {
+                        let message = 'There was an error with your code: </br>'
+                        if(vm.user_info.email !== response.email) {
+                            message += 'email associated with code does not match above'
+                        } else if( response.used === true) {
+                            message += 'this code was already used'
+                        }
 
-            $auth.submitRegistration(new_user, {config: auth_config})
-                .then(vm.registrationSuccess, vm.registrationFail);
+                        Flash.message('warning',message,0,{container:'regform_flash'}, true);
+                    }
+                })
+            } else {
+                $auth.submitRegistration(new_user, {config: auth_config})
+                    .then(vm.registrationSuccess, vm.registrationFail);
+            }
         }
 
         function registrationSuccess(resp) {
@@ -121,6 +140,8 @@
             Flash.create('success', message, 5000, {container: container});
             vm.registered = true;
             vm.submitting = false;
+
+            InvitationCodesApi.put(vm.user_info.code_id, {used: true});
         }
 
         function registrationFail(resp) {

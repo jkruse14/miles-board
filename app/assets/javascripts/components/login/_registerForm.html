@@ -101,8 +101,16 @@
         <!--<small id="passwordConfHelp" class="form-text text-muted">{{vm.passwordConfMessage}}</small>-->
     </div>
     <div class="form-group">
-        <input type="checkbox" class="form-control" id="owner_tick" ng-model="vm.isOwner">
-        <label id="owner_tick_label" for="owner_tick">I am a Team Owner</label>
+        <input type="checkbox" class="form-control" id="owner_tick" ng-model="vm.isOwner" />
+        <label id="owner_tick_label" for="owner_tick" ng-click="vm.isOwner = true">I am a Team Owner</label>
     </div>
-    <span class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="(vm.tab === 1 && newMemberForm.$invalid) || vm.registered === true">Submit</span>
+    <div class="form-group">
+        <label id="ower_code_label" for="owner_code" ng-show="vm.isOwner === true"> Enter Owner Invitation Code</label>
+        <input type="text" class="form-control" id="owner_code" ng-show="vm.isOwner === true" ng-model="vm.user_info.owner_confirmation_code"/>
+    </div>
+    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="(vm.tab === 1 && newMemberForm.$invalid) || 
+                                                                                                  vm.registered === true || 
+                                                                                                  (vm.isOwner && !vm.user_info.owner_confirmation_code)">
+            Submit
+    </button>
 </form>

@@ -43,6 +43,6 @@
         </div>
             
     </div>
-    <span class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.tab === 0 && loginForm.$invalid">Submit</span>
+    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.tab === 0 && loginForm.$invalid">Submit</button>
     <span ng-click="vm.setTab(2)" class="pull-right"><a>Resend Confirmation Email</a></span>
 </form>
