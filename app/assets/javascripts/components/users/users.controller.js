@@ -13,13 +13,16 @@
                  TEAM_OWNER : 'TeamOwner',
                  USER: 'User'
             }
+
             vm.user = user.user;
             vm.loggedIn = $localStorage.user ? true : false;
             vm.profileImageSrc = MilesBoardImages.road_runner;
+            vm.myProfile = (vm.loggedIn && vm.user.id === $localStorage.user.id);
+           
 
             vm.tabs = [
-                { title: 'Teams'},
-                { title: 'Owned Teams' }
+                { title: 'Teams', hidden: false},
+                { title: 'Owned Teams', hidden: vm.user.type !== userTypes.TEAM_OWNER }
             ];
 
             vm.$onInit = onInit;
@@ -27,10 +30,9 @@
             vm.showCreateTeamModal = showCreateTeamModal;
 
             function onInit() {
-                vm.tab = 0;
                 vm.TeamsDisplayConfig = TeamsDisplayConfig;
                 vm.RunsDisplayConfig = RunsDisplayConfig;
-
+                
                 for (let i = 0; i < vm.TeamsDisplayConfig.headers.length; i++) {
                     if (vm.TeamsDisplayConfig.headers[i].text !== 'Name') {
                         vm.TeamsDisplayConfig.headers[i].hidden = true;
@@ -60,21 +62,25 @@
                 // vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
                 // vm.displayConfig = TeamsDisplayConfig;
 
-                
+                 vm.setTab(0);
             }
 
             function setTab(index) {
                 vm.tab = index;
                 vm.showCreateTeamButton = getShowCreateTeamButton();
+                let displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig);
+                if (!vm.myProfile) {
+                    displayObjData = $filter('filter')(displayObjData, getValueForFiltering, sharedTeamComparator)
+                }
                 switch(index) {
-                    case 0:
-                        vm.teams_board_display.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
+                    case 0: //all teams user is on
+                        vm.teams_board_display.displayObjData = displayObjData;
                         break;
-                    case 1:
+                    case 1: //user owned teams
                         vm.teams_board_display.displayObjData = $filter('filter')(vm.teams_board_display.displayObjData, getValueForFiltering,  isTeamOwnerComparator)
                         break;
                     default:
-                        vm.teams_board_display.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
+                        vm.teams_board_display.displayObjData = displayObjData;
                         break;
                 }
                 // switch(index) {
@@ -140,6 +146,15 @@
 
             function isTeamOwnerComparator(actual, expected) {
                  return actual === vm.user.id;
+            }
+
+            function sharedTeamComparator(actual,expected) {
+                for(let i = 0; i < $localStorage.user.teams; i++) {
+                    if($localStorage.user.teams[i] === actual) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             ///// MODALS /////
