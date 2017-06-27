@@ -22,7 +22,7 @@
             </ul>
 
             <ul class="nav navbar-nav user-nav">
-                <li class="nav-item" ng-repeat="uelt in vm.user_nav" ng-show="uelt.show" >
+                <li class="nav-item" ng-repeat="uelt in vm.user_nav track by $index" ng-show="uelt.show" >
                     <a class="nav-link" ui-sref="{{uelt.uiSref}}" ng-if="uelt.uiSref !== undefined"  ui-sref-active="active">
                         {{uelt.display}}
                         <i class="fa" ng-class="[{'{{uelt.icon}}': uelt.icon !== undefinded}]" ng-if="uelt.icon !== undefined" aria-hidden="true"></i>

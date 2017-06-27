@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  protect_from_forgery with: :null_session
+  # protect_from_forgery with: :null_session
   before_action :set_user, only: %i(show update destroy)
   skip_before_action :verify_authenticity_token
 
@@ -35,28 +35,30 @@ class UsersController < ApplicationController
       # team[:team_distance] = team_miles[team.id]
     end
 
-    render(json: { user: user_return_obj},
+    render(json: { user: user_return_obj },
            status: 200) && return
   end
 
   def create
     # .new() creates but does not save
-    # .create() creates, saves, and returns the object
-    @user = User.create(user_params.except(:id, :team_id))
+    # .create() creates, saves if valid, and returns the object (regardless if valid)
 
-    if @user.save!
-      unless user_params[:team_id].nil?
-        TeamMemberList.create(user_id: @user.id, team_id: user_params[:team_id])
+    @user = User.new(user_params.except(:id, :team_id))
+    begin
+      if @user.save!
+        unless user_params[:team_id].nil?
+          TeamMemberList.create(user_id: @user.id, team_id: user_params[:team_id])
+        end
+
+        @user = User.find(@user.id)
+        # Tell the Mailer to send a welcome email after save
+        puts @user.inspect
+        # RegistrationMailer.registration_success(@user).deliver!
+        Devise::Mailer.confirmation_instructions(@user, @user.confirmation_token).deliver!
+        render(json: { id: @user.id }, status: :created) && return
       end
-
-      @user = User.find(@user.id)
-      # Tell the Mailer to send a welcome email after save
-      puts @user.inspect
-      # RegistrationMailer.registration_success(@user).deliver!
-      Devise::Mailer.confirmation_instructions(@user, @user.confirmation_token).deliver!
-      render(json: { id: @user.id }, status: :created) && return
-    else
-      render(json: @user.errors, status: :unprocessable_entity) && return
+    rescue ActiveRecord::RecordInvalid => invalid
+      render(json: invalid.record.errors.messages, status: :unprocessable_entity) && return
     end
   end
 
@@ -95,13 +97,13 @@ class UsersController < ApplicationController
 
   def user_return_obj
     @user.as_json(only: %i(id first_name last_name email type),
-                          include: {
-                            teams: {
-                              only: %i(id name location contact_email team_owner_id)
-                            },
-                            runs: { include: { team: { only: :name } } },
-                            imported_user_data: { only: %i(team_miles num_team_runs) }
-                          })
+                  include: {
+                    teams: {
+                      only: %i(id name location contact_email team_owner_id)
+                    },
+                    runs: { include: { team: { only: :name } } },
+                    imported_user_data: { only: %i(team_miles num_team_runs) }
+                  })
   end
 
   def user_params

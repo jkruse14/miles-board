@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$auth','$controller', '$localStorage', '$scope','$state','$uibModalInstance', 'UsersApi']
+    LoginModalController.$inject = ['$auth', '$controller', '$localStorage', '$scope', '$state', '$uibModalInstance', 'Flash', 'MilesBoardApi', 'InvitationCodesApi', 'Restangular', 'UsersApi']
 
-    function LoginModalController($auth, $controller, $localStorage, $scope, $state, $uibModalInstance, UsersApi){
+    function LoginModalController($auth, $controller, $localStorage, $scope, $state, $uibModalInstance, Flash, MilesBoardApi, InvitationCodesApi, Restangular, UsersApi){
         let vm = this;
         vm.inModal = true;
         vm.submitting = false;
@@ -88,6 +88,7 @@
         }
 
         function handleSubmitRegistration() {
+            Flash.clear();
             let new_user = {
                 first_name: vm.user_info.first_name,
                 last_name: vm.user_info.last_name,
@@ -97,21 +98,47 @@
             }
 
             let auth_config = vm.isOwner ? 'team_owner' : 'user';
+            if (vm.isOwner) {
+                InvitationCodesApi.get(vm.user_info.owner_confirmation_code).then(function (response) {
+                    response = response.plain();
+                    if (response.email === vm.user_info.email && response.used === false) {
+                        vm.user_info.code_id = response.id;
+                        $auth.submitRegistration(new_user, { config: auth_config })
+                            .then(registrationSuccess, registrationFail);
+                    } else {
+                        let message = 'There was an error with your code: </br>'
+                        if (vm.user_info.email !== response.email) {
+                            message += 'email associated with code does not match above'
+                        } else if (response.used === true) {
+                            message += 'this code was already used'
+                        }
 
-            $auth.submitRegistration(new_user, { config: auth_config })
-                .then(registraionSuccess, registrationFail);
+                        Flash.create('warning', message, 0, { container: 'regform_flash' }, true);
+                    }
+                })
+            } else {
+                $auth.submitRegistration(new_user, { config: auth_config })
+                    .then(registrationSuccess, registrationFail);
+            }
         }
 
         function registrationSuccess(resp) {
             let email = vm.user_info.email
             let message = 'Success!<br /> A confirmation email has been sent to ' + vm.user_info.email;
-            Flash.create('success', message, 5000, { container: 'regform_flash' });
-            vm.submitting = false;
+            let container = 'regform_flash';
+            if (vm.tab === 2) {
+                container = 'resendform_flash'
+            }
+            Flash.create('success', message, 5000, { container: container });
             vm.registered = true;
+            vm.submitting = false;
+
+            InvitationCodesApi.put(vm.user_info.code_id, { used: true });
         }
 
         function registrationFail(resp) {
             let message = 'Whoops... something went wrong while submitting your registration'
+            message += MilesBoardApi.errorReader(resp.data);
             Flash.create('danger', message, 0, { container: 'regform_flash' }, true);
             vm.submitting = false;
         }
