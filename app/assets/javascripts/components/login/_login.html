@@ -1,16 +1,23 @@
 <div id="login-container">
     <span class="title">Miles Board</span>
     <span class="subtitle">View and Track Runs with your Teams</span>
+    <flash-message name="login-flash"></flash-message>
     <uib-tabset active="vm.tab" id="tabs-container">
-        <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)">
+        <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)" class="{{vm.hideAllTabs === true ? 'hidden-tab': ''}}">
             <ng-include src="'components/login/_loginForm.html'"></ng-include>
         </uib-tab>
-        <uib-tab index="1" heading="Register" ng-if="true" select="vm.setTab(1)">
+        <uib-tab index="1" heading="Register" ng-if="true" select="vm.setTab(1)" class="{{vm.hideAllTabs === true ? 'hidden-tab': ''}}">
             <ng-include src="'components/login/_registerForm.html'"></ng-include>
         </uib-tab>
         <uib-tab index="2" ng-if="true" heading="" class="hidden-tab">
             <ng-include src="'components/login/_resendConfirmationEmail.html'"></ng-include>
             <span class='btn btn-primary' ng-click='vm.handleSubmitClick()'>Send</span>
+        </uib-tab>
+        <uib-tab index="3" ng-if="true" heading="" class="hidden-tab">
+            <ng-include src="'components/login/_resetPassword.html'"></ng-include>
+        </uib-tab>
+        <uib-tab index="4" ng-if="true" heading="" class="hidden-tab">
+            <ng-include src="'components/login/_updatePassword.html'"></ng-include>
         </uib-tab>
     </uib-tabset>
 </div>

@@ -41,4 +41,5 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  adapter: postgresql
+  url: <%= ENV['MILES_DB_URL'] %>

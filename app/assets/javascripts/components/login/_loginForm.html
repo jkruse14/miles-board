@@ -43,6 +43,12 @@
         </div>
             
     </div>
-    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.tab === 0 && loginForm.$invalid">Submit</button>
-    <span ng-click="vm.setTab(2)" class="pull-right"><a>Resend Confirmation Email</a></span>
+    <div id="form-actions">
+        <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.tab === 0 && loginForm.$invalid">Submit</button>
+        <button class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.handleCancel()'> Close</button>
+    </div>
+    <div id="auth-actions" class="pull-right">
+        <span ng-click="vm.setTab(3)"><a>Reset Password</a></span>
+        <span ng-click="vm.setTab(2)"><a>Resend Confirmation Email</a></span>
+    <div>
 </form>

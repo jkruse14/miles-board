@@ -22,7 +22,7 @@
         }
 
         function cancel() {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.close('cancel');
         }
         
         function onInit() {

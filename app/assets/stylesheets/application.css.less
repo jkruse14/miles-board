@@ -67,6 +67,14 @@
     content: " ";
 }
 
+///// INDEX /////
+#index_flash {
+    position: absolute;
+    z-index: 999;
+    left: 50%;
+    top: 0px;
+}
+
 ///// BOARDS /////
 .board-title {
     text-align: center;
@@ -195,12 +203,13 @@
         margin-top: 30px;
         width: 30%;
 
-        >.hidden-tab {
-            opacity: 0;
-            visibility: hidden;
-            webkit-box-shadow: none !important;
-            box-shadow: none !important;
-            border:none;
+        >ul>.hidden-tab {
+            // opacity: 0;
+            // visibility: hidden;
+            // webkit-box-shadow: none !important;
+            // box-shadow: none !important;
+            // border:none;
+            display: none !important;
         }
 
         >.tab-content {
@@ -238,6 +247,20 @@
     }
 }
 
+#loginForm {
+    >#form-actions {
+        display: inline-block;
+    }
+    >#auth-actions {
+        display: inline-block;
+        float: right;
+        >span {
+            display: block;
+            font-size: 1.4rem;
+        }
+    }
+}
+
  #owner_tick {
     width: 20px;
     display: inline;
@@ -271,11 +294,12 @@
                         border-top-left-radius: 3px;
                     }
                     >.hidden-tab {
-                        opacity: 0;
-                        visibility: hidden;
-                        webkit-box-shadow: none !important;
-                        box-shadow: none !important;
-                        border: none;
+                        // opacity: 0;
+                        // visibility: hidden;
+                        // webkit-box-shadow: none !important;
+                        // box-shadow: none !important;
+                        // border: none;
+                        display: none;
                     }
                 }
                 >.tab-content {

@@ -16,6 +16,6 @@
         </div>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
-    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.registered === true">Submit</button>
-    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.registered === true ? vm.handleCancel() : vm.setTab(0)'> {{vm.registered === true ? Close : Cancel}}</span>
+    <button type="submit" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled="vm.registered === true || !vm.user_info.email">Submit</button>
+    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.registered === true ? vm.handleCancel() : vm.setTab(0)'> Cancel</span>
 </form>

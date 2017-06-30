@@ -4,6 +4,7 @@ class Team < ApplicationRecord
     has_many :team_member_lists, dependent: :destroy
     has_many :users, through: :team_member_lists
     has_many :runs, through: :users
+    has_many :custom_tabs
 
     belongs_to :team_owner
 

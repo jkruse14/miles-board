@@ -5,16 +5,20 @@
         .module('milesBoard')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$filter','$localStorage', '$scope', '$state', '$uibModal', 'MilesBoardImages', 'RunsApi', 'RunsDisplayConfig', 'TeamsApi', 'TeamsDisplayConfig', 'user', 'UsersDisplayConfig'];
+    UsersController.$inject = ['$auth','$filter', '$localStorage', '$scope', '$state', '$uibModal', 
+                                'Flash', 'MilesBoardApi', 'MilesBoardImages', 'RunsDisplayConfig', 
+                                'TeamsDisplayConfig', 'user', 'UsersDisplayConfig', 'Restangular'];
 
-    function UsersController($filter, $localStorage, $scope, $state, $uibModal, MilesBoardImages, RunsApi, RunsDisplayConfig, TeamsApi, TeamsDisplayConfig, user, UsersDisplayConfig) {
+    function UsersController($auth, $filter, $localStorage, $scope, $state, $uibModal, 
+                             Flash, MilesBoardApi, MilesBoardImages, RunsDisplayConfig, 
+                             TeamsDisplayConfig, user, UsersDisplayConfig, Restangular) {
             let vm = this;
             const userTypes = {
                  TEAM_OWNER : 'TeamOwner',
                  USER: 'User'
             }
 
-            vm.user = user.user;
+            vm.user = user.user ? user.user : MilesBoardApi.UsersApi.get($state.params['userId']);
             vm.loggedIn = $localStorage.user ? true : false;
             vm.profileImageSrc = MilesBoardImages.road_runner;
             vm.myProfile = (vm.loggedIn && vm.user.id === $localStorage.user.id);
@@ -28,8 +32,15 @@
             vm.$onInit = onInit;
             vm.setTab = setTab;
             vm.showCreateTeamModal = showCreateTeamModal;
+            vm.showUpdateEmailModal = showUpdateEmailModal;
+            vm.resetPassword = resetPassword;
 
             function onInit() {
+                if($state.params['reset']) {
+                    let message = 'Password successfully reset!';
+                    Flash.create('success', message, 5000, { container: 'profile_flash' }, true)
+                }
+
                 vm.TeamsDisplayConfig = TeamsDisplayConfig;
                 vm.RunsDisplayConfig = RunsDisplayConfig;
                 
@@ -83,26 +94,6 @@
                         vm.teams_board_display.displayObjData = displayObjData;
                         break;
                 }
-                // switch(index) {
-                //     case 0:
-                //         vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
-                //         vm.displayConfig = TeamsDisplayConfig;
-                //         vm.displayConfig.showCallback = false;
-                //         vm.rowCallback = null;
-                //         break;
-                //     case 1:
-                //         vm.displayObjData = buildDisplayObject(vm.user.runs, RunsDisplayConfig)
-                //         vm.displayConfig = RunsDisplayConfig;
-                //         vm.displayConfig.showCallback = true;
-                //         vm.rowCallback = showEditRunModal;
-                //         break;
-                //     default:
-                //         vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
-                //         vm.displayConfig = TeamsDisplayConfig;
-                //         vm.displayConfig.showCallback = false;
-                //         vm.rowCallback = null;
-                //         break;
-                // }
             }
 
             function getShowCreateTeamButton() {
@@ -189,7 +180,7 @@
                         }
                     }
 
-                    RunsApi.one('runs', result.id).customPUT(updates, result.id).then(function (response) {
+                    MilesBoardApi.RunsApi.one('runs', result.id).customPUT(updates, result.id).then(function (response) {
                         for(let i = 0; i < vm.user.runs.length; i++) {
                             if(result.id === vm.user.runs[i].id) {
                                 vm.user.runs[i].run_date = result.run_date;
@@ -224,7 +215,7 @@
                 });
 
                 modalInstance.result.then(function (result) {
-                    TeamsApi.post(result).then(
+                    MilesBoardApi.TeamsApi.post(result).then(
                         function (response) {
                             vm.user.teams.push(result);
                             vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
@@ -235,6 +226,49 @@
                         }
                     );
                 }, function () { });
+            }
+
+            function showUpdateEmailModal() {
+                // var parentElem = parentSelector ?
+                //     angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
+                $scope.profileAction = 'edit';
+                $scope.user_for_modal = vm.user;
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'components/modals/newMemberModal/_newMemberModal.html',
+                    controller: 'NewMemberModalController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    // appendTo: parentElem,
+                    scope: $scope
+                });
+
+                modalInstance.result.then(function (result) {
+                    vm.user.imported_user_id = vm.user.id;
+
+                    Restangular.all('update_imported_user').customPATCH(vm.user).then(function (response) {
+                        let message = 'Account Successfully Updated!'
+                        Flash.create('success', message, 5000, {container: 'index_flash'}, true)                      
+                    }, function (error) {
+                        let message = 'There were errors updating your accout:<br />';
+                        message += MilesBoardImages.errorReader(error);
+                        Flash.create('danger', messsage, 0, {container: 'index_flash'}, true)
+                     });
+                })
+            }
+
+            function resetPassword(user) {
+                $auth.requestPasswordReset({email: user.email})
+                    .then(function (resp) {
+                        let message = "Success!<br />An email has been sent to reset your password"
+                        Flash.create('success', message, 0, { container: 'index_flash' }, true)
+                    })
+                    .catch(function (resp) {
+                        // handle error response
+                        MilesBoardImages.errorReader(error);
+                    });
             }
         }
 })();

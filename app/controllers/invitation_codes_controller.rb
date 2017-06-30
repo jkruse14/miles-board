@@ -19,7 +19,14 @@ class InvitationCodesController < ApplicationController
     end
   end
 
-  def update; end
+  def update
+    @code[:used] = code_params[:used]
+    if @code.save!
+      render json: { id: @code.id }, status: :created && return
+    else
+      render json: @code.errors.messages, status: :unprocessable_entity && return
+    end
+  end
 
   def delete; end
 

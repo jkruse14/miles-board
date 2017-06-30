@@ -1,4 +1,5 @@
 <div id="userProfile" class="row">
+    <flash-message name="profile_flash"></flash-message>
     <div class="board-title" class="col-sm-12">
         <span>{{vm.user.first_name + ' ' + vm.user.last_name}}</span>
     </div>
@@ -8,6 +9,9 @@
         </div>
         <span id="createTeamButton" class="btn btn-primary" ng-click="vm.showCreateTeamModal()" ng-show="vm.showCreateTeamButton">
             Create Team
+        </span>
+        <span id="updateEmailButton" class="btn btn-primary" ng-click="vm.showUpdateEmailModal()" ng-show="vm.user.email.includes('milesboardimport')">
+            Update Email
         </span>
         <uib-tabset>
             <uib-tab ng-repeat="tab in vm.tabs" ng-click="vm.setTab($index)" heading="{{tab.title}}" ng-hide='tab.hidden'></uib-tab>
