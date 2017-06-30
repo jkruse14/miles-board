@@ -18,6 +18,7 @@
 //= require angular-cookie
 //= require angular-rails-templates
 //= require lodash/lodash.min.js
+//= require angular-animate/angular-animate.min.js
 //= require angular-ui-bootstrap/dist/ui-bootstrap.js
 //= require angular-ui-bootstrap/dist/ui-bootstrap-tpls.js
 //= require restangular

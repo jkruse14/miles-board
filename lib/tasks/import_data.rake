@@ -3,7 +3,7 @@ require 'securerandom'
 
 namespace :import_data do
   desc 'Import users from a csv file'
-  task :users, %i(filename team_id) => :environment do |_t, args|
+  task :users, [:filename, :team_id] => :environment do |_t, args|
     puts '----- args -----'
     puts args.inpect
 
@@ -26,6 +26,7 @@ namespace :import_data do
         end
 
         begin
+          @user.skip_confirmation!
           @user = User.create(new_user)
 
           @tml = TeamMemberList.create([user_id: @user.id, team_id: args[:team_id]])

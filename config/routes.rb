@@ -1,25 +1,12 @@
 Rails.application.routes.draw do
-  get 'imported_user_data/index'
-
-  get 'imported_user_data/show'
-
-  get 'imported_user_data/create'
-
-  get 'imported_user_data/update'
-
-  get 'imported_user_data/delete'
-
   get 'invitation_codes', to: 'invitation_codes#index'
-
   get 'invitation_codes/:code', to: 'invitation_codes#show'
+  post 'invitation_codes', to: 'invitation_codes#create'
+  put 'invitation_codes', to: 'invitation_codes#update'
+  delete 'invitation_codes/:id', to: 'invitation_codes#delete'
 
-  get 'invitation_codes/create'
-
-  get 'invitation_codes/update'
-
-  get 'invitation_codes/delete'
-
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: {confirmations: 'confirmations'}
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { confirmations: 'confirmations',
+                                                                 passwords: 'passwords' }
 
   get 'team_member_lists',      to: 'team_member_lists#index',  as: 'team_member_lists_path'
   get 'team_member_lists/:id',  to: 'team_member_lists#show',   as: 'team_member_lists_show'
@@ -54,7 +41,8 @@ Rails.application.routes.draw do
 
   get    'users',       to: 'users#index',  as: 'users_path'
   get    'users/:id',   to: 'users#show',   as: 'users_show', constraints: { id: /[0-9]+/ }
-  get    'users/resend_confirmation', to:'users#resend_confirmation', as:'users_resend_confirmation'
+  get    'users/resend_confirmation', to: 'users#resend_confirmation', as: 'users_resend_confirmation'
+  patch 'update_imported_user', to: 'users#update_imported_user', as: 'users_update_imported', constraints: { id: /[0-9]+/ }
   post   'users',       to: 'users#create', as: 'users_create'
   put    'users/:id',   to: 'users#update', as: 'users_update', constraints: { id: /[0-9]+/ }
   put    'users',       to: 'users#update', as: 'users_bulk_update'

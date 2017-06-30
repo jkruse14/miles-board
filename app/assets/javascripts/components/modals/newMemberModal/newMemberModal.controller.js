@@ -7,11 +7,18 @@
 
     function NewMemberModalController($scope, $uibModalInstance) {
         let vm = this;
-        vm.newMember = {
-            first_name:'',
-            last_name:'',
-            email:''
-        };
+        
+        vm.newMember = $scope.$parent.profileAction !== 'edit' ? 
+                        {
+                            first_name:'',
+                            last_name:'',
+                            email:'',
+                            password: '',
+                            password_confirmation: ''
+                        } : 
+                        $scope.user_for_modal;
+
+        vm.showPasswordForm = $scope.$parent.profileAction;
 
         vm.save = save;
         vm.cancel = cancel;
@@ -21,7 +28,7 @@
         }
 
         function cancel() {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.close('cancel');
         }
 
     }

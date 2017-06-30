@@ -5,31 +5,18 @@
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$auth', '$controller', '$localStorage', '$scope', '$state', '$uibModalInstance', 'Flash', 'MilesBoardApi', 'InvitationCodesApi', 'Restangular', 'UsersApi']
+    LoginModalController.$inject = ['$auth', '$controller', '$localStorage', '$scope', '$state', '$uibModalInstance', 
+                                    '$window','Flash', 'MilesBoardApi', 'InvitationCodesApi', 'Restangular', 'UsersApi']
 
-    function LoginModalController($auth, $controller, $localStorage, $scope, $state, $uibModalInstance, Flash, MilesBoardApi, InvitationCodesApi, Restangular, UsersApi){
+    function LoginModalController($auth, $controller, $localStorage, $scope, $state, $uibModalInstance, 
+                                  $window, Flash, MilesBoardApi, InvitationCodesApi, Restangular, UsersApi){
         let vm = this;
         vm.inModal = true;
         vm.submitting = false;
         
-        vm.focused_field = {
-            loginForm: {
-                email: false,
-                password: false
-            },
-            newMemberForm: {
-                email: false,
-                first_name: false,
-                last_name: false,
-                password: false,
-                password_confirmation: false
-            },
-            resendEmailForm: {
-                email: false
-            }
-        };
+        
         angular.extend(vm, $controller('LoginController', { $scope: $scope }));
-
+        resetFocusedField();
         resetUserInfo();
 
         vm.setTab = setTab;
@@ -39,6 +26,7 @@
         vm.handleSubmitRegistration = handleSubmitRegistration;
         vm.resetFocusedField = resetFocusedField;
         vm.setFocusedField = setFocusedField;
+        vm.resetPassword = resetPassword;
 
         function setTab(index) {
             vm.tab = index;
@@ -63,6 +51,9 @@
                 case 2:
                     resendEmailConfirmation();
                     break;
+                case 3:
+                    resetPassword(vm.user_info);
+                    break;
                 default:
                     handleLogin();
                     break;
@@ -80,11 +71,12 @@
                 vm.submitting = false;
                 handleCancel();
             });
-            $state.go('user', { userId: resp.id })
+            $state.go('user', { userId: resp.id }, { reload: true });
+            $window.location.reload();
         }
 
         function handleCancel() {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.close('cancel');
         }
 
         function handleSubmitRegistration() {
@@ -133,7 +125,9 @@
             vm.registered = true;
             vm.submitting = false;
 
-            InvitationCodesApi.put(vm.user_info.code_id, { used: true });
+            if(vm.user_info.code_id){
+                Restangular.all('invitation_codes').customPUT({ code: vm.user_info.owner_confirmation_code, used: true });
+            }
         }
 
         function registrationFail(resp) {
@@ -171,7 +165,10 @@
                     password_confirmation: false
                 },
                 resendEmailForm: {
-                    resend_email: false
+                    email: false
+                },
+                resetPasswordForm: {
+                    email: false
                 }
             };
         }
@@ -184,6 +181,20 @@
                 password_confirmation: '',
                 email: ''
             };
+        }
+
+        function resetPassword(user) {
+            Flash.clear();
+            let u = {email: user.email}
+            $auth.requestPasswordReset(u)
+                .then(function (resp) {
+                    let message = "Success!<br />An email has been sent to reset your password"
+                    Flash.create('success', message, 0, { container: 'resetform_flash' }, true)
+                })
+                .catch(function (resp) {
+                    // handle error response
+                    Flash.create('danger', resp.data.message, 0,{container: 'resetform_flash' }, true);
+                });
         }
     }
 

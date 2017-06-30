@@ -7,13 +7,16 @@
             'restangular',
             'ui.router',
             'templates',
+            'ngAnimate',
             'ui.bootstrap',
             'ng-token-auth',
             'ngStorage',
             'ngFlash'
         ])
         .config(EnvironmentConfig)
-        .config(authConfig);
+        .config(authConfig)
+        .config(ApiConfig)
+        .run();
 
     authConfig.$inject = ['$authProvider','envServiceProvider'];
 
@@ -26,19 +29,22 @@
                     apiUrl: url,
                     emailRegistrationPath: '/users',
                     confirmationSuccessUrl: window.location.href,
-                    validateOnPageLoad: true,
+                    validateOnPageLoad: false,
+                    passwordResetSuccessUrl: url+'/#!/login'
                 }},
                 {'user': {
                     apiUrl: url,
                     emailRegistrationPath: '/users',
                     confirmationSuccessUrl: window.location.href,
-                    validateOnPageLoad: true,
+                    validateOnPageLoad: false,
+                    passwordResetSuccessUrl: url+'/#!/login'
                 }},
                 {'team_owner' : {
                     apiUrl: url,
                     emailRegistrationPath: '/team_owners',
                     confirmationSuccessUrl: window.location.href,
-                    validateOnPageLoad: true,
+                    validateOnPageLoad: false,
+                    passwordResetSuccessUrl: url+'/#!/login'
                 }
             }]
         );
@@ -65,5 +71,11 @@
         });
 
         envServiceProvider.check();
+    }
+
+    ApiConfig.$inject = ['RestangularProvider'];
+
+    function ApiConfig(RestangularProvider) {
+        // RestangularProvider.setBaseUrl('/api');
     }
 })();

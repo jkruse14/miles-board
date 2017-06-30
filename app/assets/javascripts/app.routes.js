@@ -28,7 +28,7 @@
 
         var loginState = {
             name: 'login',
-            url: '/login',
+            url: '/login?reset_token',
             templateUrl: 'components/login/_login.html',
             controller: 'LoginController as vm'
         };
@@ -63,7 +63,7 @@
 
         var userState = {
             name: 'user',
-            url: '/users/:userId',
+            url: '/users/:userId?reset',
             templateUrl: 'components/users/_users.html',
             controller: 'UsersController as vm',
             resolve: {

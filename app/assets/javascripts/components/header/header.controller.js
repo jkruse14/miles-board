@@ -5,12 +5,12 @@
         .module('milesBoard')
         .controller('HeaderController',HeaderController);
     
-    HeaderController.$inject = ['$auth', '$document', '$localStorage', '$rootScope', '$scope','$state','$uibModal'];
+    HeaderController.$inject = ['$auth', '$document', '$localStorage', '$rootScope', '$scope','$state','$uibModal', '$window'];
 
-    function HeaderController($auth, $document, $localStorage, $rootScope, $scope, $state, $uibModal) {
+    function HeaderController($auth, $document, $localStorage, $rootScope, $scope, $state, $uibModal, $window) {
         let vm = this;
-        vm.showLoginLink = $localStorage.user ? false : true;
-        let user_id = $localStorage.user ? $localStorage.user.id : null;
+
+        
 
         vm.site_nav = [
             { uiSref: 'home', display: 'Home', icon: 'fa-road' },
@@ -18,46 +18,18 @@
         ];
 
         vm.$onInit = onInit;
-        vm.$onChanges = onChanges;
         vm.showLoginModal = showLoginModal;
         vm.logout = logout;
 
-        $rootScope.$on('auth:login-success', function(){
-            setUserNav();
-        });
-
-        $rootScope.$on('auth:logout-success', function () {
-            $localStorage.$reset();
-            setUserNav();
-        });
-
-        $rootScope.$on('auth.validation-success', function(){
-            setUserNav()
-        });
-
-        $rootScope.$on('auth.validation-error', function () {
-            $localStorage.$reset();
-            setUserNav();
+        $rootScope.$on('auth:login-success', function () {
+            $localStorage.user_nav = 'show-logout';
+            vm.showLogoutLink = true;
         });
 
         function onInit() {
-            setUserNav();
-        }
-
-        function onChanges() {
-            setUserNav();
-        }
-
-        function setUserNav() {
-            if(vm.user_nav) {
-                vm.user_nav.length = 0;
-                vm.user_nav = [];
-            }
-            vm.user_nav = [
-                { uiSref: 'user({userId: ' + user_id + '})', display: 'Profile', show: vm.showLoginLink == false, icon: 'fa-user-circle-o' },
-                { click: showLoginModal, display: 'Login', show: vm.showLoginLink === true, icon: 'fa-sign-in' },
-                { click: logout, display: 'Logout', show: vm.showLoginLink == false, icon: 'fa-sign-out' }
-            ];
+            vm.showLogoutLink = $localStorage.user ? true : false;
+            
+            vm.user_id = $localStorage.user ? $localStorage.user.id : null;
         }
 
         function showLoginModal(parentSelector) {
@@ -89,13 +61,13 @@
                 .then(
                     function(resp){
                         $localStorage.$reset();
-                        setUserNav()
-                        $state.go('home');
+                        $state.go('home')
+                        $window.location.reload();
                     },
                     function(resp){
                         $localStorage.$reset();
-                        setUserNav();
-                        $state.go('home');
+                        $state.go('home', {}, { reload: true });
+                        $window.location.reload();
                         console.error(resp);
                     });
         }

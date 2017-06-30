@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627142752) do
+ActiveRecord::Schema.define(version: 20170629013612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "custom_tabs", force: :cascade do |t|
+    t.integer  "team_id"
+    t.string   "filter_field"
+    t.string   "filter_value"
+    t.string   "object_type"
+    t.string   "comparator"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "imported_user_data", force: :cascade do |t|
     t.integer  "user_id"

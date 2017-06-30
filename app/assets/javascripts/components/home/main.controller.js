@@ -9,5 +9,10 @@
 
     function MainController() {
         let vm = this;
+
+        vm.$onInit = onInit;
+
+        function onInit() {
+        }
     }
 })();

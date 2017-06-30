@@ -113,4 +113,5 @@
                                                                                                   (vm.isOwner && !vm.user_info.owner_confirmation_code)">
             Submit
     </button>
+    <span class='btn btn-primary' ng-if="vm.inModal === true" ng-click='vm.handleCancel()'>Close</span>
 </form>

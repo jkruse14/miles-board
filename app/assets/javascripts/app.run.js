@@ -5,10 +5,15 @@
         .module('milesBoard')
         .run(runBlock);
 
-    runBlock.$inject = ['$log', '$auth', '$rootScope', '$localStorage', '$location', '$state', '$http', '$cacheFactory']
+    runBlock.$inject = ['$log', '$auth', '$rootScope', '$localStorage', '$location', '$state', '$cacheFactory', '$window']
 
-    function runBlock($log, $auth, $rootScope, $localStorage, $location, $state, $http, $cacheFactory) {
+    function runBlock($log, $auth, $rootScope, $localStorage, $location, $state, $cacheFactory, $window) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
+
+        $rootScope.$on('auth:password-reset-confirm-success', function () {
+            console.log('reset heard')
+            $state.go('login?reset_token')
+        });
 
         $rootScope.$on('auth:login-success', (ev, user) => {
             $state.go('home');
@@ -16,6 +21,7 @@
 
         $rootScope.$on('auth:invalid', (ev, reason) => {
             $localStorage.$reset();
+            $state.go('home',{},{reload: true})
             console.error('Invalid token', ev);
         });
 

@@ -5,12 +5,17 @@
         .module('milesBoard')
         .service('MilesBoardApi', MilesBoardApi);
 
-    MilesBoardApi.$inject = [];
+    MilesBoardApi.$inject = ['Restangular', 'RunsApi', 'TeamsApi', 'UsersApi' ];
 
-    function MilesBoardApi() {
+    function MilesBoardApi(Restangular, RunsApi, TeamsApi, UsersApi) {
         let self = this;
 
+        self.RunsApi = RunsApi;
+        self.TeamsApi = TeamsApi;
+        self.UsersApi = UsersApi;
+        
         self.errorReader = errorReader;
+        self.put = put;
 
         function errorReader(errors) {
             const keys = Object.keys(errors);
@@ -25,6 +30,10 @@
             }
 
             return message;
+        }
+
+        function put(obj_type, obj) {
+            return Restangular.all(obj_type).customPUT(obj);
         }
 
         return self;

@@ -5,9 +5,13 @@ angular
     .module('milesBoard')
     .controller('TeamsController', TeamsController);
 
-    TeamsController.$inject = ['$localStorage','$scope', '$stateParams', 'RunsApi', 'team', 'teams', 'TeamsApi', 'TeamsDisplayConfig', 'TeamMemberListsApi', '$uibModal' ,'UsersApi','UsersDisplayConfig'];
+TeamsController.$inject = ['$localStorage', '$scope', '$stateParams', 'MilesBoardApi', 
+                                'team', 'teams', 'TeamsDisplayConfig', 
+                                'TeamMemberListsApi', '$uibModal','UsersDisplayConfig'];
 
-    function TeamsController($localStorage, $scope, $stateParams, RunsApi, team, teams, TeamsApi, TeamsDisplayConfig, TeamMemberListsApi, $uibModal , UsersApi, UsersDisplayConfig) {
+    function TeamsController($localStorage, $scope, $stateParams, MilesBoardApi, 
+                             team, teams, TeamsDisplayConfig, 
+                             TeamMemberListsApi, $uibModal, UsersDisplayConfig) {
         let vm = this;
         vm.team = team;
         vm.teams = teams.plain();
@@ -65,6 +69,17 @@ angular
             return displayObj;
         }
 
+        function teamMemberAddSuccessFlash() {
+            let message = 'New Team Member Successfully Created!';
+            Flash.create('success', message, 5000, { container: 'index_flash' }, true)
+        }
+
+        function teamMemberAddFailFlash(reason) {
+            let message = 'There was an error while creating a new team member:<br />'
+            message += MilesBoardApi.errorReader(reason);
+            Flash.create('danger', message, 0, { container: 'index_flash' }, true)
+        }
+
         function showAddTeamMemberModal(parentSelector) {
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
@@ -77,15 +92,14 @@ angular
                 controllerAs: 'vm',
                 size: 'md',
                 appendTo: parentElem,
-                // resolve: {
-                //     items: function () {
-                //         return vm.items;
-                //     }
-                // }
+                scope: {
+                    profileAction: 'create'
+                }
             });
 
             modalInstance.result.then(function (result) {
-                UsersApi.get('',{email:result.email}).then(function(response){
+                Flash.clear();
+                MilesBoardApi.UsersApi.get('',{email:result.email}).then(function(response){
                     if(response.id) {
                         let user = {
                             id: response.id,
@@ -100,6 +114,9 @@ angular
                         }).then(function(post_result){
                             vm.team.users.push(user);
                             vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+                            teamMemberAddSuccessFlash();
+                        }, function(reason) {
+                            teamMemberAddFailFlash(reason)
                         })
                     } else {
                         let newUser = { 
@@ -108,13 +125,12 @@ angular
                                 last_name: result.last_name,
                                 email : result.email,
                                 team_id: $stateParams.team_id,
-                                password : 'test1234',
-                                password_confirmation: 'test1234',
-                                //type: 'user'
+                                password : result.password,
+                                password_confirmation: result.password_confirmation,
                             }
                         }
 
-                        UsersApi.post(newUser).then(function(result){
+                        MilesBoardApi.UsersApi.post(newUser).then(function(result){
                             let user = {
                                 id: result.id,
                                 first_name: newUser.user.first_name,
@@ -124,16 +140,18 @@ angular
                             }
                             vm.team.users.push(user);
                             vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+
+                            teamMemberAddSuccessFlash();
+                        },
+                        function(reason) {
+                           teamMemberAddFailFlash(reason);
                         });
                     }
                 }, function () {});
             })
         };
 
-        function showAddRunToUser(input) {
-            // var parentElem = parentSelector ?
-            //     angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
-            let user_id = input.id.text; //contains user id
+        function showAddRunToUser(input) {let user_id = input.id.text; //contains user id
             var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
@@ -142,10 +160,10 @@ angular
                 controller: 'AddRunToUserController',
                 controllerAs: 'vm',
                 size: 'md',
-                // appendTo: parentElem,
             });
 
             modalInstance.result.then(function (result) {
+                Flash.clear();
                 let newRun = {
                     run: {
                         distance: result.distance,
@@ -155,20 +173,23 @@ angular
                     }
                 }
 
-                RunsApi.post(newRun).then(function (api_result) {
+                MilesBoardApi.RunsApi.post(newRun).then(function (api_result) {
                     for(let i = 0; i < vm.team.users.length; i++) {
                         if(vm.team.users[i].id === parseInt(user_id)) {
                             vm.team.users[i].team_distance = parseInt(vm.team.users[i].team_distance) + parseInt(result.distance);
                             vm.team.users[i].team_run_count = parseInt(vm.team.users[i].team_run_count) + 1;
-                            vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+                            vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig);
                             break;
                         }
                     }
+
+                    let message = 'Run Successfully Added!'
+                    Flash.create('success', message, 5000, { container: 'index_flash'}, true);
                 });
             }, function (reason) {
-                if(reason !== 'cancel') {
-                    console.error(reason);
-                }
+                let message = 'An error occured while saving your run:<br />';
+                message += MilesBoardApi.errorReader(reason);
+                Flash.create('danger', message, 0, { container: 'index_flash'}, true)
              });
         }
     };

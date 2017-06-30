@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  # protect_from_forgery with: :null_session
-  before_action :set_user, only: %i(show update destroy)
-  skip_before_action :verify_authenticity_token
+  #
+  # skip_before_action :verify_authenticity_token
+  # before_action :authenticate_user!, only: %i(index show update imported_user_id delete)
+  before_action :check_team_owner, only: %i(update_imported_user delete)
+  before_action :set_user, only: %i(show update update_imported_user destroy)
 
   def index
     # check logged in user:
@@ -23,7 +25,7 @@ class UsersController < ApplicationController
         @user = user
         users << user_return_obj
       end
-      render json: users, status: 200 && return
+      render json: { users: users }, status: 200 && return
     end
   end
 
@@ -70,6 +72,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_imported_user
+    user = User.find_by_id(user_params[:imported_user_id])
+    # user_params[:current_password] = 'imported123'
+
+    user.update_with_password(user_params.except(:imported_user_id))
+    user.skip_confirmation!
+    if user.reset_password(user_params[:password], user_params[:password_confirmation])
+      puts '************ TRUE ************'
+    else
+        puts '------------- FALSE ----------'
+    end
+    if user.save!
+      render json: { id: user.id }, status: 200 && return
+    else
+      render json: { error: 'an error occurred while updating the account', id: user.id, email: user.email }, status: :unprocessable_entity && return
+    end
+  end
+
   def delete
     @user = User.find(params[:id]).destroy
     if @user.destroyed?
@@ -107,10 +127,16 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :team_id)
+    params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :team_id, :imported_user_id)
   end
 
   def users_params
-    params.require('users').permit(:first_name, :last_name, :email, :password, :password_confirmation, :team_id)
+    params.require('users').permit(:first_name, :last_name, :email, :password, :password_confirmation, :team_id, :imported_user_id, :current_password)
+  end
+
+  def check_team_owner
+    unless current_user.instance_of? TeamOwner
+      render json: { error: 'unauthorized' }, status: 401 && return
+    end
   end
 end
