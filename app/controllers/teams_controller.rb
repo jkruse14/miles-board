@@ -40,7 +40,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @owner = TeamOwners.find_by_id(team_params[:team_owner_id])
+    @owner = TeamOwner.find_by_id(team_params[:team_owner_id])
     if @owner.nil?
       render(json: { errors: 'no user with submitted owner id' }, status: :unprocessable_entity) && return
     end

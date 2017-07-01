@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$state', '$localStorage', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
+    LoginModalController.$inject = ['$state', '$localStorage', '$uibModal', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
 
-    function LoginModalController($state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi){
+    function LoginModalController($state, $localStorage, uibModal, $window, Flash, LoginFactory, MilesBoardApi){
         let vm = this;
         vm.inModal = true;
         vm.submitting = false;

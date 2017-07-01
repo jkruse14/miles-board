@@ -215,16 +215,18 @@
                 });
 
                 modalInstance.result.then(function (result) {
-                    MilesBoardApi.TeamsApi.post(result).then(
-                        function (response) {
-                            vm.user.teams.push(result);
-                            vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
-                            vm.displayConfig = TeamsDisplayConfig;
-                        },
-                        function (response) {
-                            console.error(response);
-                        }
-                    );
+                    if(result) {
+                        MilesBoardApi.TeamsApi.post(result).then(
+                            function (response) {
+                                vm.user.teams.push(result);
+                                vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
+                                vm.displayConfig = TeamsDisplayConfig;
+                            },
+                            function (response) {
+                                console.error(response);
+                            }
+                        );
+                    }
                 }, function () { });
             }
 
