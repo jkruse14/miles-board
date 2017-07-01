@@ -1,7 +1,7 @@
 <div id="login-container">
-    <flash-message name="login_flash"></flash-message>
     <span class="title">Miles Board</span>
     <span class="subtitle">View and Track Runs with your Teams</span>
+    <flash-message name="login-flash"></flash-message>
     <uib-tabset active="vm.tab" id="tabs-container">
         <uib-tab index="0" heading="Login" ng-if="true" select="vm.setTab(0)" class="{{vm.hideAllTabs === true ? 'hidden-tab': ''}}">
             <ng-include src="'components/login/_loginForm.html'"></ng-include>
