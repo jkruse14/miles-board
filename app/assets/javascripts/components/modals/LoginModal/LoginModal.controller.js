@@ -5,30 +5,45 @@
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$auth', '$controller', '$localStorage', '$scope', '$state', '$uibModalInstance', 
-                                    '$window','Flash', 'MilesBoardApi', 'InvitationCodesApi', 'Restangular', 'UsersApi']
+    LoginModalController.$inject = ['$state', '$localStorage', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
 
-    function LoginModalController($auth, $controller, $localStorage, $scope, $state, $uibModalInstance, 
-                                  $window, Flash, MilesBoardApi, InvitationCodesApi, Restangular, UsersApi){
+    function LoginModalController($state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi){
         let vm = this;
         vm.inModal = true;
         vm.submitting = false;
         
-        
-        angular.extend(vm, $controller('LoginController', { $scope: $scope }));
         resetFocusedField();
         resetUserInfo();
 
         vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
-        vm.handleLogin = handleLogin;
         vm.handleCancel = handleCancel;
-        vm.handleSubmitRegistration = handleSubmitRegistration;
         vm.resetFocusedField = resetFocusedField;
         vm.setFocusedField = setFocusedField;
-        vm.resetPassword = resetPassword;
+
+        function handleSubmitClick() {
+            vm.submitting = true;
+            switch (vm.tab) {
+                case 0:
+                    LoginFactory.handleLogin(vm.user_info, loginSuccess, loginFail);
+                    break;
+                case 1:
+                    LoginFactory.handleSubmitRegistration(vm.user_info, vm.isOwner, registrationSuccess, registrationFail);
+                    break;
+                case 2:
+                    LoginFactory.resendEmailConfirmation(vm.user_info);
+                    break;
+                case 3:
+                    LoginFactory.resetPassword(user_info);
+                    break;
+                default:
+                    handleLogin();
+                    break;
+            }
+        }
 
         function setTab(index) {
+            Flash.clear();
             vm.tab = index;
             vm.user_info = {
                 first_name: '',
@@ -39,34 +54,8 @@
             };
         }
 
-        function handleSubmitClick() {
-            vm.submitting = true;
-            switch (vm.tab) {
-                case 0:
-                    handleLogin();
-                    break;
-                case 1:
-                    handleSubmitRegistration();
-                    break;
-                case 2:
-                    resendEmailConfirmation();
-                    break;
-                case 3:
-                    resetPassword(vm.user_info);
-                    break;
-                default:
-                    handleLogin();
-                    break;
-            }
-        }
-
-        function handleLogin() {
-            $auth.submitLogin(vm.user_info)
-                .then(loginSuccess, vm.loginFail)
-        }
-
         function loginSuccess(resp) {
-            UsersApi.get(resp.id).then(function (response) {
+            MilesBoardApi.UsersApi.get(resp.id).then(function (response) {
                 $localStorage.user = response.user;
                 vm.submitting = false;
                 handleCancel();
@@ -75,43 +64,13 @@
             $window.location.reload();
         }
 
-        function handleCancel() {
-            $uibModalInstance.close('cancel');
+        function loginFail(reason) {
+            
+            Flash.create('danger', 'Login Error: '+reason.errors, 0, { container: 'loginModal_flash' }, true);
         }
 
-        function handleSubmitRegistration() {
-            Flash.clear();
-            let new_user = {
-                first_name: vm.user_info.first_name,
-                last_name: vm.user_info.last_name,
-                password: vm.user_info.password,
-                password_confirmation: vm.user_info.password_confirmation,
-                email: vm.user_info.email
-            }
-
-            let auth_config = vm.isOwner ? 'team_owner' : 'user';
-            if (vm.isOwner) {
-                InvitationCodesApi.get(vm.user_info.owner_confirmation_code).then(function (response) {
-                    response = response.plain();
-                    if (response.email === vm.user_info.email && response.used === false) {
-                        vm.user_info.code_id = response.id;
-                        $auth.submitRegistration(new_user, { config: auth_config })
-                            .then(registrationSuccess, registrationFail);
-                    } else {
-                        let message = 'There was an error with your code: </br>'
-                        if (vm.user_info.email !== response.email) {
-                            message += 'email associated with code does not match above'
-                        } else if (response.used === true) {
-                            message += 'this code was already used'
-                        }
-
-                        Flash.create('warning', message, 0, { container: 'regform_flash' }, true);
-                    }
-                })
-            } else {
-                $auth.submitRegistration(new_user, { config: auth_config })
-                    .then(registrationSuccess, registrationFail);
-            }
+        function handleCancel() {
+            $uibModalInstance.close('cancel');
         }
 
         function registrationSuccess(resp) {
@@ -133,68 +92,28 @@
         function registrationFail(resp) {
             let message = 'Whoops... something went wrong while submitting your registration'
             message += MilesBoardApi.errorReader(resp.data);
-            Flash.create('danger', message, 0, { container: 'regform_flash' }, true);
+            Flash.create('danger', message, 0, { container: 'index_flash' }, true);
             vm.submitting = false;
         }
 
-        function resendEmailConfirmation() {
-            Restangular.all('users').customGET('resend_confirmation', { email: vm.user_info.email })
-                .then(registrationSuccess(resp),
-                function (resp) {
-                    let message = 'Whoops... something went wrong while sending your confirmation email'
-                    Flash.create('danger', message, 0, { container: 'regform_flash' }, true);
-                    vm.registered = true;
-                });
-        }
-
         function setFocusedField(form, field) {
-            vm.focused_field[form][field] = true;
+            vm.focused_field = LoginFactory.setFocusedField(form, field, vm.focused_field);
         }
 
         function resetFocusedField() {
-            vm.focused_field = {
-                loginForm: {
-                    email: false,
-                    password: false
-                },
-                newMemberForm: {
-                    email: false,
-                    first_name: false,
-                    last_name: false,
-                    password: false,
-                    password_confirmation: false
-                },
-                resendEmailForm: {
-                    email: false
-                },
-                resetPasswordForm: {
-                    email: false
-                }
-            };
+            vm.focused_field = LoginFactory.resetFocusedField();
         }
 
-        function resetUserInfo() {
+        function resetUserInfo(email) {
+            email !== undefined ? email : '';
+
             vm.user_info = {
                 first_name: '',
                 last_name: '',
                 password: '',
                 password_confirmation: '',
-                email: ''
+                email: email
             };
-        }
-
-        function resetPassword(user) {
-            Flash.clear();
-            let u = {email: user.email}
-            $auth.requestPasswordReset(u)
-                .then(function (resp) {
-                    let message = "Success!<br />An email has been sent to reset your password"
-                    Flash.create('success', message, 0, { container: 'resetform_flash' }, true)
-                })
-                .catch(function (resp) {
-                    // handle error response
-                    Flash.create('danger', resp.data.message, 0,{container: 'resetform_flash' }, true);
-                });
         }
     }
 
