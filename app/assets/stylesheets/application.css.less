@@ -187,6 +187,14 @@
 #login-container {
     text-align: center;
     margin-top: 20vh;
+
+    >flash-message {
+        position: absolute;
+        top: -15%;
+        left: 0;
+        width: 100%;
+    } 
+
     >.title {
         font-size: 4rem;
         display: block;
@@ -313,6 +321,10 @@
                         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
                     }
                 }
+            }
+
+            >flash-message {
+                text-align: center;
             }
         }
     }
