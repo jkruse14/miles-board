@@ -24,7 +24,7 @@
         }
 
         function cancel() {
-            $uibModalInstance.close('cancel');
+            $uibModalInstance.close(null);
         }
 
     }

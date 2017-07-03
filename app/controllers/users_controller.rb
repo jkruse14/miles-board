@@ -78,11 +78,7 @@ class UsersController < ApplicationController
 
     user.update_with_password(user_params.except(:imported_user_id))
     user.skip_confirmation!
-    if user.reset_password(user_params[:password], user_params[:password_confirmation])
-      puts '************ TRUE ************'
-    else
-        puts '------------- FALSE ----------'
-    end
+    
     if user.save!
       render json: { id: user.id }, status: 200 && return
     else

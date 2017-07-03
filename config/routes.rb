@@ -1,12 +1,21 @@
 Rails.application.routes.draw do
+
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { confirmations: 'confirmations',
+                                                                 passwords: 'passwords' }
+  
+  get 'custom_filters/:id',   to: 'custom_filters#show', as: 'custom_filters_show'
+  post 'custom_filters',      to: 'custom_filters#create', as: 'custom_filters_create'
+  put 'custom_filters/:id',   to: 'custom_filters#update', as: 'custom_filters_update'
+  delete 'custom_filters/:id', to: 'custom_filters#delete', as: 'custom_filters_delete'
+
+  get  'custom_tabs/:id', to: 'custom_tabs#show', as: 'custom_tabs_show'
+  post 'custom_tabs', to: 'custom_tabs#create', as: 'custom_tabs_create'
+
   get 'invitation_codes', to: 'invitation_codes#index'
   get 'invitation_codes/:code', to: 'invitation_codes#show'
   post 'invitation_codes', to: 'invitation_codes#create'
   put 'invitation_codes', to: 'invitation_codes#update'
   delete 'invitation_codes/:id', to: 'invitation_codes#delete'
-
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: { confirmations: 'confirmations',
-                                                                 passwords: 'passwords' }
 
   get 'team_member_lists',      to: 'team_member_lists#index',  as: 'team_member_lists_path'
   get 'team_member_lists/:id',  to: 'team_member_lists#show',   as: 'team_member_lists_show'

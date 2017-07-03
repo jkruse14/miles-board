@@ -35,7 +35,14 @@ class TeamsController < ApplicationController
       tmp[:team_run_count] = team_run_count + base_runs
       users.push(tmp)
     end
-    render(json: { name: @team.name, users: users, team_owner_id: @team.team_owner_id, location: @team.location },
+
+    render(json: { team: @team.as_json(only: %i(id name users team_owner_id location),
+                                       include: {
+                                         custom_tabs: { only: %i(heading),
+                                                        include: {
+                                                          custom_filters: { only: %i(filter_field filter_value comparator) }
+                                                        } }
+                                       }), users: users },
            status: 200) && return
   end
 

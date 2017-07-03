@@ -7,7 +7,7 @@
 
         CustomTabsApi.$inject = ['Restangular'];
 
-        function CustomTabsApi() {
+        function CustomTabsApi(Restangular) {
             return Restangular.service('custom_tabs');
         }
 
