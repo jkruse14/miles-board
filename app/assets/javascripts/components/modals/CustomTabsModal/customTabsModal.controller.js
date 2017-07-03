@@ -3,11 +3,11 @@
 
     angular
         .module('milesBoard')
-        .controller('CreateTabController', CreateTabController);
+        .controller('CustomTabsController', CustomTabsController);
 
-    CreateTabController.$inject = ['$uibModalInstance'];
+    CustomTabsController.$inject = ['$uibModalInstance'];
 
-    function CreateTabController($uibModalInstance) {
+    function CustomTabsController($uibModalInstance) {
         let vm = this;
         vm.filter_fields = ['miles', 'runs'];
         vm.comparators = ['less than', 'less than or equal to', 'greater than', 'greater than or equal to', 'equal to'];
@@ -24,17 +24,19 @@
             runs: 'Team Run Count'
         }
 
-        vm.filter1 = {
+        let filter1 = {
             filter_field: '(select field)',
             filter_value: '',
             comparator: '(select comparison)'
         };
 
-        vm.filter2 = {
-            filter_field: vm.filter1.filter_field,
+        let filter2 = {
+            filter_field: filter1.filter_field,
             filter_value: '',
             comparator: '(select comparison)'
         };
+
+        vm.filters = [filter1, filter2];
 
         vm.newTab = {
             heading: ''
@@ -49,6 +51,7 @@
         vm.save = save;
         vm.setFilterField = setFilterField;
         vm.setComparator = setComparator;
+        vm.setValue = setValue;
 
         function save() {
             let dbf = dataObj_fields[vm.filter1.filter_field]
@@ -67,15 +70,7 @@
         }
 
         function setFilterField(filter, field) {
-            switch(filter) {
-                case 1:
-                    vm.filter1.filter_field = field;
-                    break;
-                case 2:
-                    vm.filter2.filter_field = field;
-                    break;
-            }
-            
+            vm.filters[filter].field = field;            
         }
 
         function setComparator(filter, comp) {
@@ -101,14 +96,11 @@
                     break;
             }
 
-            switch (filter) {
-                case 1:
-                    vm.filter1.comparator = parsed;
-                    break;
-                case 2:
-                    vm.filter2.comparator = parsed;
-                    break;
-            }
+            vm.filters[filter].comparator = parsed;
+        }
+
+        function setValue(filter, val) {
+            vm.filters[filter].vaule = val
         }
     }
 

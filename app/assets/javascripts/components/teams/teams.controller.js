@@ -24,7 +24,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         vm.showAddTeamMemberModal = showAddTeamMemberModal;
         vm.showUserProfileModal = showUserProfileModal;
         vm.showFilteredTable = showFilteredTable;
-        vm.showCreateTabModal = showCreateTabModal;
+        vm.showCustomTabsModal = showCustomTabsModal;
 
         function onInit() {
             if ($stateParams.team_id) {
@@ -32,7 +32,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
 
                 if (vm.team.custom_tabs.length === 0) {
                     vm.team.custom_tabs.push(
-                        { heading: 'Create Cutsom Tab', click: showCreateTabModal }
+                        { heading: 'Create Cutsom Tab', click: showCustomTabsModal }
                     )
                     vm.hasCustomTabs = false;
                 }
@@ -233,15 +233,15 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 });
         }
 
-    function showCreateTabModal() {
+    function showCustomTabsModal() {
         console.log('here');
 
         var modalInstance = $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'components/modals/CreateTabModal/_createTabModal.html',
-            controller: 'CreateTabController',
+            templateUrl: 'components/modals/CustomTabsModal/_createTabModal.html',
+            controller: 'CustomTabsController',
             controllerAs: 'vm',
             size: 'md',
         });

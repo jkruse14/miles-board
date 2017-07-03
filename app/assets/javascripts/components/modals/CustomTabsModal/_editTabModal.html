@@ -1,0 +1,16 @@
+<div id="editTabModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body createTab-container">
+                <uib-accordion close-others="false">
+                    <uib-accordion-group class="panel-default" heading="{{group.title}}" ng-repeat="group in groups">
+                        <custom-filter id="0" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue'
+                            show-filter-field='true'></custom-filter>
+                        <custom-filter id="0" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue'
+                            show-filter-field='false'></custom-filter>
+                    </uib-accordion-group>
+                </uib-accordion>
+            </div>
+        </div>
+    </div>
+</div>
