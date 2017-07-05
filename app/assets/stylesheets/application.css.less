@@ -46,6 +46,10 @@
     }
 }
 
+.modal-flash {
+    text-align: center;
+}
+
 ///// angular ui modal overides /////
 //angular ui modal overrides
 .modal {
@@ -434,5 +438,16 @@
 @media(max-width: 667px) {
     #login-container>#tabs-container {
         width:97%;
+    }
+}
+
+///// CUSTOM TABS MODALS /////
+#editTabModal {
+    >.modal-dialog>.modal-content>.modal-body> {
+        >uib-accordion {
+            >.panel-group>.panel-default>.panel-collapse>.panel-body>.show-second-condition{
+                display: block;
+            }
+        }
     }
 }

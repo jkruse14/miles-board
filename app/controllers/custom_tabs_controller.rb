@@ -49,13 +49,18 @@ class CustomTabsController < ApplicationController
     end
   end
 
-  def delete; end
+  def delete
+    @tab.destroy
+    if @tab.destroyed?
+      render json: { id: @tab[:id] }, status: 200 && return
+    else
+      render json: { error: 'delete failed' }, status: :unprocessable_entity && return
+    end
+  end
 
   protected
 
-  def update_custom_filters(tab)
-    puts '------------'
-    puts tab.inspect
+  def update_custom_filters
     tab[:custom_filters].each do |filter|
       begin
         update_filter = CustomFilter.find_by_id(filter[:id])

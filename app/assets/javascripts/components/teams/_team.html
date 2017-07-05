@@ -10,10 +10,10 @@
         </div>
     </div>
     <uib-tabset>
-        <uib-tab index="0" heading="All" ng-click="vm.showFilteredTable(0)"></uib-tab>
+        <uib-tab index="0" heading="All" ng-click="vm.showFilteredTable(0)" ng-show="vm.team.custom_tabs.length > 0"></uib-tab>
         <uib-tab index="$index+1" ng-repeat="tab in vm.team.custom_tabs" heading="{{tab.heading}}" ng-click="vm.showFilteredTable($index+1)"></uib-tab>
-        <uib-tab index="vm.team.custom_tabs.length+2" heading="Add Tab" ng-click="vm.showCustomTabsModal('add')" ng-show="vm.hasCustomTabs !== false" class="action-tab"></uib-tab>
-        <uib-tab index="vm.team.custom_tabs.length+3" heading="Edit Tabs" ng-click="vm.showCustomTabsModal('edit')" ng-show="vm.hasCustomTabs !== false" class="action-tab"></uib-tab>
+        <uib-tab index="vm.team.custom_tabs.length+2" heading="Add Tab" ng-click="vm.showCustomTabsModal('add')" class="action-tab"></uib-tab>
+        <uib-tab index="vm.team.custom_tabs.length+3" heading="Edit Tabs" ng-click="vm.showCustomTabsModal('edit')" ng-show="vm.team.custom_tabs.length > 0" class="action-tab"></uib-tab>
     </uib-tabset>
     <board display-obj-data="vm.displayObjData" display-obj-config="vm.displayConfig" row-callback="vm.showAddRunToUser" is-owner="vm.isTeamOwner"></board>
 </div>

@@ -9,16 +9,24 @@
                             required>
                     </div>
                     <span>Show Team Members with<span>
-                    <custom-filter index="0" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue' show-filter-field='true'></custom-filter>
-                    <div><span>AND</span></div>
-                    <custom-filter index="1" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue' show-filter-field='false'></custom-filter>
-                    <div id="form-actions">
-                        <button type="submit" class='btn btn-primary' ng-click='vm.save()' ng-disabled="vm.tab === 0 && createTabForm.$invalid">Submit</button>
-                        <button class='btn btn-primary' ng-click='vm.handleCancel()'> Close</button>
+                    <custom-filter index="" filter-index="0" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue' show-filter-field='true'></custom-filter>
+                    <div ng-show="vm.showSecondCondition === true">
+                        <div><span>AND</span></div>
+                        <custom-filter index="" filter-index="1" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator'
+                            value-change='vm.setValue' show-filter-field='false'></custom-filter>
                     </div>
+                    <span class="show-second-condition" ng-click="vm.showSecondCondition = !vm.showSecondCondition"><a>{{vm.showSecondCondition ? 'Do Not Use Second Condition -' : 'Add Second Condition +'}}</a></span>
                 </form>
             </div>
+            <div class="modal-footer">
+                <div id="form-actions">
+                    <button type="submit" class='btn btn-primary' ng-click='vm.save()' >Submit</button>
+                    <button class='btn btn-primary' ng-click='vm.handleCancel()'> Close</button>
+                </div>
+            </div>
+            <flash-message class="modal-flash" name="createTab_flash"></flash-message>
         </div>
+        
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

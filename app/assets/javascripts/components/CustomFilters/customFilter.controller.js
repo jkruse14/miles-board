@@ -10,7 +10,7 @@
     function CustomFilterController() {
         let vm = this;
 
-        vm.filter_fields = ['miles', 'runs'];
+        vm.filter_fields = ['Team Distance', 'Team Runs Count'];
         vm.comparators = ['less than', 'less than or equal to', 'greater than', 'greater than or equal to', 'equal to'];
         vm.comparators_display = {
             lt: 'less than',
@@ -18,11 +18,6 @@
             gt: 'greater than',
             gte: 'greater than or equal to',
             eq: 'equal to'
-        }
-
-        let dataObj_fields = {
-            miles: 'Team Distance',
-            runs: 'Team Run Count'
         }
 
         vm.$onInit = onInit;
@@ -41,8 +36,8 @@
         }
 
         function onFilterFieldChange(field) {
-            vm.selectedField = dataObj_fields[field];
-            vm.fieldChange()(vm.index, vm.index, dataObj_fields[field]);
+            vm.selectedField = field;
+            vm.fieldChange()(vm.index, vm.filterIndex, field);
         }
 
         function onComparatorChange(comp) {

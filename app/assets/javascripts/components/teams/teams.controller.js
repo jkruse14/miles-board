@@ -29,13 +29,6 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         function onInit() {
             if ($stateParams.team_id) {
                 vm.team.users = team.plain().users;
-
-                if (vm.team.custom_tabs.length === 0) {
-                    vm.team.custom_tabs.push(
-                        { heading: 'Create Cutsom Tab', click: showCustomTabsModal }
-                    )
-                    vm.hasCustomTabs = false;
-                }
             }
             
             setUpTable();
@@ -256,25 +249,21 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             Flash.clear();
             if(result){
                 if($scope.tabAction === 'add') {
-                    result.newTab.team_id = $stateParams.team_id;         
-                    MilesBoardApi.CustomTabsApi.post(result.newTab).then(function (api_result) {
-                        if(!vm.team.custom_tabs[0].id) {
-                            vm.team.custom_tabs.pop();
-                        }
-                        console.log(api_result.plain())
-                        result.newTab.id = api_result.plain().id;
-                        let filter1 = result.filter1;
+                    result.team_id = $stateParams.team_id;         
+                    MilesBoardApi.CustomTabsApi.post(result).then(function (api_result) {
+                        result.id = api_result.plain().id;
+                        let filter1 = result.custom_filters[0];
                         filter1.custom_tab_id = api_result.plain().id;
                         filter1.object_type = 'team';
-                        let filter2 = result.filter2;
+                        let filter2 = result.custom_filters[1];
                         filter2.custom_tab_id = api_result.plain().id;
                         filter2.object_type = 'team';
                         
                         MilesBoardApi.CustomFiltersApi.post(filter1).then(function(f1_resp) {
                             MilesBoardApi.CustomFiltersApi.post(filter2).then(function(f2_resp){
-                                result.newTab.custom_filters = [];
-                                result.newTab.custom_filters.push(filter1, filter2);
-                                vm.team.custom_tabs.push(result.newTab);
+                                result.custom_filters = [];
+                                result.custom_filters.push(filter1, filter2);
+                                vm.team.custom_tabs.push(result);
 
                                 let message = 'Tab Successfully Created!'
                                 Flash.create('success', message, 5000, { container: 'index_flash' }, true);
