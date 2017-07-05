@@ -1,24 +1,24 @@
 <span uib-dropdown is-open="status.field_isopen" ng-show='vm.showFilterField'>
-    <a href id="simple-dropdown" uib-dropdown-toggle>
+    <a href id="filter-dropdown" uib-dropdown-toggle>
         {{vm.selectedField}}<span class="caret"></span>
     </a>
-    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="filter-dropdown">
         <li ng-repeat="field in vm.filter_fields">
             <a ng-click="vm.onFilterFieldChange(field)">{{field}}</a>
         </li>
     </ul>
 </span>
 <span uib-dropdown is-open="status.comparator1_isopen">
-    <a href id="simple-dropdown" uib-dropdown-toggle>
+    <a href id="filter-dropdown" uib-dropdown-toggle>
         {{vm.comparators_display[vm.selectedComparator] ? vm.comparators_display[vm.selectedComparator] : vm.selectedComparator}}<span class="caret"></span>
     </a>
-    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="filter-dropdown">
         <li ng-repeat="op in vm.comparators">
             <a ng-click="vm.onComparatorChange(op)">{{op}}</a>
         </li>
     </ul>
 </span>
-<div class="input-and-message">
+<div class="cf-input">
     <input id="filter_value" type="number" min="0" name="filter_value" class="form-control" 
         ng-class="" 
         ng-model="vm.filter.filter_value" 

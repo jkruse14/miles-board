@@ -65,6 +65,9 @@
     display: table;
     content: " ";
 }
+.modal-header{
+    font-size: 2rem;
+}
 .modal-header:before,
 .modal-header:after {
     display: table;
@@ -447,7 +450,44 @@
         >uib-accordion {
             >.panel-group>.panel-default>.panel-collapse>.panel-body>.show-second-condition{
                 display: block;
+                font-size: 1.6rem;
+                margin: 8px 0px 15px 0px;
             }
         }
+    }
+}
+
+#createTabModal {
+    >.modal-dialog>.modal-content>.modal-body> {
+        >#createTabForm {
+            >label,div>label {
+                font-size: 1.7rem;
+                font-weight: 500;
+            }
+            >.cf-input {
+                margin: 3px 0px 15px 0px;
+
+                >label {
+                    font-size: 1.7rem;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+#no-tabs-message {
+    font-size: 1.8rem;
+    text-align: center;
+    color: gray;
+}
+
+///// CUSTOM FILTERS /////
+custom-filter {
+    >span {
+        font-size: 1.8rem;
+    }
+    >.cf-input {
+        margin: 3px 0px 15px 0px;
     }
 }

@@ -195,12 +195,8 @@
             Restangular.all('custom_tabs').customDELETE(vm.tabs[tab].id).then(function(resp){;
                 vm.tabs.splice(tab,1);
                 let message = 'Tab successfully deleted'
-                let container = 'editTab_flash'
-                if(vm.tabs.length === 0) {
-                    container = 'index_flash'
-                    cancel();
-                }
-                Flash.create('success',message, 0, {container: container}, true);
+                Flash.clear();
+                Flash.create('success', message, 0, { container: 'editTab_flash'}, true);
             });
         }
     }

@@ -31,10 +31,13 @@
                         <button class="btn btn-primary" ng-show="vm.delete_first_click === true" ng-click="vm.delete_first_click = false">Cancel</button>
                     </div>
                 </uib-accordion>
+                <div id="no-tabs-message" ng-show="vm.tabs.length === 0">
+                    <p>No Tabs Available to Edit</p>
+                </div>
             </div>
             <div class="modal-footer">
                 <div id="form-actions">
-                    <button type="submit" class="btn btn-primary" ng-click="vm.save()">Save</button>
+                    <button type="submit" class="btn btn-primary" ng-click="vm.save()" ng-disabled="vm.tabs.length === 0">Save</button>
                     <button class="btn btn-primary" ng-click="vm.cancel()"> Close</button>
                 </div>  
             </div>
