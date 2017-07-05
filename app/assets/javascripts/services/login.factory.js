@@ -66,7 +66,7 @@
                             message += 'this code was already used'
                         }
 
-                        Flash.message('warning', message, 0, { container: 'index_flash' }, true);
+                        Flash.create('warning', message, 0, { container: 'index_flash' }, true);
                     }
                 })
             } else {
