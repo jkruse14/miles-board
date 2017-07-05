@@ -26,8 +26,9 @@ namespace :import_data do
         end
 
         begin
-          @user = User.create(new_user)
+          @user = User.new(new_user)
           @user.skip_confirmation!
+          @user.save!
 
           @tml = TeamMemberList.create([user_id: @user.id, team_id: args[:team_id]])
 
