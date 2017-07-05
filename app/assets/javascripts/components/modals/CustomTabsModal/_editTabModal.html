@@ -1,15 +1,37 @@
 <div id="editTabModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <div class="modal-header">
+                <span>Edit Tabs</span>
+            </div>
             <div class="modal-body createTab-container">
-                <uib-accordion close-others="false">
-                    <uib-accordion-group class="panel-default" heading="{{group.title}}" ng-repeat="group in groups">
-                        <custom-filter id="0" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue'
-                            show-filter-field='true'></custom-filter>
-                        <custom-filter id="0" object-type='team' field-change="vm.setFilterField" comparator-change='vm.setComparator' value-change='vm.setValue'
-                            show-filter-field='false'></custom-filter>
-                    </uib-accordion-group>
+                <uib-accordion close-others="{{false}}">
+                    <div uib-accordion-group class="panel-default" heading="{{tab.heading}}" 
+                                                                   ng-repeat="tab in vm.tabs">
+                        <custom-filter index="$index" filter-index="0" object-type="team" field-change="vm.setFilterField" 
+                                                                 comparator-change="vm.setComparator" 
+                                                                 value-change="vm.setValue"
+                                                                 initial-field="tab.custom_filters[0].filter_field"
+                                                                 initial-comparator="tab.custom_filters[0].comparator"
+                                                                 initial-value="tab.custom_filters[0].filter_value"
+                                                                 show-filter-field="true">
+                        </custom-filter>
+                        <custom-filter index="$index" filter-index="1" object-type="team" field-change="vm.setFilterField" 
+                                                                 comparator-change="vm.setComparator" 
+                                                                 value-change="vm.setValue"
+                                                                 initial-field="tab.custom_filters[1].filter_field" 
+                                                                 initial-comparator="tab.custom_filters[1].comparator" 
+                                                                 initial-value="tab.custom_filters[1].filter_value"
+                                                                 show-filter-field="false">
+                        </custom-filter>
+                    </div>
                 </uib-accordion>
+            </div>
+            <div class="modal-footer">
+                <div id="form-actions">
+                    <button type="submit" class="btn btn-primary" ng-click="vm.save()">Save</button>
+                    <button class="btn btn-primary" ng-click="vm.handleCancel()"> Close</button>
+                </div>  
             </div>
         </div>
     </div>

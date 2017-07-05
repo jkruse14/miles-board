@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get  'custom_tabs/:id', to: 'custom_tabs#show', as: 'custom_tabs_show'
   post 'custom_tabs', to: 'custom_tabs#create', as: 'custom_tabs_create'
+  put  'custom_tabs', to: 'custom_tabs#bulk_update', as: 'custom_tabs_bulkupdate'
+  put  'custom_tabs/:id', to: 'custom_tabs#update', as: 'custom_tabs_update'
 
   get 'invitation_codes', to: 'invitation_codes#index'
   get 'invitation_codes/:code', to: 'invitation_codes#show'

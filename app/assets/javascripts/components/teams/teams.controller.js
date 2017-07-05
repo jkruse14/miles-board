@@ -233,55 +233,66 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 });
         }
 
-    function showCustomTabsModal() {
-        console.log('here');
-
+    function showCustomTabsModal(action) {
+        $scope.tabAction = action
+        $scope.tabs = [];
+        let template = 'components/modals/CustomTabsModal/_createTabModal.html'
+        if(action === 'edit') {
+            $scope.tabs = vm.team.custom_tabs;
+            template = 'components/modals/CustomTabsModal/_editTabModal.html'
+        } 
         var modalInstance = $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'components/modals/CustomTabsModal/_createTabModal.html',
+            templateUrl: template,
             controller: 'CustomTabsController',
             controllerAs: 'vm',
             size: 'md',
+            scope: $scope
         });
 
         modalInstance.result.then(function (result) {
             Flash.clear();
-            if(result){   
-                result.newTab.team_id = $stateParams.team_id;         
-                MilesBoardApi.CustomTabsApi.post(result.newTab).then(function (api_result) {
-                    if(!vm.team.custom_tabs[0].id) {
-                        vm.team.custom_tabs.pop();
-                    }
-                    console.log(api_result.plain())
-                    result.newTab.id = api_result.plain().id;
-                    let filter1 = result.filter1;
-                    filter1.custom_tab_id = api_result.plain().id;
-                    filter1.object_type = 'team';
-                    let filter2 = result.filter2;
-                    filter2.custom_tab_id = api_result.plain().id;
-                    filter2.object_type = 'team';
-                    
-                    MilesBoardApi.CustomFiltersApi.post(filter1).then(function(f1_resp) {
-                        MilesBoardApi.CustomFiltersApi.post(filter2).then(function(f2_resp){
-                            result.newTab.custom_filters = [];
-                            result.newTab.custom_filters.push(filter1, filter2);
-                            vm.team.custom_tabs.push(result.newTab);
+            if(result){
+                if($scope.tabAction === 'add') {
+                    result.newTab.team_id = $stateParams.team_id;         
+                    MilesBoardApi.CustomTabsApi.post(result.newTab).then(function (api_result) {
+                        if(!vm.team.custom_tabs[0].id) {
+                            vm.team.custom_tabs.pop();
+                        }
+                        console.log(api_result.plain())
+                        result.newTab.id = api_result.plain().id;
+                        let filter1 = result.filter1;
+                        filter1.custom_tab_id = api_result.plain().id;
+                        filter1.object_type = 'team';
+                        let filter2 = result.filter2;
+                        filter2.custom_tab_id = api_result.plain().id;
+                        filter2.object_type = 'team';
+                        
+                        MilesBoardApi.CustomFiltersApi.post(filter1).then(function(f1_resp) {
+                            MilesBoardApi.CustomFiltersApi.post(filter2).then(function(f2_resp){
+                                result.newTab.custom_filters = [];
+                                result.newTab.custom_filters.push(filter1, filter2);
+                                vm.team.custom_tabs.push(result.newTab);
 
-                            let message = 'Tab Successfully Created!'
-                            Flash.create('success', message, 5000, { container: 'index_flash' }, true);
+                                let message = 'Tab Successfully Created!'
+                                Flash.create('success', message, 5000, { container: 'index_flash' }, true);
+                            }, function(reason) {
+                                let message = 'An error occured while creating the second condition of your tab:<br />';
+                                message += MilesBoardApi.errorReader(reason.data);
+                                Flash.create('danger', message, 0, { container: 'index_flash' }, true);
+                            })
                         }, function(reason) {
-                            let message = 'An error occured while creating the second condition of your tab:<br />';
+                            let message = 'An error occured while creating the first condition of your tab:<br />';
                             message += MilesBoardApi.errorReader(reason.data);
                             Flash.create('danger', message, 0, { container: 'index_flash' }, true);
-                        })
-                    }, function(reason) {
-                        let message = 'An error occured while creating the first condition of your tab:<br />';
-                        message += MilesBoardApi.errorReader(reason.data);
-                        Flash.create('danger', message, 0, { container: 'index_flash' }, true);
+                        });
                     });
-                });
+                } else if ($scope.tabAction === 'edit') {
+                    let updates = {tabs: result}
+                    MilesBoardApi.put('custom_tabs', updates);
+                }
             }
         }, function (reason) {
             let message = 'An error occured while creating your tab:<br />';

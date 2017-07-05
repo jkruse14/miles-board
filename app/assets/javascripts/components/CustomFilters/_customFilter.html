@@ -15,11 +15,15 @@
     </a>
     <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
         <li ng-repeat="op in vm.comparators">
-            <a ng-click="vm.setComparator(1,op)">{{op}}</a>
+            <a ng-click="vm.onComparatorChange(op)">{{op}}</a>
         </li>
     </ul>
 </span>
 <div class="input-and-message">
-    <input id="filter_value1" type="number" min="0" name="filter_value" class="form-control" ng-class="" ng-model="vm.filter1.filter_value"
+    <input id="filter_value" type="number" min="0" name="filter_value" class="form-control" 
+        ng-class="" 
+        ng-model="vm.filter.filter_value" 
+        ng-change="vm.onValueChange(vm.filter.filter_value)"
+        ng-model-options="{ debounce: 200 }"
         placeholder="Enter amount to filter by" required>
 </div>

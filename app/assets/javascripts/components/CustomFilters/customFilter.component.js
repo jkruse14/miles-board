@@ -8,12 +8,16 @@
             controller: 'CustomFilterController',
             controllerAs: 'vm',
             bindings: {
-                id: '@',
-                objectType: '@',
+                index: '<',
+                filterIndex: '<',
+                objectType: '<',
                 showFilterField: '<',
                 fieldChange: '&',
                 comparatorChange: '&',
-                valueChange: '&'
+                valueChange: '&',
+                initialField: '<',
+                initialComparator: '<',
+                initialValue: '<'
             }
         })
 })();

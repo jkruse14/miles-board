@@ -38,9 +38,9 @@ class TeamsController < ApplicationController
 
     render(json: { team: @team.as_json(only: %i(id name users team_owner_id location),
                                        include: {
-                                         custom_tabs: { only: %i(heading),
+                                         custom_tabs: { only: %i(id heading),
                                                         include: {
-                                                          custom_filters: { only: %i(filter_field filter_value comparator) }
+                                                          custom_filters: { only: %i(id filter_field filter_value comparator) }
                                                         } }
                                        }), users: users },
            status: 200) && return

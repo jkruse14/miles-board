@@ -24,32 +24,34 @@
             miles: 'Team Distance',
             runs: 'Team Run Count'
         }
-        
-        vm.selectedField = '(select field)';
-        vm.selectedComparator = '(select comparison)'
 
-        vm.filter = {
-            filter_field: '(select field)',
-            filter_value: '',
-            comparator: '(select comparison)'
-        }
-
+        vm.$onInit = onInit;
         vm.onFilterFieldChange = onFilterFieldChange;
         vm.onComparatorChange = onComparatorChange;
         vm.onValueChange = onValueChange;
 
+        function onInit() {
+            vm.selectedField = vm.initialField || '(select field)';
+            vm.selectedComparator = vm.comparators_display[vm.initialComparator] || '(select comparison)';
+            vm.filter = {
+                filter_field: vm.selectedField,
+                filter_value: parseInt(vm.initialValue),
+                comparator: vm.selectedComparator
+            }
+        }
+
         function onFilterFieldChange(field) {
-            vm.selectedField = field;
-            vm.fieldChange()(vm.id, field);
+            vm.selectedField = dataObj_fields[field];
+            vm.fieldChange()(vm.index, vm.index, dataObj_fields[field]);
         }
 
         function onComparatorChange(comp) {
-            vm.selectedComparator = vm.comparators_display[comp];
-            vm.comparatorChange()(vm.id, comp);
+            vm.selectedComparator = comp;
+            vm.comparatorChange()(vm.index, vm.filterIndex, comp);
         }
 
         function onValueChange(v) {
-            vm.valueChange()(vm.id, v);
+            vm.valueChange()(vm.index, vm.filterIndex, v);
         }
     }
 })();

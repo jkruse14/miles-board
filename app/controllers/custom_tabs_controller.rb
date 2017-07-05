@@ -5,7 +5,7 @@ class CustomTabsController < ApplicationController
     render json: @tab.as_json(only: %i(heading team_id),
                               include: {
                                 custom_filters: {
-                                  only: %i(filter_field filter_value comparator object_type)
+                                  only: %i(id filter_field filter_value comparator object_type)
                                 }
                               })
   end
@@ -21,14 +21,59 @@ class CustomTabsController < ApplicationController
     end
   end
 
-  def update; end
+  def update
+    update_custom_filters(tab_params) if tab_params[:custom_filters]
+
+    CustomTab.update!(tab_params.except(:custom_filters))
+    render json: { id: @tab.id }, status: 200 && return
+  end
+
+  def bulk_update
+    updated = []
+    bulk_tabs_params[:tabs].each do |tab|
+      update_custom_filters(tab) unless tab[:custom_filters].empty?
+
+      begin
+        to_update = CustomTab.find_by_id(tab[:id])
+        to_update.update!(tab.except(:custom_filters, :id))
+        updated.push(tab[:id])
+      rescue ActiveRecord::RecordInvalid => invalid
+        render json: invalid.record.errors.messages, status: :unprocessable_entity && return
+      end
+    end
+
+    if !updated.empty?
+      render json: { ids: updated }, status: 200 && return
+    else
+      render json: { message: 'no updated items' }, status: 204 && return
+    end
+  end
 
   def delete; end
+
+  protected
+
+  def update_custom_filters(tab)
+    puts '------------'
+    puts tab.inspect
+    tab[:custom_filters].each do |filter|
+      begin
+        update_filter = CustomFilter.find_by_id(filter[:id])
+        update_filter.update(filter.except(:id))
+      rescue ActiveRecord::RecordInvalid => invalid
+        render(json: invalid.record.errors.messages, status: :unprocessable_entity) && return
+      end
+    end
+  end
 
   private
 
   def tab_params
-    params.permit(:team_id, :custom_filter_id, :heading)
+    params.permit(:team_id, :heading, :custom_filters)
+  end
+
+  def bulk_tabs_params
+    params.permit(tabs: [:id, :team_id, :heading, custom_filters: %i(id filter_field filter_value comparator)])
   end
 
   def set_tab
