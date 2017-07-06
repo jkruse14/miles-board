@@ -5,9 +5,9 @@
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$state', '$localStorage', '$uibModal', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
+    LoginModalController.$inject = ['$state', '$localStorage', '$uibModal', '$uibModalInstance', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
 
-    function LoginModalController($state, $localStorage, uibModal, $window, Flash, LoginFactory, MilesBoardApi){
+    function LoginModalController($state, $localStorage, $uibModal, $uibModalInstance, $window, Flash, LoginFactory, MilesBoardApi){
         let vm = this;
         vm.inModal = true;
         vm.submitting = false;
@@ -58,7 +58,7 @@
             MilesBoardApi.UsersApi.get(resp.id).then(function (response) {
                 $localStorage.user = response.user;
                 vm.submitting = false;
-                handleCancel();
+                $uibModalInstance.close();
             });
             $state.go('user', { userId: resp.id }, { reload: true });
             $window.location.reload();
