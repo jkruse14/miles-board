@@ -106,6 +106,10 @@
         function loginSuccess(resp) {
             UsersApi.get(resp.id).then(function(response) {
                 $localStorage.user = response.user;
+                $localStorage.user.team_ids = [];
+                for(let i = 0; i < $localStorage.user.teams.length; i++) {
+                    $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
+                }
                 vm.submitting = false;
             });
             $state.go('user',{userId: resp.id, reset: true})

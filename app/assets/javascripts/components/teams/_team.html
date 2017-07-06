@@ -15,5 +15,7 @@
         <uib-tab index="vm.team.custom_tabs.length+2" heading="Add Tab" ng-click="vm.showCustomTabsModal('add')" class="action-tab"></uib-tab>
         <uib-tab index="vm.team.custom_tabs.length+3" heading="Edit Tabs" ng-click="vm.showCustomTabsModal('edit')" ng-show="vm.team.custom_tabs.length > 0" class="action-tab"></uib-tab>
     </uib-tabset>
-    <board display-obj-data="vm.displayObjData" display-obj-config="vm.displayConfig" row-callback="vm.showAddRunToUser" is-owner="vm.isTeamOwner"></board>
+    <board display-obj-data="vm.displayObjData" display-obj-config="vm.displayConfig" 
+           row-callback="vm.showAddRunToUser" is-owner="vm.isTeamOwner"
+           show-callback-conditions="vm.showAddRunButton"></board>
 </div>

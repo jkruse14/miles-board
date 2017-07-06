@@ -7,11 +7,11 @@
 
     UsersController.$inject = ['$auth','$filter', '$localStorage', '$scope', '$state', '$uibModal', 
                                 'Flash', 'MilesBoardApi', 'MilesBoardImages', 'RunsDisplayConfig', 
-                                'TeamsDisplayConfig', 'user', 'UsersDisplayConfig', 'Restangular'];
+                                'TeamDisplayConfig', 'user', 'UsersDisplayConfig', 'Restangular'];
 
     function UsersController($auth, $filter, $localStorage, $scope, $state, $uibModal, 
                              Flash, MilesBoardApi, MilesBoardImages, RunsDisplayConfig, 
-                             TeamsDisplayConfig, user, UsersDisplayConfig, Restangular) {
+                             TeamDisplayConfig, user, UsersDisplayConfig, Restangular) {
             let vm = this;
             const userTypes = {
                  TEAM_OWNER : 'TeamOwner',
@@ -41,22 +41,22 @@
                     Flash.create('success', message, 5000, { container: 'profile_flash' }, true)
                 }
 
-                vm.TeamsDisplayConfig = TeamsDisplayConfig;
+                vm.TeamDisplayConfig = TeamDisplayConfig;
                 vm.RunsDisplayConfig = RunsDisplayConfig;
                 
-                for (let i = 0; i < vm.TeamsDisplayConfig.headers.length; i++) {
-                    if (vm.TeamsDisplayConfig.headers[i].text !== 'Name') {
-                        vm.TeamsDisplayConfig.headers[i].hidden = true;
+                for (let i = 0; i < vm.TeamDisplayConfig.headers.length; i++) {
+                    if (vm.TeamDisplayConfig.headers[i].text !== 'Name') {
+                        vm.TeamDisplayConfig.headers[i].hidden = true;
                     }
                 }
 
                 
-                vm.TeamsDisplayConfig.showCallback = false;
-                vm.TeamsDisplayConfig.hideSearch = true;
-                vm.TeamsDisplayConfig.hideHeaderRow = true;
+                vm.TeamDisplayConfig.showCallback = false;
+                vm.TeamDisplayConfig.hideSearch = true;
+                vm.TeamDisplayConfig.hideHeaderRow = true;
                 vm.teams_board_display = {
-                    displayObjData: buildDisplayObject(vm.user.teams, TeamsDisplayConfig),
-                    displayConfig: TeamsDisplayConfig,
+                    displayObjData: buildDisplayObject(vm.user.teams, TeamDisplayConfig),
+                    displayConfig: TeamDisplayConfig,
                     rowCallback: null
                 }
 
@@ -70,8 +70,8 @@
                 }
 
                  vm.showCreateTeamButton = getShowCreateTeamButton();
-                // vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
-                // vm.displayConfig = TeamsDisplayConfig;
+                // vm.displayObjData = buildDisplayObject(vm.user.teams, TeamDisplayConfig)
+                // vm.displayConfig = TeamDisplayConfig;
 
                  vm.setTab(0);
             }
@@ -79,7 +79,7 @@
             function setTab(index) {
                 vm.tab = index;
                 vm.showCreateTeamButton = getShowCreateTeamButton();
-                let displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig);
+                let displayObjData = buildDisplayObject(vm.user.teams, TeamDisplayConfig);
                 if (!vm.myProfile) {
                     displayObjData = $filter('filter')(displayObjData, getValueForFiltering, sharedTeamComparator)
                 }
@@ -219,8 +219,8 @@
                         MilesBoardApi.TeamsApi.post(result).then(
                             function (response) {
                                 vm.user.teams.push(result);
-                                vm.displayObjData = buildDisplayObject(vm.user.teams, TeamsDisplayConfig)
-                                vm.displayConfig = TeamsDisplayConfig;
+                                vm.displayObjData = buildDisplayObject(vm.user.teams, TeamDisplayConfig)
+                                vm.displayConfig = TeamDisplayConfig;
                             },
                             function (response) {
                                 console.error(response);

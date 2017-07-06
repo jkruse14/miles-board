@@ -5,15 +5,16 @@
         .module('milesBoard')
         .service('MilesBoardApi', MilesBoardApi);
 
-    MilesBoardApi.$inject = ['CustomFiltersApi','CustomTabsApi', 'Restangular', 'RunsApi', 'TeamsApi', 'UsersApi' ];
+    MilesBoardApi.$inject = ['CustomFiltersApi', 'CustomTabsApi', 'Restangular', 'RunsApi', 'TeamsApi','TeamMemberListsApi', 'UsersApi' ];
 
-    function MilesBoardApi(CustomFiltersApi, CustomTabsApi, Restangular, RunsApi, TeamsApi, UsersApi) {
+    function MilesBoardApi(CustomFiltersApi, CustomTabsApi, Restangular, RunsApi, TeamsApi, TeamMemberListsApi, UsersApi) {
         let self = this;
 
         self.CustomFiltersApi = CustomFiltersApi;
         self.CustomTabsApi = CustomTabsApi;
         self.RunsApi = RunsApi;
         self.TeamsApi = TeamsApi;
+        self.TeamMemberListsApi = TeamMemberListsApi;
         self.UsersApi = UsersApi;
         
         self.errorReader = errorReader;

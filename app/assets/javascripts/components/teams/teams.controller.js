@@ -6,12 +6,12 @@ angular
     .controller('TeamsController', TeamsController);
 
 TeamsController.$inject = ['$localStorage', '$scope', '$stateParams', 'boardFilterFilter', 'Flash', 
-                           'MilesBoardApi', 'team', 'teams', 'TeamsDisplayConfig', 
-                           'TeamMemberListsApi', '$uibModal','UsersDisplayConfig'];
+                           'MilesBoardApi', 'team', 'teams', 'TeamDisplayConfig', 'TeamsDisplayConfig', 
+                           '$uibModal','UsersDisplayConfig'];
 
 function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter, Flash, 
-                             MilesBoardApi, team, teams, TeamsDisplayConfig, 
-                             TeamMemberListsApi, $uibModal, UsersDisplayConfig) {
+                          MilesBoardApi, team, teams, TeamDisplayConfig, TeamsDisplayConfig, 
+                        $uibModal, UsersDisplayConfig) {
         let vm = this;
         vm.team = $stateParams.team_id ? team.plain().team : null;
         vm.teams = teams ? teams.plain() : null;
@@ -25,6 +25,9 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         vm.showUserProfileModal = showUserProfileModal;
         vm.showFilteredTable = showFilteredTable;
         vm.showCustomTabsModal = showCustomTabsModal;
+        vm.showAddRunButton = showAddRunButton;
+        vm.showJoinTeamButton = showJoinTeamButton;
+        vm.joinTeam = joinTeam;
 
         function onInit() {
             if ($stateParams.team_id) {
@@ -104,6 +107,18 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             let message = 'There was an error while creating a new team member:<br />'
             message += MilesBoardApi.errorReader(reason);
             Flash.create('danger', message, 0, { container: 'index_flash' }, true)
+        }
+
+        function showAddRunButton(user_row) {
+            return (vm.loggedIn && (vm.isTeamOwner || $localStorage.user.id == parseInt(user_row.id.text)));
+        }
+
+        function showJoinTeamButton(row) {
+            let notOnTeam = true
+            if($localStorage.user.team_ids){
+                notOnTeam = $localStorage.user.team_ids.indexOf(row.id.text) === -1;
+            }
+            return notOnTeam;
         }
 
         ///// MODALS /////
@@ -288,6 +303,21 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             message += MilesBoardApi.errorReader(reason.data);
             Flash.create('danger', message, 0, { container: 'index_flash' }, true);
         });
+    }
+
+    function joinTeam(team_row) {
+       MilesBoardApi.TeamMemberListsApi.post({team_id: team_row.id.text, user_id:$localStorage.user.id}).then(
+           function(resp) {
+               $localStorage.user.teams.push({id: team_row.id.text, name: team_row['Name'].text})
+               $localStorage.user.team_ids.push(team_row.id.text)
+               let message = 'You have been added as a member to ' + team_row['Name'].text;
+               Flash.create('success', message, 5000, {container: 'index_flash'}, true);
+           },
+           function(reason) {
+               let message = 'Whoops... There was an error with your request, please try again later'
+               Flash.create('danger', message, 5000, {container: 'index_flash'}, true);
+           }
+       )
     }
 
     function showUserProfileModal(user_id) {

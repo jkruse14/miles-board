@@ -11,7 +11,8 @@ angular
             displayObjData: '<',
             displayObjConfig: '<',
             isOwner: '<',
-            rowCallback: '&'
+            rowCallback: '&',
+            showCallbackConditions:'&'
         }
     });
 })();
