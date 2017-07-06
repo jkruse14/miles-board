@@ -20,6 +20,7 @@
         vm.$onInit = onInit;
         vm.showLoginModal = showLoginModal;
         vm.logout = logout;
+        vm.onProfileClick = onProfileClick;
 
         $rootScope.$on('auth:login-success', function () {
             $localStorage.user_nav = 'show-logout';
@@ -28,13 +29,17 @@
         });
 
         $rootScope.$on('auth.validation-success', function () {
-            vm.user_id = $localStorage.user.id
+            vm.user_id = $localStorage.user.id;
         });
 
         function onInit() {
             vm.showLogoutLink = $localStorage.user ? true : false;
             
             vm.user_id = $localStorage.user ? $localStorage.user.id : null;
+        }
+
+        function onProfileClick() {
+            $state.go('user',{'userId':$localStorage.user.id});
         }
 
         function showLoginModal(parentSelector) {

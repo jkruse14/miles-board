@@ -63,7 +63,7 @@
 
         var userState = {
             name: 'user',
-            url: '/users/:userId?reset',
+            url: '/users/{userId}?reset',
             templateUrl: 'components/users/_users.html',
             controller: 'UsersController as vm',
             resolve: {
