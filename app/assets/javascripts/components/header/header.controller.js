@@ -24,6 +24,11 @@
         $rootScope.$on('auth:login-success', function () {
             $localStorage.user_nav = 'show-logout';
             vm.showLogoutLink = true;
+            vm.user_id = $localStorage.user ? $localStorage.user.id : null;
+        });
+
+        $rootScope.$on('auth.validation-success', function () {
+            vm.user_id = $localStorage.user.id
         });
 
         function onInit() {

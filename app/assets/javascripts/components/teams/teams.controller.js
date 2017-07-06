@@ -109,8 +109,8 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             Flash.create('danger', message, 0, { container: 'index_flash' }, true)
         }
 
-        function showAddRunButton(user_row_id) {
-            return TeamDisplayConfig.showCallback && vm.showActions && (vm.isOwner || vm.loggedInUserId == parseInt(user_row_id));
+        function showAddRunButton(user_row) {
+            return (vm.loggedIn && (vm.isTeamOwner || $localStorage.user.id == parseInt(user_row.id.text)));
         }
 
         function showJoinTeamButton(row) {

@@ -23,7 +23,7 @@
             <td ng-repeat-end ng-if="$last" >
                 <button class="btn btn-primary btn-success" 
                         ng-click="vm.callback(row)" 
-                        ng-show="vm.showCallbackConditions()(row)">
+                        ng-show="vm.showCallbackConditions()(row) && vm.showActions">
                     {{vm.displayObjConfig.rowCallbackText}}
                 </button>
             </td>
