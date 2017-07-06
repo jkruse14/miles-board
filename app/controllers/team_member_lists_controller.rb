@@ -9,6 +9,13 @@ class TeamMemberListsController < ApplicationController
   end
 
   def create
+    @tml = TeamMemberList.new(list_params)
+    begin
+      @tml.save!
+      render json: @tml.as_json, status: :created && return
+    rescue ActiveRecord::RecordInvalid => invalid
+      render(json: invalid.record.errors.messages, status: :unprocessable_entity) && return
+    end
   end
 
   def update

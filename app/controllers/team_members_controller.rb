@@ -3,6 +3,7 @@ class TeamMembersController < ApplicationController
   end
 
   def create
+    
   end
 
   def update
@@ -10,4 +11,7 @@ class TeamMembersController < ApplicationController
 
   def delete
   end
+
+  private
+
 end

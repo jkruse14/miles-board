@@ -25,9 +25,10 @@ function BoardController($localStorage, $scope) {
         dir: ASC
     }
 
-    vm.callback = callback;
+    
 
     function onInit() {
+        vm.callback = callback;
     }
 
     function callback(row) {
