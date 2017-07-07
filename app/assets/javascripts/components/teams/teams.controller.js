@@ -38,7 +38,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                     vm.owner_ids.push(vm.team.team_owners[i].id);
                 }
 
-                vm.isTeamOwner = vm.loggedIn && vm.owner_ids.indexOf($localStorage.user.id) !== -1
+                vm.isTeamOwner = vm.loggedIn && (vm.owner_ids.indexOf($localStorage.user.id) !== -1 || vm.team.team_owner_id == $localStorage.user.id)
             }
             
             setUpTable();
