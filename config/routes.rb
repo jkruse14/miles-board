@@ -45,6 +45,9 @@ Rails.application.routes.draw do
   put     'team_owners/:id',    to: 'team_owners#update',   as: 'team_owners_update'
   delete  'team_owners/:id',    to: 'team_owners#delete',   as: 'team_owners_delete'
 
+  post 'team_owner_lists', to: 'team_owner_lists#create', as: 'team_owner_lists_create'
+  post 'team_owner_lists/update_owners', to: 'team_owner_lists#update_owners', as: 'team_owner_lists_update_owners'
+
   get     'team_members',        to: 'team_members#index',  as: 'team_members_path'
   get     'team_members/:id',    to: 'team_members#show',   as: 'team_members_show'
   post    'team_members',        to: 'team_members#create', as: 'team_members_create'

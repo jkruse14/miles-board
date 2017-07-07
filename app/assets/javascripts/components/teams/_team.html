@@ -4,9 +4,14 @@
         <span>{{vm.team.name}}</span>
         
         <div class='board-header-btn-container'>
-            <button type="button" class="btn btn-primary addMemberBtn" ng-click="vm.showAddTeamMemberModal()" ng-show='vm.isTeamOwner'>
-                Add Team Member
-            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary addMemberBtn" ng-click="vm.showAddTeamMemberModal()" ng-show='vm.isTeamOwner'>
+                    Add Team Member
+                </button>
+                <button type="button" class="btn btn-primary addMemberBtn" ng-click="vm.showAddTeamOwnerModal()" ng-show='vm.isTeamOwner'>
+                    Add Team Owner
+                </button>
+            </div>
         </div>
     </div>
     <uib-tabset>

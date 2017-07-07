@@ -15,7 +15,8 @@
         for(let i = 0; i < keys.length; i++){
             let item = items[keys[i]];
             let query = new RegExp(inp, 'i');
-            if(inp === undefined || item['Name'] && query.test(item['Name'].text.substring(0))) {
+            let text_to_test = item['Name'] ? item['Name'].text : item.first_name + ' ' + item.last_name;
+            if (inp === undefined || text_to_test && query.test(text_to_test.substring(0))) {
                 filtered.push(item);
             }
         }
