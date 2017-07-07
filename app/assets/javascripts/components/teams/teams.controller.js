@@ -16,7 +16,6 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         vm.team = $stateParams.team_id ? team.plain().team : null;
         vm.teams = teams ? teams.plain() : null;
         vm.loggedIn = $localStorage.user ? true : false;
-        vm.isTeamOwner = vm.loggedIn && vm.team && ($localStorage.user.id === vm.team.team_owner_id);
         
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
@@ -28,10 +27,18 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         vm.showAddRunButton = showAddRunButton;
         vm.showJoinTeamButton = showJoinTeamButton;
         vm.joinTeam = joinTeam;
+        vm.showAddTeamOwnerModal = showAddTeamOwnerModal;
 
         function onInit() {
             if ($stateParams.team_id) {
                 vm.team.users = team.plain().users;
+
+                vm.owner_ids = [];
+                for (let i = 0; i < vm.team.team_owners.length; i++) {
+                    vm.owner_ids.push(vm.team.team_owners[i].id);
+                }
+
+                vm.isTeamOwner = vm.loggedIn && vm.owner_ids.indexOf($localStorage.user.id) !== -1
             }
             
             setUpTable();
@@ -105,7 +112,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
 
         function teamMemberAddFailFlash(reason) {
             let message = 'There was an error while creating a new team member:<br />'
-            message += MilesBoardApi.errorReader(reason);
+            message += MilesBoardApi.errorReader(reason.data);
             Flash.create('danger', message, 0, { container: 'index_flash' }, true)
         }
 
@@ -164,14 +171,12 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                             })
                         } else {
                             let newUser = { 
-                                user:{
                                     first_name : result.first_name,
                                     last_name: result.last_name,
                                     email : result.email,
                                     team_id: $stateParams.team_id,
                                     password : result.password,
                                     password_confirmation: result.password_confirmation,
-                                }
                             }
 
                             MilesBoardApi.UsersApi.post(newUser).then(function(result){
@@ -188,10 +193,78 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                                 teamMemberAddSuccessFlash();
                             },
                             function(reason) {
-                            teamMemberAddFailFlash(reason);
+                                teamMemberAddFailFlash(reason);
                             });
                         }
                     }, function () {});
+                }
+            })
+        };
+
+        function showAddTeamOwnerModal() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'components/modals/AddOwnerModal/_addOwnerModal.html',
+                controller: 'AddOwnerModalController',
+                controllerAs: 'vm',
+                size: 'md',
+                scope: $scope
+            });
+
+            modalInstance.result.then(function (result) {
+                Flash.clear();
+                if (result) {
+                    MilesBoardApi.UsersApi.get('', { email: result.email }).then(function (response) {
+                        if (response.id) {
+                            let user = {
+                                id: response.id,
+                                first_name: response.first_name,
+                                last_name: response.last_name,
+                                team_distance: 0,
+                                team_run_count: 0
+                            }
+                            TeamMemberListsApi.post({
+                                user_id: response.id,
+                                team_id: $stateParams.team_id,
+                            }).then(function (post_result) {
+                                vm.team.users.push(user);
+                                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+                                teamMemberAddSuccessFlash();
+                            }, function (reason) {
+                                teamMemberAddFailFlash(reason)
+                            })
+                        } else {
+                            let newUser = {
+                                user: {
+                                    first_name: result.first_name,
+                                    last_name: result.last_name,
+                                    email: result.email,
+                                    team_id: $stateParams.team_id,
+                                    password: result.password,
+                                    password_confirmation: result.password_confirmation,
+                                }
+                            }
+
+                            MilesBoardApi.UsersApi.post(newUser).then(function (result) {
+                                let user = {
+                                    id: result.id,
+                                    first_name: newUser.user.first_name,
+                                    last_name: newUser.user.last_name,
+                                    team_distance: 0,
+                                    team_run_count: 0
+                                }
+                                vm.team.users.push(user);
+                                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
+
+                                teamMemberAddSuccessFlash();
+                            },
+                                function (reason) {
+                                    teamMemberAddFailFlash(reason);
+                                });
+                        }
+                    }, function () { });
                 }
             })
         };
