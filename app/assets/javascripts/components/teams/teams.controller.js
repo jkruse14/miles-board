@@ -128,6 +128,21 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             return notOnTeam;
         }
 
+        function joinTeam(team_row) {
+            MilesBoardApi.TeamMemberListsApi.post({ team_id: team_row.id.text, user_id: $localStorage.user.id }).then(
+                function (resp) {
+                    $localStorage.user.teams.push({ id: team_row.id.text, name: team_row['Name'].text })
+                    $localStorage.user.team_ids.push(team_row.id.text)
+                    let message = 'You have been added as a member to ' + team_row['Name'].text;
+                    Flash.create('success', message, 5000, { container: 'index_flash' }, true);
+                },
+                function (reason) {
+                    let message = 'Whoops... There was an error with your request, please try again later'
+                    Flash.create('danger', message, 5000, { container: 'index_flash' }, true);
+                }
+            )
+        }
+
         ///// MODALS /////
 
         function showAddTeamMemberModal(parentSelector) {
@@ -216,57 +231,18 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             modalInstance.result.then(function (result) {
                 Flash.clear();
                 if (result) {
-                    MilesBoardApi.UsersApi.get('', { email: result.email }).then(function (response) {
-                        if (response.id) {
-                            let user = {
-                                id: response.id,
-                                first_name: response.first_name,
-                                last_name: response.last_name,
-                                team_distance: 0,
-                                team_run_count: 0
-                            }
-                            TeamMemberListsApi.post({
-                                user_id: response.id,
-                                team_id: $stateParams.team_id,
-                            }).then(function (post_result) {
-                                vm.team.users.push(user);
-                                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
-                                teamMemberAddSuccessFlash();
-                            }, function (reason) {
-                                teamMemberAddFailFlash(reason)
-                            })
-                        } else {
-                            let newUser = {
-                                user: {
-                                    first_name: result.first_name,
-                                    last_name: result.last_name,
-                                    email: result.email,
-                                    team_id: $stateParams.team_id,
-                                    password: result.password,
-                                    password_confirmation: result.password_confirmation,
-                                }
-                            }
-
-                            MilesBoardApi.UsersApi.post(newUser).then(function (result) {
-                                let user = {
-                                    id: result.id,
-                                    first_name: newUser.user.first_name,
-                                    last_name: newUser.user.last_name,
-                                    team_distance: 0,
-                                    team_run_count: 0
-                                }
-                                vm.team.users.push(user);
-                                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
-
-                                teamMemberAddSuccessFlash();
-                            },
-                                function (reason) {
-                                    teamMemberAddFailFlash(reason);
-                                });
-                        }
-                    }, function () { });
+                    Flash.clear();
+                    MilesBoardApi.TeamOwnerListsApi.updateOwners({team_id: $stateParams.team_id, owners_list: result}).then(function (response) {
+                            let message = 'Team owners successfully updated!'
+                            Flash.create('success', message, 5000, {container: 'index_flash'}, true);
+                    },
+                    function(reason) {
+                        let message = 'Whoops... there was an error updating the team owners<br />';
+                        message += MilesBoardApi.errorReader(reason.data);
+                        Flash.create('danger', message, 0, {container: 'index_flash'}, true);
+                    });
                 }
-            })
+            });
         };
 
         function showAddRunToUser(input) {
@@ -376,21 +352,6 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             message += MilesBoardApi.errorReader(reason.data);
             Flash.create('danger', message, 0, { container: 'index_flash' }, true);
         });
-    }
-
-    function joinTeam(team_row) {
-       MilesBoardApi.TeamMemberListsApi.post({team_id: team_row.id.text, user_id:$localStorage.user.id}).then(
-           function(resp) {
-               $localStorage.user.teams.push({id: team_row.id.text, name: team_row['Name'].text})
-               $localStorage.user.team_ids.push(team_row.id.text)
-               let message = 'You have been added as a member to ' + team_row['Name'].text;
-               Flash.create('success', message, 5000, {container: 'index_flash'}, true);
-           },
-           function(reason) {
-               let message = 'Whoops... There was an error with your request, please try again later'
-               Flash.create('danger', message, 5000, {container: 'index_flash'}, true);
-           }
-       )
     }
 
     function showUserProfileModal(user_id) {

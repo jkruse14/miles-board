@@ -420,8 +420,14 @@
             padding-right: 15px;
         }
         >.board-header-btn-container {
-            display: inline-block;
-            padding-left: 15px;
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 35px;
+            >.btn-group {
+                position: absolute;
+                left: 0px;
+            }
         }
     }
 }

@@ -41,6 +41,7 @@ gem 'bcrypt',         '3.1.11'
 gem 'devise_token_auth', '~> 0.1.42'
 gem 'omniauth'
 gem 'figaro'
+gem 'activerecord-import', '>= 0.2.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

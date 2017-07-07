@@ -6,10 +6,10 @@ class Team < ApplicationRecord
     has_many :runs, through: :users
     has_many :custom_tabs
 
-    belongs_to :team_owner
+    has_many :team_owner_lists, dependent: :destroy
+    has_many :team_owners, through: :team_owner_lists
 
     validates :name, presence: true, length: { maximum: 50 }
-    validates :team_owner_id, presence: true
 
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
     validates :contact_email, presence: true, 

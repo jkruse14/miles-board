@@ -36,12 +36,13 @@ class TeamsController < ApplicationController
       users.push(tmp)
     end
 
-    render(json: { team: @team.as_json(only: %i(id name users team_owner_id location),
+    render(json: { team: @team.as_json(only: %i(id name users location),
                                        include: {
                                          custom_tabs: { only: %i(id heading),
                                                         include: {
                                                           custom_filters: { only: %i(id filter_field filter_value comparator) }
-                                                        } }
+                                                        } },
+                                         team_owners: { only: %i(id first_name last_name) } 
                                        }), users: users },
            status: 200) && return
   end
@@ -54,6 +55,7 @@ class TeamsController < ApplicationController
 
     @team = Team.create(team_params.except(:id))
     if @team.valid?
+      TeamOwnerList.create(team_owner_id: @owner[:id], team_id: @team[:id])
       render(json: { id: @team.id }, status: :created) && return
     else
       render(json: @team.errors, status: :unprocessable_entity) && return
