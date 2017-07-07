@@ -36,7 +36,7 @@ class TeamsController < ApplicationController
       users.push(tmp)
     end
 
-    render(json: { team: @team.as_json(only: %i(id name users location),
+    render(json: { team: @team.as_json(only: %i(id name users team_owner_id location),
                                        include: {
                                          custom_tabs: { only: %i(id heading),
                                                         include: {
