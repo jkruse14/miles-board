@@ -9,14 +9,22 @@
 
     function AddRunToUserController($scope, $uibModalInstance) {
         let vm = this;
-        vm.run = {
-            user_id: '',
-            distance: 0,
-            run_date: '',
-        };
-
+        
+        vm.$onInit = onInit;
         vm.save = save;
         vm.cancel = cancel;
+
+        function onInit() {
+            vm.cal_opened = false;
+            vm.run = {
+                user_id: '',
+                distance: 0,
+                run_date: new Date(),
+            };
+            vm.dateOptions = {
+                maxDate: new Date(),
+            };
+        }
 
         function save(user_id) {
             vm.run.user_id = user_id;

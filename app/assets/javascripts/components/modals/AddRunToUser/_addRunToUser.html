@@ -13,7 +13,18 @@
                     </div>
                     <div class="form-group">
                         <label for="run_date">Date of Run</label>
-                        <input type="date" class="form-control" id="run_date" ng-model="vm.run.run_date" placeholder="Select date">
+                        <p class='input-group'>
+                            <input uib-datepicker-popup type="text" class="form-control" id="run_date"
+                                is-open="vm.cal_opened"
+                                datepicker-options="vm.dateOptions" 
+                                ng-required="true"
+                                ng-model="vm.run.run_date" 
+                                ng-click="vm.cal_opened = !vm.cal_opened"
+                                placeholder="Select date" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vm.cal_opened = !vm.cal_opened"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </p>
                     </div>
                 </form>
             </div>
