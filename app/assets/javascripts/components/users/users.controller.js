@@ -97,8 +97,7 @@
             }
 
             function getShowCreateTeamButton() {
-                return (vm.tab === 0 && vm.loggedIn && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner') || 
-                        ($state.params.userId && parseInt($state.params.userId) == vm.user.id && vm.user.type === userTypes.TEAM_OWNER);
+                return (vm.tab === 0 && vm.loggedIn && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner');
             }
 
             function buildDisplayObject(obj, config) {
