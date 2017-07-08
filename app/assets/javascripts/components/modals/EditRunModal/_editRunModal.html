@@ -13,12 +13,13 @@
                     </div>
                     <div class="form-group">
                         <label for="date">Date</label>
-                        <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.run_date" is-open="vm.cal.opened" datepicker-options="dateOptions"
-                                ng-required="true" close-text="Close" />
+                        <p class='input-group'>
+                            <input uib-datepicker-popup type="text" class="form-control" id="run_date" is-open="vm.cal_opened" datepicker-options="vm.dateOptions"
+                                ng-required="true" ng-model="vm.run.run_date" ng-click="vm.cal_opened = !vm.cal_opened" placeholder="Select date"
+                            />
                             <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
+                                <button type="button" class="btn btn-default" ng-click="vm.cal_opened = !vm.cal_opened"><i class="fa fa-calendar"></i></button>
+                            </span>
                         </p>
                     </div>
                 </form>

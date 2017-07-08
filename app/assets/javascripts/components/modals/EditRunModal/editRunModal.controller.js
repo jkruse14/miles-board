@@ -10,6 +10,10 @@
     function EditRunModalController($scope, $uibModalInstance) {
         let vm = this;
 
+        vm.distance = parseInt($scope.editing_run.Distance.text);
+        vm.run_date = $scope.editing_run['Run Date'].text === '--' ? new Date() : moment($scope.editing_run['Run Date'].text);
+
+
         vm.$onInit = onInit;
         vm.save = save;
         vm.cancel = cancel;
@@ -27,8 +31,8 @@
         
         function onInit() {
             vm.distance = parseInt($scope.editing_run.Distance.text);
-            vm.run_date = $scope.editing_run['Run Date'].text === '--' ? moment() : moment($scope.editing_run['Run Date'].text);
-
+            vm.run_date = $scope.editing_run['Run Date'].text === '--' ? new Date() : moment($scope.editing_run['Run Date'].text);
+            
             vm.today = moment();
             vm.dateOptions = {
                 maxDate: new Date(),
