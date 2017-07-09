@@ -15,7 +15,17 @@ describe('UsersController', function() {
                                 "location": "Savage, MN", 
                                 "contact_email": "coachkruser@gmail.com" 
                             }], 
-                        "runs": [], 
+                        "runs":[
+                                {
+                                    "id":2,
+                                    "distance":"5.0",
+                                    "event":null,
+                                    "user_id":568,
+                                    "team_id":1,
+                                    "run_date":"2017-07-09T16:50:33.832Z",
+                                    "team":{"name":"Next Goal Coaching"}
+                                }
+                            ], 
                         "imported_user_data": [] 
                     } ;
 
@@ -104,5 +114,20 @@ describe('UsersController', function() {
           expect(UsersController.teams_board_display.displayObjData[0].Location.hidden).toBe(true);
           expect(UsersController.teams_board_display.displayObjData[0]['Contact Email'].text).toBe('coachkruser@gmail.com');
           expect(UsersController.teams_board_display.displayObjData[0]['Contact Email'].hidden).toBe(true);
-      })
+      });
+
+      it('should build a board showing the users\' runs', function () {
+          expect(UsersController.runs_board_display).toBeDefined();
+          expect(UsersController.runs_board_display.displayObjData).toBeDefined();
+          expect(UsersController.runs_board_display.displayConfig).toEqual(RunsDisplayConfig);
+          expect(UsersController.runs_board_display.rowCallback).toBeDefined();
+
+          expect(UsersController.runs_board_display.displayObjData.length).toEqual(1);
+          expect(UsersController.runs_board_display.displayObjData[0].id.text).toBe(2);
+          expect(UsersController.runs_board_display.displayObjData[0].id.hidden).toBe(true);
+          expect(UsersController.runs_board_display.displayObjData[0].Team.text).toBe('Next Goal Coaching')
+          expect(parseInt(UsersController.runs_board_display.displayObjData[0].Distance.text)).toEqual(5);
+          expect(UsersController.runs_board_display.displayObjData[0]['Run Date'].text).toBe('July 9, 2017');
+          
+      });
 });
