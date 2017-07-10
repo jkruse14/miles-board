@@ -7,10 +7,10 @@
         'objcode': 'USER',
         'paramName': 'userId',
         'headers': [{text: 'id', hidden: true},
-                    {text: 'Name', hidden: false, uiSref:'user'}, 
+                    {text: 'Name', hidden: false}, 
                     {text: 'Team Distance', hidden: false}, 
                     {text: 'Team Run Count', hidden: false}],
         'showCallback':true,
-        'rowCallbackText': 'Add Run'
+        'rowCallbackText': ['Add Run', 'Profile']
     });
 })();

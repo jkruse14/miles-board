@@ -354,8 +354,26 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         });
     }
 
-    function showUserProfileModal(user_id) {
-
+    function showUserProfileModal(user_row) {
+        let newscope = $scope.$new();
+        MilesBoardApi.UsersApi.get(user_row.id.text).then(function(resp){
+            newscope.user = resp.plain();
+            newscope.owner_ids = vm.owner_ids;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'components/modals/UserProfileModal/_userProfileModal.html',
+                controller: 'UserProfileModalController',
+                controllerAs: 'vm',
+                size: 'lg',
+                scope: newscope
+            });
+        },
+        function(reason){
+            let message = 'Whoops... that user could not be found';
+            Flash.create('danger', message, 5000, {container: 'index_flash'}, true);
+        });
     }
 }
 
