@@ -6,11 +6,11 @@
         .controller('UsersController', UsersController);
 
     UsersController.$inject = ['$auth','$filter', '$localStorage', '$scope', '$state', '$uibModal', 
-                                'Flash', 'MilesBoardApi', 'MilesBoardImages', 'RunsDisplayConfig', 
+                                '$uibModalInstance','Flash', 'MilesBoardApi', 'MilesBoardImages', 'RunsDisplayConfig', 
                                 'TeamDisplayConfig', 'user', 'UsersDisplayConfig', 'Restangular'];
 
     function UsersController($auth, $filter, $localStorage, $scope, $state, $uibModal, 
-                             Flash, MilesBoardApi, MilesBoardImages, RunsDisplayConfig, 
+                            $uibModalInstance, Flash, MilesBoardApi, MilesBoardImages, RunsDisplayConfig, 
                              TeamDisplayConfig, user, UsersDisplayConfig, Restangular) {
             let vm = this;
             const userTypes = {
@@ -33,7 +33,6 @@
             vm.setTab = setTab;
             vm.showCreateTeamModal = showCreateTeamModal;
             vm.showUpdateEmailModal = showUpdateEmailModal;
-            vm.resetPassword = resetPassword;
 
             function onInit() {
                 if($state.params['reset']) {
@@ -88,16 +87,17 @@
                         vm.teams_board_display.displayObjData = displayObjData;
                         break;
                     case 1: //user owned teams
-                        vm.teams_board_display.displayObjData = $filter('filter')(vm.teams_board_display.displayObjData, getValueForFiltering,  isTeamOwnerComparator)
+                        vm.teams_board_display.displayObjData = $filter('filter')(vm.teams_board_display.displayObjData, getValueForFiltering, isTeamOwnerComparator);
                         break;
                     default:
+                        vm.tab = 0;
                         vm.teams_board_display.displayObjData = displayObjData;
                         break;
                 }
             }
 
             function getShowCreateTeamButton() {
-                return (vm.tab === 0 && vm.loggedIn && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner');
+                return (vm.loggedIn && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner');
             }
 
             function buildDisplayObject(obj, config) {
@@ -130,12 +130,14 @@
                 return displayObj;
             }
 
-            function getValueForFiltering(item) {
-                return item.id.text;
+            function getValueForFiltering(value, index, array) {
+                console.log(value);
+                return value.id.text;
             }
 
             function isTeamOwnerComparator(actual, expected) {
-                 return actual === vm.user.id;
+                console.log(actual, expected)
+                 return parseInt(actual) === parseInt(expected);
             }
 
             function sharedTeamComparator(actual,expected) {
@@ -230,8 +232,6 @@
             }
 
             function showUpdateEmailModal() {
-                // var parentElem = parentSelector ?
-                //     angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
                 $scope.profileAction = 'edit';
                 $scope.user_for_modal = vm.user;
                 var modalInstance = $uibModal.open({
@@ -242,7 +242,6 @@
                     controller: 'NewMemberModalController',
                     controllerAs: 'vm',
                     size: 'md',
-                    // appendTo: parentElem,
                     scope: $scope
                 });
 
@@ -258,18 +257,6 @@
                         Flash.create('danger', messsage, 0, {container: 'index_flash'}, true)
                      });
                 })
-            }
-
-            function resetPassword(user) {
-                $auth.requestPasswordReset({email: user.email})
-                    .then(function (resp) {
-                        let message = "Success!<br />An email has been sent to reset your password"
-                        Flash.create('success', message, 0, { container: 'index_flash' }, true)
-                    })
-                    .catch(function (resp) {
-                        // handle error response
-                        MilesBoardImages.errorReader(error);
-                    });
             }
         }
 })();

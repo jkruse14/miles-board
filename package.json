@@ -20,6 +20,7 @@
     "restangular": "^1.6.1"
   },
   "devDependencies": {
+    "angular-mocks": "^1.6.5",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-concat": "^2.6.1",
@@ -30,8 +31,14 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-util": "^3.0.8",
     "gulp-wiredep": "^1.2.0",
+    "jasmine-core": "^2.6.4",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-ng-html2js-preprocessor": "^1.0.0",
+    "karma-spec-reporter": "0.0.31",
     "protractor": "^5.1.2",
     "protractor-fail-fast": "^3.0.2",
     "wiredep": "^2.2.2"
