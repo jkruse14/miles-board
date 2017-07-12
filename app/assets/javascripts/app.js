@@ -48,7 +48,6 @@
                 }
             }]
         );
-        console.log('is dev: ', envServiceProvider.is('development'))
     }
 
     EnvironmentConfig.$inject = ['envServiceProvider'];

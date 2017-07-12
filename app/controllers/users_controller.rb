@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     # - if user_type = user, show friends
     if !params['email'].nil?
       @user = User.find_by_email(params[:email])
-      render json: @users, status: 200 && return
+      render(json: { user: user_return_obj }, status: 200) && return
     else
       all_users = if !params[:team_id].nil?
                     Team.find(params[:team_id]).users
@@ -32,10 +32,9 @@ class UsersController < ApplicationController
   def show
     team_miles = Run.where(user_id: params['id']).group(:team_id).calculate(:sum, :distance)
 
-    @user.teams.each do |team|
-      puts team.inspect
-      # team[:team_distance] = team_miles[team.id]
-    end
+    # @user.teams.each do |team|
+    #   # team[:team_distance] = team_miles[team.id]
+    # end
 
     render(json: { user: user_return_obj },
            status: 200) && return
@@ -66,9 +65,9 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      render json: { id: @user['id'] }, status: :ok
+      render(json: { id: @user['id'] }, status: :ok) && return
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render(json: @user.errors, status: :unprocessable_entity) && return
     end
   end
 
@@ -89,9 +88,9 @@ class UsersController < ApplicationController
   def delete
     @user = User.find(params[:id]).destroy
     if @user.destroyed?
-      render json: { id: params[:id] }, status: :ok
+      render(json: { id: params[:id] }, status: :ok) && return
     else
-      render json: { error: 'failed to destroy', id: params[:id] }, status: :unprocessable_entity
+      render(json: { error: 'failed to destroy', id: params[:id] }, status: :unprocessable_entity) && return
     end
   end
 
@@ -99,9 +98,9 @@ class UsersController < ApplicationController
     if !params[:email].nil?
       @user = User.find_by_email(params[:email])
       @user.send_confirmation_instructions
-      render json: { status: 'success' }, status: :ok
+      render(json: { status: 'success' }, status: :ok) && return
     else
-      render json: { error: 'no email address present', id: params[:id] }, status: :unprocessable_entity
+      render(json: { error: 'no email address present', id: params[:id] }, status: :unprocessable_entity) && return
     end
   end
 
@@ -115,7 +114,12 @@ class UsersController < ApplicationController
     @user.as_json(only: %i(id first_name last_name email type),
                   include: {
                     teams: {
-                      only: %i(id name location contact_email team_owner_id)
+                      only: %i(id name location contact_email team_owner_id),
+                      include: {
+                        team_owners: {
+                          only: %i(id first_name last_name)
+                        }
+                      }
                     },
                     runs: { include: { team: { only: :name } } },
                     imported_user_data: { only: %i(team_miles num_team_runs) }

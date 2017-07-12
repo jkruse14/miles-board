@@ -6,16 +6,17 @@
         .service('MilesBoardApi', MilesBoardApi);
 
     MilesBoardApi.$inject = ['CustomFiltersApi', 'CustomTabsApi', 'Restangular', 'RunsApi', 
-                             'TeamsApi','TeamMemberListsApi', 'TeamOwnerListsApi', 'UsersApi' ];
+                             'TeamsApi','TeamMemberListsApi', 'TeamOwnersApi', 'TeamOwnerListsApi', 'UsersApi' ];
 
     function MilesBoardApi(CustomFiltersApi, CustomTabsApi, Restangular, RunsApi, 
-                           TeamsApi, TeamMemberListsApi, TeamOwnerListsApi, UsersApi) {
+                           TeamsApi, TeamMemberListsApi,TeamOwnersApi, TeamOwnerListsApi, UsersApi) {
         let self = this;
 
         self.CustomFiltersApi = CustomFiltersApi;
         self.CustomTabsApi = CustomTabsApi;
         self.RunsApi = RunsApi;
         self.TeamsApi = TeamsApi;
+        self.TeamOwnersApi = TeamOwnersApi;
         self.TeamMemberListsApi = TeamMemberListsApi;
         self.TeamOwnerListsApi = TeamOwnerListsApi;
         self.UsersApi = UsersApi;

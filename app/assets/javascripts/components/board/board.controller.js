@@ -28,11 +28,16 @@ function BoardController($localStorage, $scope) {
     
 
     function onInit() {
-        vm.callback = callback;
+        if(vm.rowCallback instanceof Array){
+            vm.callbacks = vm.rowCallback;
+        } else {
+            vm.callbacks = [vm.rowCallback]
+        }
+        vm.callback = callback
     }
 
-    function callback(row) {
-        vm.rowCallback()(row);
+    function callback(row, index) {
+        vm.callbacks[0]()[index](row);
     }
 
     function setOrdering(col) {
@@ -51,7 +56,7 @@ function BoardController($localStorage, $scope) {
     }
 
     function getValueForOrdering(item) {
-        return item[vm.ordering.col].text;
+        return item[vm.ordering.col];
     }
 }
 })();
