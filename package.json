@@ -6,6 +6,9 @@
   "directories": {
     "test": "test"
   },
+  "engines": {
+    "node": "6.11.1"
+  },
   "dependencies": {
     "@uirouter/angularjs": "latest",
     "angular": "^1.6.4",
@@ -46,7 +49,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "./node_modules/bower/bin/bower install; rake assets:precompile"
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "repository": {
     "type": "git",
