@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    // 'use strict';
 
     angular
         .module('milesBoard')
@@ -39,10 +39,10 @@
             templateUrl: 'components/teams/_teams.html',
             controller: 'TeamsController as vm',
             resolve: {
-                team: function(){ return [] },
-                teams: function (TeamsApi, $stateParams) {
+                team: [function(){ return [] }],
+                teams: ['TeamsApi', '$stateParams', function (TeamsApi, $stateParams) {
                     return TeamsApi.get('');
-                }
+                }]
             }
         }
 
@@ -52,12 +52,12 @@
             templateUrl: 'components/teams/_team.html',
             controller: 'TeamsController as vm',
             resolve: {
-                team: function (TeamsApi, $stateParams) {
+                team: ['TeamsApi', '$stateParams', function (TeamsApi, $stateParams) {
                     return TeamsApi.get($stateParams.team_id);
-                },
-                teams: function (TeamsApi, $stateParams) {
+                }],
+                teams: ['TeamsApi', '$stateParams', function (TeamsApi, $stateParams) {
                     return TeamsApi.get('');
-                }
+                }]
             }
         };
 
@@ -67,15 +67,15 @@
             templateUrl: 'components/users/_users.html',
             controller: 'UsersController as vm',
             resolve: {
-                user: function (UsersApi, $stateParams) {
+                user: ['UsersApi', '$stateParams', function (UsersApi, $stateParams) {
                     return UsersApi.get($stateParams.userId);
-                },
-                owner: function (TeamOwnersApi, $stateParams) {
+                }],
+                owner: ['TeamOwnersApi', '$stateParams', function (TeamOwnersApi, $stateParams) {
                     return TeamOwnersApi.get($stateParams.userId);
-                },
-                auth: function($auth) {
+                }],
+                auth: ['$auth',function($auth) {
                     return $auth.validateUser();
-                }
+                }]
             }
         };
 
