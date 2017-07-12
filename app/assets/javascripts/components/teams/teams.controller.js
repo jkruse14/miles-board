@@ -6,11 +6,11 @@ angular
     .controller('TeamsController', TeamsController);
 
 TeamsController.$inject = ['$localStorage', '$scope', '$stateParams', 'boardFilterFilter', 'Flash', 
-                           'MilesBoardApi', 'TeamDisplayConfig', 'TeamsDisplayConfig', 
+                           'MilesBoardApi', 'team', 'teams', 'TeamDisplayConfig', 'TeamsDisplayConfig', 
                            '$uibModal','UsersDisplayConfig'];
 
 function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter, Flash, 
-                          MilesBoardApi, TeamDisplayConfig, TeamsDisplayConfig, 
+                          MilesBoardApi, team, teams, TeamDisplayConfig, TeamsDisplayConfig, 
                         $uibModal, UsersDisplayConfig) {
         let vm = this;
         vm.team = $stateParams.team_id ? team.plain().team : null;
