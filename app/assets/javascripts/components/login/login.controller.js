@@ -6,9 +6,9 @@
         .run()
         .controller('LoginController', LoginController);
     
-    LoginController.$inject = ['$state','$localStorage','$window', 'Flash','LoginFactory'];
+    LoginController.$inject = ['$state','$localStorage','$window', 'Flash','LoginFactory', 'MilesBoardApi'];
 
-    function LoginController($state, $localStorage, $window, Flash, LoginFactory) {
+    function LoginController($state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi) {
         let vm = this;
 
         let PW_CONF_MSG = {
@@ -104,7 +104,7 @@
         }
 
         function loginSuccess(resp) {
-            UsersApi.get(resp.id).then(function(response) {
+            MilesBoardApi.UsersApi.get(resp.id).then(function(response) {
                 $localStorage.user = response.user;
                 $localStorage.user.team_ids = [];
                 for(let i = 0; i < $localStorage.user.teams.length; i++) {

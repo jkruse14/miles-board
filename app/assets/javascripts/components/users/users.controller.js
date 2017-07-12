@@ -6,11 +6,11 @@
         .controller('UsersController', UsersController);
 
     UsersController.$inject = ['$auth','$filter', '$localStorage', '$scope', '$state', '$uibModal', 
-                                '$uibModalInstance','Flash', 'MilesBoardApi', 'MilesBoardImages', 'RunsDisplayConfig', 
+                                'Flash', 'MilesBoardApi', 'MilesBoardImages', 'owner', 'RunsDisplayConfig', 
                                 'TeamDisplayConfig', 'user', 'UsersDisplayConfig', 'Restangular'];
 
     function UsersController($auth, $filter, $localStorage, $scope, $state, $uibModal, 
-                            $uibModalInstance, Flash, MilesBoardApi, MilesBoardImages, RunsDisplayConfig, 
+                            Flash, MilesBoardApi, MilesBoardImages, owner, RunsDisplayConfig, 
                              TeamDisplayConfig, user, UsersDisplayConfig, Restangular) {
             let vm = this;
             const userTypes = {
@@ -19,6 +19,7 @@
             }
 
             vm.user = user.user ? user.user : MilesBoardApi.UsersApi.get($state.params['userId']);
+
             vm.loggedIn = $localStorage.user ? true : false;
             vm.profileImageSrc = MilesBoardImages.road_runner;
             vm.myProfile = (vm.loggedIn && vm.user.id === $localStorage.user.id);
@@ -38,6 +39,11 @@
                 if($state.params['reset']) {
                     let message = 'Password successfully reset!';
                     Flash.create('success', message, 5000, { container: 'profile_flash' }, true)
+                }
+
+                if(vm.user.type === userTypes.TEAM_OWNER) {
+                    vm.user = owner.user;
+                    vm.user.teams = owner.teams;
                 }
 
                 vm.TeamDisplayConfig = TeamDisplayConfig;
@@ -87,7 +93,7 @@
                         vm.teams_board_display.displayObjData = displayObjData;
                         break;
                     case 1: //user owned teams
-                        vm.teams_board_display.displayObjData = $filter('filter')(vm.teams_board_display.displayObjData, getValueForFiltering, isTeamOwnerComparator);
+                        vm.teams_board_display.displayObjData = $filter('filter')(displayObjData, {team_owner_id:{text: vm.user.id}}, isTeamOwnerComparator);
                         break;
                     default:
                         vm.tab = 0;
@@ -132,12 +138,19 @@
 
             function getValueForFiltering(value, index, array) {
                 console.log(value);
-                return value.id.text;
+                return value;
             }
 
             function isTeamOwnerComparator(actual, expected) {
-                console.log(actual, expected)
-                 return parseInt(actual) === parseInt(expected);
+                let inOwnerArr = false;
+                for(let i = 0; i < vm.user.teams[i].length; i++) {
+                    if(vm.user.teams[i].id === expected.Team.id.text){
+                        if (vm.user.teams[i].owner_ids && vm.user.teams[i].owner_ids.indexOf(expected) !== -1 ) {
+                                inOwnerArr = true;
+                        }
+                    }
+                }
+                return parseInt(actual) === parseInt(expected) || inOwnerArr;
             }
 
             function sharedTeamComparator(actual,expected) {

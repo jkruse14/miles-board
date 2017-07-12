@@ -11,7 +11,6 @@
         $rootScope.$on('$stateChangeError', console.log.bind(console));
 
         $rootScope.$on('auth:password-reset-confirm-success', function () {
-            console.log('reset heard')
             $state.go('login?reset_token')
         });
 

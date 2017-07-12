@@ -17,11 +17,7 @@ module.exports = function(config) {
     files: [
       './public/dev-assets/*.js',
       './node_modules/angular-mocks/angular-mocks.js',
-      './test/assets/javascripts/components/**/*.spec.js',
-      './test/assets/javascripts/services/**/*.spec.js',
-      './test/assets/javascripts/providers/**/*.spec.js',
-      './test/assets/javascripts/directives/**/*.spec.js',
-      './test/assets/javascripts/filters/**/*.spec.js',
+      './test/assets/javascripts/**/*.spec.js',
       {
         pattern: 'app/assets/javascripts/*.js',
         watched: true,

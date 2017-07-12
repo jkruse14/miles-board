@@ -70,6 +70,9 @@
                 user: function (UsersApi, $stateParams) {
                     return UsersApi.get($stateParams.userId);
                 },
+                owner: function (TeamOwnersApi, $stateParams) {
+                    return TeamOwnersApi.get($stateParams.userId);
+                },
                 auth: function($auth) {
                     return $auth.validateUser();
                 }

@@ -14,14 +14,16 @@ describe('UsersController', function() {
                                 "name": "Next Goal Coaching", 
                                 "team_owner_id": 464, 
                                 "location": "Savage, MN", 
-                                "contact_email": "coachkruser@gmail.com" 
+                                "contact_email": "coachkruser@gmail.com" ,
+                                "owner_ids": [464]
                             },
                             {
                                 "id": 2,
                                 "name": "Mill City Running",
                                 "team_owner_id": 2,
                                 "location": "Minneapolis, MN",
-                                "contact_email": "info@millcityrunning.com"
+                                "contact_email": "info@millcityrunning.com",
+                                "owner_ids": [2]
                             }], 
                         "runs":[
                                 {
@@ -65,6 +67,7 @@ describe('UsersController', function() {
           UsersController = $controller('UsersController', { 
              $scope: $rootScope.$new(), 
             user: { user: user}, 
+            owner: {user: user},
             TeamDisplayConfig: TeamDisplayConfig,
             RunsDisplayConfig: RunsDisplayConfig
         });

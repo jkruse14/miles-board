@@ -166,16 +166,17 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 Flash.clear();
                 if(result){
                     MilesBoardApi.UsersApi.get('',{email:result.email}).then(function(response){
-                        if(response.id) {
+                        response = response.plain();
+                        if(response.user.id) {
                             let user = {
-                                id: response.id,
-                                first_name: response.first_name,
-                                last_name: response.last_name,
+                                id: response.user.id,
+                                first_name: response.user.first_name,
+                                last_name: response.user.last_name,
                                 team_distance: 0,
                                 team_run_count: 0
                             }
-                            TeamMemberListsApi.post({
-                                user_id: response.id,
+                            MilesBoardApi.TeamMemberListsApi.post({
+                                user_id: response.user.id,
                                 team_id: $stateParams.team_id,
                             }).then(function(post_result){
                                 vm.team.users.push(user);
