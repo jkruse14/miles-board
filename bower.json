@@ -23,6 +23,16 @@
     "angular-ui-router": "^1.0.4",
     "lodash": "^4.17.4",
     "angular-flash-alert": "^2.4.0",
-    "angular-animate": "^1.6.4"
+    "angular-animate": "^1.6.4",
+    "angular-mocks": "^1.6.5",
+    "angular-environment": "^1.0.8",
+    "angular-bootstrap": "^2.5.0",
+    "ng-token-auth": "^0.0.30",
+    "ngstorage": "^0.3.11",
+    "moment": "^2.18.1",
+    "restangular": "^1.6.1"
+  },
+  "resolutions": {
+    "angular": ">=1.4 <1.6.0"
   }
 }

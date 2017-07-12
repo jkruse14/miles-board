@@ -15,7 +15,13 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './public/dev-assets/*.js',
+      './public/dev-assets/angular.js',
+      './public/dev-assets/jquery.js',
+      './public/dev-assets/lodash.js',
+      //'./public/dev-assets/angular-ui-router.js',
+      './public/dev-assets/angular-animate.js',
+      './public/dev-assets/angular-*.js',
+      './public/dev-assets/build.js',
       './node_modules/angular-mocks/angular-mocks.js',
       './test/assets/javascripts/**/*.spec.js',
       {
@@ -36,38 +42,26 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      // '**/*.js.erb': ['generic']
+      'app/assets/javascripts/**/*.(js,es6)': ['babel', 'coverage'],
+      'app/public/dev-assets/javascripts/**/*.(js,es6)': ['babel', 'coverage']
     },
-
-    // genericPreprocessor: {
-    //   rules: [{
-    //     // this will always be matched on original path, even 
-    //     // if you change file.path in of the `process` functions 
-    //     match: "*.js.erb",
-    //     // almost  same as karam-coffee-preprocessor 
-    //     process: function (content, file, done, log) {
-    //       file.path = file.originalPath.replace(/\.erb$/g, '');
-    //       try {
-    //         done(coffee.compile(content));
-    //       } catch (e) {
-    //         log.error('%s\n  at %s', e.message, file.originalPath);
-    //       }
-    //     }
-    //   }, {
-    //     // if no match is specified all the files matched by 
-    //     // `preprocessors` config above will be processed 
-    //     process: function (content, file, done, log) {
-    //       log.debug('Processing "%s".', file.originalPath);
-    //       done(content);
-    //     }
-    //   }]
-    // }
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec'],
+    reporters: ['spec', 'coverage', 'progress'],
 
+    coverageReporter: {
+      reporters: [
+        {
+          type: 'text-summary',
+        },
+        {
+          type: 'html',
+          dir: 'coverage/',
+        }
+      ]
+    },
 
     // web server port
     port: 9876,

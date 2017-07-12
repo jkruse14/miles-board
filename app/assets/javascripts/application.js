@@ -19,8 +19,8 @@
 //= require angular-rails-templates
 //= require lodash/lodash.min.js
 //= require angular-animate/angular-animate.min.js
-//= require angular-ui-bootstrap/dist/ui-bootstrap.js
-//= require angular-ui-bootstrap/dist/ui-bootstrap-tpls.js
+//= require angular-bootstrap/ui-bootstrap.js
+//= require angular-bootstrap/ui-bootstrap-tpls.js
 //= require restangular
 //= require moment/min/moment.min.js
 //= require ng-token-auth/dist/ng-token-auth.min.js
