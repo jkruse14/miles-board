@@ -5,7 +5,6 @@ ra-*.html
 tmp/
 /log
 log/
-public/dev-assets/
 /db/*.sqlite3
 /db/*.sqlite3-journal
 public/dev-assets/
