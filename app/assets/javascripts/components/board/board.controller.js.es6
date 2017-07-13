@@ -5,7 +5,7 @@ angular
     .module('milesBoard')
     .controller('BoardController', BoardController);
 
-BoardController.$inject = ['$localStorage','$scope', '$stateParams'];//'displayObj','displayObjConfig'];
+BoardController.$inject = ['$localStorage','$scope', '$stateParams'];
 
 function BoardController($localStorage, $scope) {
     var vm = this;

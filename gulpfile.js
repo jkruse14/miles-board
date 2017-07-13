@@ -17,10 +17,15 @@ var sassPath, sassSource, jsSource;
 
 sassPath = './app/assets/stylesheets/**/*.less';
 sassSource = ['./app/assets/stylesheets/application.css.less'];
-jsSource = './app/assets/javascripts/**/*.{js,es6}';
+let components = glob.sync('./app/assets/javascripts/components/**/*.{js,es6}');
+var directives = glob.sync('./app/assets/javascripts/directives/**/*.{js,es6}');
+var filters =    glob.sync('./app/assets/javascripts/filters/**/*.{js,es6}');
+var providers =  glob.sync('./app/assets/javascripts/providers/**/*.{js,es6}');
+var services =   glob.sync('./app/assets/javascripts/services/**/*.{js,es6}');
+var appfiles =  glob.sync('./app/assets/javascripts/app.*.{js,es6}');
 
 function compile(watch) {
-    var files = glob.sync(jsSource, {ignore: 'cable'})
+    var files = appfiles.concat(components, directives, filters, providers, services);
     var bower_files = mainBowerFiles()
     var bundler = watchify(browserify({ entries: files, debug: true }).transform(babelify));
 
@@ -28,7 +33,7 @@ function compile(watch) {
         bundler.bundle()
             .on('error', util.log.bind(util, "Browserify Error"))
             .pipe(source('build.js'))
-            .pipe(gulp.dest('./public/dev-assets'));
+            .pipe(gulp.dest('./app/assets'));
 
             gulp.src(bower_files)
                 .pipe(gulp.dest('public/dev-assets'));

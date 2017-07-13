@@ -15,14 +15,13 @@
         ])
         .config(EnvironmentConfig)
         .config(authConfig)
-        .config(ApiConfig)
         .run();
 
     authConfig.$inject = ['$authProvider','envServiceProvider'];
 
     /** @ngInject */
     function authConfig($authProvider,envServiceProvider) {
-        let url = envServiceProvider.is('development') ? 'http://localhost:8000' : 'https://miles-board.herokuapp.com';
+        var url = envServiceProvider.is('development') ? 'http://localhost:8000' : 'https://miles-board.herokuapp.com';
         
         $authProvider.configure([{
                'default': {
@@ -70,11 +69,5 @@
         });
 
         envServiceProvider.check();
-    }
-
-    ApiConfig.$inject = ['RestangularProvider'];
-
-    function ApiConfig(RestangularProvider) {
-        // RestangularProvider.setBaseUrl('/api');
     }
 })();

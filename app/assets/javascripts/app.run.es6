@@ -36,7 +36,6 @@
 
         $rootScope.$on('auth:login-error', function (ev, reason) {
             console.error('login error:' + reason[0])
-            //alert('Login Failed: '+reason);
         });
 
         $rootScope.$on('auth:validation-error', function (ev, reason) {

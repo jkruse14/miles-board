@@ -6,6 +6,8 @@ tmp/
 /log
 log/
 public/dev-assets/
+public/assets/
+vendor/assets/bower_components
 /db/*.sqlite3
 /db/*.sqlite3-journal
 public/dev-assets/

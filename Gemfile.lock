@@ -235,7 +235,7 @@ DEPENDENCIES
   responders
   spring
   spring-watcher-listen (~> 2.0.0)
-  sprockets
+  sprockets (>= 3.0.0)
   sprockets-es6
   therubyracer
   turbolinks (~> 5)

@@ -28,6 +28,11 @@
             vm.user_id = $localStorage.user ? $localStorage.user.id : null;
         });
 
+        $rootScope.$on('auth:logout-success', function() {
+            vm.showLogoutLink = false;
+            vm.user_id = null;
+        })
+
         $rootScope.$on('auth.validation-success', function () {
             vm.user_id = $localStorage.user.id;
         });
