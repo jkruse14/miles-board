@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require angular/angular
-//= require angular-ui-router
+//= require angular-ui-router/release/angular-ui-router.js
 //= require angular-cookie
 //= require angular-rails-templates
 //= require lodash/lodash.js
