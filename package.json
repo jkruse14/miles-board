@@ -54,7 +54,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "rails s",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "preinstall": "rm -rf node_modules && rm -rf vendor/assets/bower_components",
+    "postinstall": "bower install && rake assets:precompile"
   },
   "repository": {
     "type": "git",
