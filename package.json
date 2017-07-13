@@ -10,6 +10,7 @@
     "node": "6.11.1"
   },
   "dependencies": {
+    "@uirouter/angularjs": "^1.0.5",
     "bower": "^1.8.0",
     "lodash": "^4.17.4"
   },
@@ -54,8 +55,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "rails s",
-    "preinstall": "rm -rf node_modules && rm -rf vendor/assets/bower_components",
-    "postinstall": "bower install && rake assets:precompile"
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "repository": {
     "type": "git",
