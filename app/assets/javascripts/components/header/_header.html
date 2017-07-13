@@ -22,8 +22,8 @@
             </ul>
 
             <ul class="nav navbar-nav user-nav">
-                <li class="nav-item" ng-show="vm.showLogoutLink">
-                    <a class="nav-link" ui-sref="user({userId:{{vm.user_id}}})" ng-click="vm.onProfileClick()"  ui-sref-active="active">
+                <li class="nav-item" ng-show="vm.showLogoutLink && vm.user_id">
+                    <a class="nav-link" ui-sref="user({userId:{{vm.user_id || -1}}})" ng-click="vm.onProfileClick()"  ui-sref-active="active">
                         Profile
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                     </a>

@@ -5,9 +5,16 @@ ra-*.html
 tmp/
 /log
 log/
+<<<<<<< HEAD
+=======
+public/dev-assets/
+public/assets/
+vendor/assets/bower_components
+>>>>>>> development
 /db/*.sqlite3
 /db/*.sqlite3-journal
 public/dev-assets/
+public/assets/
 /public/system
 /coverage/
 /spec/tmp
