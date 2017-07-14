@@ -150,6 +150,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
             
             $scope.profileAction = 'create';
+            $scope.team_id = $stateParams.team_id;
             var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
@@ -165,55 +166,13 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
             modalInstance.result.then(function (result) {
                 Flash.clear();
                 if(result){
-                    MilesBoardApi.UsersApi.get('',{email:result.email}).then(function(response){
-                        response = response.plain();
-                        if(response.user.id) {
-                            let user = {
-                                id: response.user.id,
-                                first_name: response.user.first_name,
-                                last_name: response.user.last_name,
-                                team_distance: 0,
-                                team_run_count: 0
-                            }
-                            MilesBoardApi.TeamMemberListsApi.post({
-                                user_id: response.user.id,
-                                team_id: $stateParams.team_id,
-                            }).then(function(post_result){
-                                vm.team.users.push(user);
-                                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
-                                teamMemberAddSuccessFlash();
-                            }, function(reason) {
-                                teamMemberAddFailFlash(reason)
-                            })
-                        } else {
-                            let newUser = { 
-                                    first_name : result.first_name,
-                                    last_name: result.last_name,
-                                    email : result.email,
-                                    team_id: $stateParams.team_id,
-                                    password : result.password,
-                                    password_confirmation: result.password_confirmation,
-                            }
+                    vm.team.users.push(result);
+                    vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
 
-                            MilesBoardApi.UsersApi.post(newUser).then(function(result){
-                                let user = {
-                                    id: result.id,
-                                    first_name: newUser.user.first_name,
-                                    last_name: newUser.user.last_name,
-                                    team_distance: 0,
-                                    team_run_count: 0
-                                }
-                                vm.team.users.push(user);
-                                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig)
-
-                                teamMemberAddSuccessFlash();
-                            },
-                            function(reason) {
-                                teamMemberAddFailFlash(reason);
-                            });
-                        }
-                    }, function () {});
+                    teamMemberAddSuccessFlash();
                 }
+            }, function(reason){
+                teamMemberAddFailFlash(reason);
             })
         };
 

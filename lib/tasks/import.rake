@@ -1,3 +1,6 @@
+require 'securerandom'
+
+
 namespace :import do
   desc 'Import users from a csv file'
   task :users, %i(filename team_id) => :environment do |_t, args|
