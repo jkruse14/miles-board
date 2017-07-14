@@ -15,30 +15,17 @@ class TeamOwnersController < ApplicationController
 
     memberOf = TeamMemberList.where(user_id: @user.id)
 
-    
     addedIds = []
     memberOf.each do |team|
-      tmp = {}
-      unless addedIds.include? team.team[:id]
-        tmp[:contact_email] = team.team[:contact_email]
-        tmp[:name] = team.team[:name]
-        tmp[:id] = team.team[:id]
-        tmp[:location] = team.team[:location]
-        tmp[:team_owner_id] = team.team[:team_owner_id]
-        tmp[:owner_ids] = []
-        team.team.team_owners.each do |owner|
-          tmp[:owner_ids] << owner[:id]
-        end
-        addedIds << tmp[:id]
-        allteams << tmp
-      end
+      @user.teams << team.team unless @user.teams.include?(team.team)
     end
 
     render(json: { user: @user.as_json(only: %i(id first_name last_name email type),
                                        include: {
+                                         teams: { only: %i(id name location team_owner_id),
+                                                  include: { team_owner_lists: { only: %i(team_owner_id) } } },
                                          runs: { include: { team: { only: :name } } }
                                        }),
-                   teams: allteams,
                    team_distance: team_miles },
            status: 200) && return
   end

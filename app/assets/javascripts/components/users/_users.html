@@ -7,11 +7,11 @@
         <div id='profile_image'>
             <img ng-src="{{vm.profileImageSrc}}" />
         </div>
-        <span id="createTeamButton" class="btn btn-primary" ng-click="vm.showCreateTeamModal()" ng-show="vm.showCreateTeamButton">
+        <span id="createTeamButton" class="btn btn-primary profileActionButton" ng-click="vm.showCreateTeamModal()" ng-show="vm.showCreateTeamButton">
             Create Team
         </span>
-        <span id="updateEmailButton" class="btn btn-primary" ng-click="vm.showUpdateEmailModal()" ng-show="vm.user.email.includes('milesboardimport')">
-            Update Email
+        <span id="updateProfileButton" class="btn btn-primary profileActionButton" ng-click="vm.showUpdateProfileModal()" >
+            Update Profile
         </span>
         <uib-tabset>
             <uib-tab ng-repeat="tab in vm.tabs" ng-click="vm.setTab($index)" heading="{{tab.title}}" ng-hide='tab.hidden'></uib-tab>
