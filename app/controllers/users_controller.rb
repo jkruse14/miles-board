@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class UsersController < ApplicationController
   #
   # skip_before_action :verify_authenticity_token
@@ -45,6 +47,19 @@ class UsersController < ApplicationController
     # .create() creates, saves if valid, and returns the object (regardless if valid)
 
     @user = User.new(user_params.except(:id, :team_id))
+
+    if @user[:email].empty?
+      new_user = {}
+      new_user[:email] = SecureRandom.hex + '@milesboardimport.com'
+      new_user[:password] = 'test1234'
+      new_user[:password_confirmation] = 'test1234'
+      new_user[:first_name] = user_params[:first_name]
+      new_user[:last_name] = user_params[:last_name]
+
+      @user = User.new(new_user)
+      @user.skip_confirmation!
+    end
+
     begin
       if @user.save!
         unless user_params[:team_id].nil?
@@ -77,7 +92,7 @@ class UsersController < ApplicationController
 
     user.update_with_password(user_params.except(:imported_user_id))
     user.skip_confirmation!
-    
+
     if user.save!
       render json: { id: user.id }, status: 200 && return
     else

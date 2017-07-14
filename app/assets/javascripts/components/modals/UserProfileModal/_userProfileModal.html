@@ -1,12 +1,8 @@
 <div id="userProfileModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="vm.close()"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Run Details</h4>
-            </div>
             <div class="modal-body">
-                <div id="userProfile" class="row profile_modal">
+                <div id="userProfile" class="row profile_modal" ng-show="!vm.showNewMemberForm">
                     <div class="board-title" class="col-sm-12">
                         <span>{{vm.user.first_name + ' ' + vm.user.last_name}}</span>
                     </div>
@@ -14,8 +10,8 @@
                         <div id='profile_image'>
                             <img ng-src="{{vm.profileImageSrc}}" />
                         </div>
-                        <span id="updateEmailButton" class="btn btn-primary" ng-click="vm.showNewMemberForm = true" ng-show="vm.showUpdateEmailButton">
-                            Update Email
+                        <span id="updateProfileButton" class="btn btn-primary" ng-click="vm.showNewMemberForm = true" ng-show="vm.showUpdateProfileButton">
+                            Update Profile
                         </span>
                         <uib-tabset>
                             <uib-tab ng-repeat="tab in vm.tabs" ng-click="vm.setTab($index)" heading="{{tab.title}}" ng-hide='tab.hidden'></uib-tab>
@@ -27,13 +23,18 @@
                         <board display-obj-data="vm.runs_board_display.displayObjData" display-obj-config="vm.runs_board_display.displayConfig" row-callback="vm.rowCallback">
                     </section>
                 </div>
-                <div id="newMemberForm-container" ng-show="vm.showNewMemberForm" >
+                <div id="newMemberForm-container" ng-show="vm.showNewMemberForm === true" >
                      <ng-include src="'components/modals/newMemberModal/_newMemberForm.html'"></ng-include>
                 </div>
                 <div id="createTeamForm-container" ng-show="vm.showCreateTeamForm">
                     <ng-include src="'components/modals/CreateTeamModal/_createTeamForm.html'"></ng-include>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">{{vm.showNewMemberForm || vm.showCreateTeamForm ? 'Cancel' : 'Close'}}</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.showNewMemberForm || vm.showCreateTeamForm">Save</button>
+            </div>
         </div>
+        <flash-message name="profile-modal-flash" class="modal-flash"></flash-message>
     </div>
 </div>

@@ -33,7 +33,7 @@
             vm.$onInit = onInit;
             vm.setTab = setTab;
             vm.showCreateTeamModal = showCreateTeamModal;
-            vm.showUpdateEmailModal = showUpdateEmailModal;
+            vm.showUpdateProfileModal = showUpdateProfileModal;
 
             function onInit() {
                 if($state.params['reset']) {
@@ -43,7 +43,6 @@
 
                 if(vm.user.type === userTypes.TEAM_OWNER) {
                     vm.user = owner.user;
-                    vm.user.teams = owner.teams;
                 }
 
                 vm.TeamDisplayConfig = TeamDisplayConfig;
@@ -137,7 +136,6 @@
             }
 
             function getValueForFiltering(value, index, array) {
-                console.log(value);
                 return value;
             }
 
@@ -244,7 +242,7 @@
                 }, function () { });
             }
 
-            function showUpdateEmailModal() {
+            function showUpdateProfileModal() {
                 $scope.profileAction = 'edit';
                 $scope.user_for_modal = vm.user;
                 var modalInstance = $uibModal.open({
@@ -259,16 +257,18 @@
                 });
 
                 modalInstance.result.then(function (result) {
-                    vm.user.imported_user_id = vm.user.id;
+                    if(result){
+                        vm.user.imported_user_id = vm.user.id;
 
-                    Restangular.all('update_imported_user').customPATCH(vm.user).then(function (response) {
-                        let message = 'Account Successfully Updated!'
-                        Flash.create('success', message, 5000, {container: 'index_flash'}, true)                      
-                    }, function (error) {
-                        let message = 'There were errors updating your accout:<br />';
-                        message += MilesBoardImages.errorReader(error);
-                        Flash.create('danger', messsage, 0, {container: 'index_flash'}, true)
-                     });
+                        Restangular.all('update_imported_user').customPATCH(vm.user).then(function (response) {
+                            let message = 'Account Successfully Updated!'
+                            Flash.create('success', message, 5000, {container: 'index_flash'}, true)                      
+                        }, function (error) {
+                            let message = 'There were errors updating your accout:<br />';
+                            message += MilesBoardImages.errorReader(error);
+                            Flash.create('danger', messsage, 0, {container: 'index_flash'}, true)
+                        });
+                    }
                 })
             }
         }
