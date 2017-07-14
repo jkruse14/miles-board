@@ -16,7 +16,6 @@
                             email:'',
                             password: '',
                             password_confirmation: '',
-                            team_id: $scope.team_id
                         } : 
                         $scope.user_for_modal;
 
@@ -45,14 +44,19 @@
                             team_distance: 0,
                             team_run_count: 0
                         }
-                        MilesBoardApi.TeamMemberListsApi.post({
-                            user_id: response.user.id,
-                            team_id: $stateParams.team_id,
-                        }).then(function (post_result) {
+                        if($scope.team_id){
+                            MilesBoardApi.TeamMemberListsApi.post({
+                                user_id: response.user.id,
+                                team_id: $scope.team_id,
+                            }).then(function (post_result) {
+                                $uibModalInstance.close(user);
+                            }, function (reason) {
+                                $uibModalInstance.close(reason);
+                            });
+                        } else {
                             $uibModalInstance.close(user);
-                        }, function (reason) {
-                            $uibModalInstance.close(reason);
-                        })
+                        }
+
                     } else {
                         createNewUser(vm.newMember);
                     }
@@ -87,6 +91,10 @@
                 team_id: user.team_id,
                 password: user.password,
                 password_confirmation: user.password_confirmation,
+            }
+
+            if ($scope.team_id) {
+                user.team_id = $scope.team_id;
             }
 
             return MilesBoardApi.UsersApi.post(newUser);
