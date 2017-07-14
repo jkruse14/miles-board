@@ -8,6 +8,7 @@
     function NewMemberModalController($scope, $uibModalInstance, MilesBoardApi) {
         let vm = this;
         vm.showEmailAndPasswordFields = false;
+        vm.updating = $scope.$parent.profileAction === 'edit'
         
         vm.newMember = $scope.$parent.profileAction !== 'edit' ? 
                         {
