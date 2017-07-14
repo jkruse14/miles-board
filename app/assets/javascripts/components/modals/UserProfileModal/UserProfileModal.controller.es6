@@ -30,6 +30,7 @@
         vm.$onInit = onInit;
         vm.setTab = setTab;
         vm.close = close;
+        vm.save = save;
 
         function onInit() {
             vm.TeamDisplayConfig = TeamDisplayConfig;
@@ -43,14 +44,13 @@
             vm.RunsDisplayConfig.hideSearch = true;
 
             vm.showCreateTeamButton = getShowCreateTeamButton();
-            vm.showUpdateEmailButton = vm.user.email.includes('milesboardimport') && (vm.user.id === $localStorage.user.id || $scope.owner_ids.indexOf($localStorage.user.id) !== -1)
+            vm.showUpdateProfileButton = vm.user.email.includes('milesboardimport') && (vm.user.id === $localStorage.user.id || $scope.owner_ids.indexOf($localStorage.user.id) !== -1)
             vm.showNewMemberForm = false;
             vm.showCreateTeamForm = false;
 
             if (vm.user.type === userTypes.TEAM_OWNER) {
                 MilesBoardApi.TeamOwnersApi.get(vm.user.id).then(function(resp){
                     vm.user = resp.user;
-                    vm.user.teams = resp.teams;
                     //vm.user.teams = owner.user.teams;
                     for (let i = 0; i < vm.TeamDisplayConfig.headers.length; i++) {
                         if (vm.TeamDisplayConfig.headers[i].text !== 'Name') {
@@ -144,7 +144,6 @@
         }
 
         function getValueForFiltering(value, index, array) {
-            console.log(value);
             return value.id.text;
         }
 
@@ -175,6 +174,14 @@
 
         function close() {
             $uibModalInstance.close();
+        }
+
+        function save() {
+            if (vm.showNewMemberForm) {
+                vm.showNewMemberForm = false;
+            } else if (vm.showCreateTeamForm) {
+                vm.showCreateTeamForm = false;
+            }
         }
     }
 })();
