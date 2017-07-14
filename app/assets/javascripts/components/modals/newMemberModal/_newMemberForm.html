@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="first_name">First Name</label>
         <input type="text" id="first_name" name="first_name" class="form-control" ng-class="{'field-invalid': !newMemberForm.first_name.$pristine && newMemberForm.first_name.$invalid}"
-            ng-model="vm.newMember.first_name" placeholder="Enter first name" required>
+            ng-model="vm.newMember.first_name" placeholder="{{vm.user && vm.user.first_name? vm.user.first_name : 'Enter first name'}}" required>
     </div>
     <div class="form-group">
         <label for="last_name">Last Name</label>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group" ng-if="vm.showEmailAndPasswordFields">
         <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ng-model="vm.newMember.email" placeholder="Enter email"
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ng-model="vm.newMember.email" placeholder="{{vm.user && vm.user.last_name ? vm.user.last_name : 'Enter email'}}"
             required>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>

@@ -329,6 +329,23 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 size: 'lg',
                 scope: newscope
             });
+
+            modalInstance.result.then(function(result){
+                //if there's a result, the user updated their profile
+                //update the table as a result
+                if(result) {
+                    for(let i = 0; i < vm.team.users.length; i++) {
+                        if(vm.team.users[i].id === result.id) {
+                            vm.team.users[i] = angular.extend(vm.team.users[i], result);
+                            setUpTable();
+                            break;
+                        }
+                    }
+                }
+            },
+            function(reason){
+
+            })
         },
         function(reason){
             let message = 'Whoops... that user could not be found';

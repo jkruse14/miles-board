@@ -5,12 +5,13 @@
         .module('milesBoard')
         .controller('UserProfileModalController', UserProfileModalController);
 
-    UserProfileModalController.$inject = ['$filter','$localStorage', '$scope', 'MilesBoardApi', 'MilesBoardImages',  
+    UserProfileModalController.$inject = ['$filter','$localStorage', '$scope', 'Flash', 'MilesBoardApi', 'MilesBoardImages',  
                                           'RunsDisplayConfig', 'TeamDisplayConfig', '$uibModalInstance'];
 
-    function UserProfileModalController($filter, $localStorage, $scope, MilesBoardApi, MilesBoardImages, 
+    function UserProfileModalController($filter, $localStorage, $scope, Flash, MilesBoardApi, MilesBoardImages, 
                                         RunsDisplayConfig, TeamDisplayConfig, $uibModalInstance) {
-        let vm = this; 
+        let vm = this;
+        let PROFILE_MODAL_FLASH = 'profile-modal-flash';
         vm.user = $scope.user.user;
 
         const userTypes = {
@@ -173,11 +174,54 @@
         }
 
         function close() {
-            $uibModalInstance.close();
+            if(vm.showNewMemberForm === true) {
+                vm.showNewMemberForm = false;
+            } else if(vm.showCreateTeamForm === true) {
+                vm.showCreateTeamForm = false;
+            } else {
+                let result = null;
+                if(vm.user_updated === true) {
+                    result = vm.user;
+                }
+                $uibModalInstance.close(vm.user);
+            }
         }
 
         function save() {
+            let changed = false;
+            let updates = {
+                id: vm.user.id
+            }
             if (vm.showNewMemberForm) {
+                if(vm.newMember) {
+                    if (vm.newMember.first_name && vm.user.first_name !== vm.newMember.first_name) {
+                        updates.first_name = vm.newMember.first_name
+                        changed = true;
+                    }
+
+                    if (vm.newMember.last_name && vm.user.last_name !== vm.newMember.last_name ) {
+                        updates.last_name = vm.newMember.last_name
+                        changed = true;
+                    }
+
+                    if (vm.newMember.email && vm.user.email !== vm.newMember.email) {
+                        updates.email = vm.newMember.email;
+                        changed = true;
+                    }
+                    Flash.clear();
+                    if(changed === true) {
+                        MilesBoardApi.put('users',updates).then(function(resp) {
+                            vm.user = angular.extend(vm.user, updates);
+                            vm.user_updated = true;
+                            let message = 'Profile Successfully Updated!'
+                            Flash.create('success', message, 5000, { container: PROFILE_MODAL_FLASH}, true);
+                        },
+                        function(reason){
+                            let message = 'Whoops... There was an error updating your profile. Please try again later';
+                            Flash.create('danger', message, 5000, { container: PROFILE_MODAL_FLASH }, true);
+                        });
+                    }
+                }
                 vm.showNewMemberForm = false;
             } else if (vm.showCreateTeamForm) {
                 vm.showCreateTeamForm = false;
