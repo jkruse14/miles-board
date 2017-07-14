@@ -3,7 +3,8 @@
                              placeholder="Search By Name..."
                              ng-hide="vm.displayObjConfig.hideSearch"
                              ng-model="query" 
-                             ng-model-options="{ debounce: 200 }"/>
+                             ng-model-options="{ debounce: 200 }"
+                             ng-click="query = ''"/>
     <table id="board" class="table table-responsive table-striped">
         <tr ng-hide="vm.displayObjConfig.hideHeaderRow === true">
             <th ng-repeat-start="header in vm.displayObjConfig.headers" ng-click="vm.setOrdering(header.text)" ng-hide="header.hidden">
