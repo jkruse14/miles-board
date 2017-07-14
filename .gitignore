@@ -17,6 +17,7 @@ public/dev-assets/
 rerun.txt
 pickle-email-*.html
 
+npm-debug.log
 /node_modules
 /bower_components
 
