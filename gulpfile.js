@@ -33,7 +33,7 @@ function compile(watch) {
         bundler.bundle()
             .on('error', util.log.bind(util, "Browserify Error"))
             .pipe(source('build.js'))
-            .pipe(gulp.dest('./app/assets'));
+            .pipe(gulp.dest('./app/dev-assets'));
 
             gulp.src(bower_files)
                 .pipe(gulp.dest('public/dev-assets'));
