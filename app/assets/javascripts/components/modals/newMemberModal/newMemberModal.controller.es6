@@ -8,8 +8,10 @@
     function NewMemberModalController($scope, $uibModalInstance, MilesBoardApi) {
         let vm = this;
         vm.showEmailAndPasswordFields = false;
+        vm.waiverUrl = 'waivers/'+$scope.team_id+'/waiver.txt';
+        vm.showWaiver = false;
+        vm.waiverAgree = false;
         vm.updating = $scope.$parent.profileAction === 'edit'
-        
         vm.newMember = $scope.$parent.profileAction !== 'edit' ? 
                         {
                             first_name:'',
@@ -19,11 +21,14 @@
                             password_confirmation: '',
                         } : 
                         $scope.user_for_modal;
+        
+        vm.disableSubmit = !vm.newMember.first_name || !vm.newMember.last_name || !vm.waiverAgree;
 
         vm.showPasswordForm = $scope.$parent.profileAction;
 
         vm.save = save;
         vm.cancel = cancel;
+        vm.handleFieldUpate = handleFieldUpate;
 
         function showEmailAndPasswordFieldsChange() {
             if(!vm.showEmailAndPasswordFields) {
@@ -99,6 +104,10 @@
             }
 
             return MilesBoardApi.UsersApi.post(newUser);
+        }
+
+        function handleFieldUpate() {
+            vm.disableSubmit = !vm.newMember.first_name || !vm.newMember.last_name || !vm.waiverAgree;
         }
 
     }
