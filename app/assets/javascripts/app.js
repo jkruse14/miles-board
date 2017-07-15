@@ -70,4 +70,10 @@
 
         envServiceProvider.check();
     }
+
+    ApiConfig.$inject = ['RestangularProvider'];
+
+    function ApiConfig(RestangularProvider) {
+        RestangularProvider.setDefaultHttpFields({ cache: true });
+    }
 })();
