@@ -7,7 +7,7 @@
 
     function NewMemberModalController($scope, $uibModalInstance, MilesBoardApi) {
         let vm = this;
-        vm.showEmailAndPasswordFields = false;
+        vm.showPasswordFields = false;
         vm.waiverUrl = 'waivers/'+$scope.team_id+'/waiver.txt';
         vm.showWaiver = false;
         vm.waiverAgree = false;
@@ -30,9 +30,8 @@
         vm.cancel = cancel;
         vm.handleFieldUpate = handleFieldUpate;
 
-        function showEmailAndPasswordFieldsChange() {
-            if(!vm.showEmailAndPasswordFields) {
-                vm.newMember.email = '';
+        function showPasswordFieldsChange() {
+            if(!vm.showPasswordFields) {
                 vm.newMember.password = '';
                 vm.newMember.password_confirmation = '';
             }
