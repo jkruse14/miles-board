@@ -10,6 +10,9 @@ BoardController.$inject = ['$localStorage','$scope', '$stateParams'];
 function BoardController($localStorage, $scope) {
     var vm = this;
     vm.$onInit = onInit;
+    vm.maxPageSize = 50;
+    vm.maxSize = 10;
+    vm.currentPage = 1;
 
     vm.showActions = $localStorage.user ? true : false;
     vm.loggedInUserId = $localStorage.user ? $localStorage.user.id : null;
@@ -33,7 +36,7 @@ function BoardController($localStorage, $scope) {
         } else {
             vm.callbacks = [vm.rowCallback]
         }
-        vm.callback = callback
+        vm.callback = callback;
     }
 
     function callback(row, index) {
