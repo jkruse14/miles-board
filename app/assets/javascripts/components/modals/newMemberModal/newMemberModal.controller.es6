@@ -76,7 +76,19 @@
                         }
 
                     } else {
-                        createNewUser(vm.newMember);
+                        createNewUser(vm.newMember).then(function (result) {
+                            let user = {
+                                id: result.id,
+                                first_name: vm.newMember.first_name,
+                                last_name: vm.newMember.last_name,
+                                team_distance: 0,
+                                team_run_count: 0
+                            }
+                            $uibModalInstance.close(user);
+                        },
+                            function (reason) {
+                                $uibModalInstance.close(reason);
+                            });
                     }
                 }, function () { });
             } else {
@@ -92,7 +104,7 @@
                 },
                 function(reason) {
                     $uibModalInstance.close(reason);
-                })
+                });
             }
             
         }

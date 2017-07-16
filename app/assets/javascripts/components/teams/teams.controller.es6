@@ -61,7 +61,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
 
         function buildDisplayObject(obj, config) {
             let displayObj = [];
-            
+            let count = 0;
             for (let j = 0; j < obj.length; j++) {
                 let item = {};
                 for (let i = 0; i < config.headers.length; i++) {
@@ -80,9 +80,11 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 if($stateParams.team_id){
                     item['Name'].text = obj[j].first_name + ' ' +obj[j].last_name
                 }
+                
                 displayObj.push(item);
+                item.id.text == 568 ? count += 1 : '';
             }
-
+            console.log(count);
             return displayObj;
         }
 
