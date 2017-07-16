@@ -48,11 +48,25 @@ class UsersController < ApplicationController
 
     @user = User.new(user_params.except(:id, :team_id))
 
+    puts @user.inspect
+
     if @user[:email].empty?
       new_user = {}
       new_user[:email] = SecureRandom.hex + '@milesboardimport.com'
-      new_user[:password] = 'test1234'
-      new_user[:password_confirmation] = 'test1234'
+      pw = SecureRandom.hex
+      new_user[:password] = pw
+      new_user[:password_confirmation] = pw
+      new_user[:first_name] = user_params[:first_name]
+      new_user[:last_name] = user_params[:last_name]
+
+      @user = User.new(new_user)
+      @user.skip_confirmation!
+    elsif @user[:password].nil? && @user[:password_confirmation].nil?
+      new_user = {}
+      new_user[:email] = user_params[:email]
+      pw = SecureRandom.hex
+      new_user[:password] = pw
+      new_user[:password_confirmation] = pw
       new_user[:first_name] = user_params[:first_name]
       new_user[:last_name] = user_params[:last_name]
 
