@@ -3,9 +3,9 @@
         .module('milesBoard')
         .controller('NewMemberModalController', NewMemberModalController);
 
-    NewMemberModalController.$inject = ['$scope','$uibModalInstance', 'MilesBoardApi'];
+    NewMemberModalController.$inject = ['$scope','$uibModalInstance', 'Flash', 'MilesBoardApi'];
 
-    function NewMemberModalController($scope, $uibModalInstance, MilesBoardApi) {
+    function NewMemberModalController($scope, $uibModalInstance, Flash, MilesBoardApi) {
         let vm = this;
         vm.showPasswordFields = false;
         vm.waiverUrl = 'waivers/'+$scope.team_id+'/waiver.txt';
@@ -41,25 +41,38 @@
             if(vm.newMember.email){
                 MilesBoardApi.UsersApi.get('', { email: vm.newMember.email }).then(function (response) {
                     response = response.plain();
-                    if (response.user.id) {
-                        let user = {
-                            id: response.user.id,
-                            first_name: response.user.first_name,
-                            last_name: response.user.last_name,
-                            team_distance: 0,
-                            team_run_count: 0
+                    if (response.user && response.user.id) {
+                        let found = false;
+                        for(let i = 0; i < response.user.teams.length; i++) {
+                            if(response.user.teams[i].id === parseInt($scope.team_id)) {
+                                found = true;
+                                break;
+                            }
                         }
-                        if($scope.team_id){
-                            MilesBoardApi.TeamMemberListsApi.post({
-                                user_id: response.user.id,
-                                team_id: $scope.team_id,
-                            }).then(function (post_result) {
+
+                        if(!found) {
+                            let user = {
+                                id: response.user.id,
+                                first_name: response.user.first_name,
+                                last_name: response.user.last_name,
+                                team_distance: 0,
+                                team_run_count: 0
+                            }
+                            if($scope.team_id){
+                                MilesBoardApi.TeamMemberListsApi.post({
+                                    user_id: response.user.id,
+                                    team_id: parseInt($scope.team_id),
+                                }).then(function (post_result) {
+                                    $uibModalInstance.close(user);
+                                }, function (reason) {
+                                    $uibModalInstance.close(reason);
+                                });
+                            } else {
                                 $uibModalInstance.close(user);
-                            }, function (reason) {
-                                $uibModalInstance.close(reason);
-                            });
+                            }
                         } else {
-                            $uibModalInstance.close(user);
+                            let message = 'A user with that email is already on this team ('+response.user.first_name+' '+response.user.last_name+')'; 
+                            Flash.create('warning',message, 5000, {container: 'newmember-flash'}, true);
                         }
 
                     } else {
