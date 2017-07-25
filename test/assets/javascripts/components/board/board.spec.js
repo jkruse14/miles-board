@@ -1,9 +1,9 @@
 describe('Board Controller', function(){
-    var BoardController, $controller, $localStorage, $rootScope;
+    var BoardController, $controller, $localStorage, $rootScope, TeamDisplayConfig;
     
     beforeEach(angular.mock.module('milesBoard'));
 
-    beforeEach(inject(function (_$controller_, _$localStorage_, _$rootScope_){
+    beforeEach(inject(function (_$controller_, _$localStorage_, _$rootScope_, _TeamDisplayConfig_){
         $controller = _$controller_;
         $localStorage = _$localStorage_;
         $localStorage.user = null;
