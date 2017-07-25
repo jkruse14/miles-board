@@ -99,15 +99,15 @@ describe('UsersController', function() {
         expect(UsersController.myProfile).toBeDefined();
       });
 
-      it('should initialize with functions: $onInit, setTab, showCreateTeamModal, showUpdateEmailModal', function() {
+      it('should initialize with functions: $onInit, setTab, showCreateTeamModal, showUpdateProfileModal', function() {
           expect(UsersController.$onInit).toBeDefined();
           expect(UsersController.$onInit instanceof Function).toBeTruthy();
           expect(UsersController.setTab).toBeDefined();
           expect(UsersController.setTab instanceof Function).toBeTruthy();
           expect(UsersController.showCreateTeamModal).toBeDefined();
           expect(UsersController.showCreateTeamModal instanceof Function).toBeTruthy();
-          expect(UsersController.showUpdateEmailModal).toBeDefined();
-          expect(UsersController.showUpdateEmailModal instanceof Function).toBeTruthy();
+          expect(UsersController.showUpdateProfileModal).toBeDefined();
+          expect(UsersController.showUpdateProfileModal instanceof Function).toBeTruthy();
       });
 
       it('should initialize with tab set to 0',function(){

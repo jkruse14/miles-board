@@ -5,10 +5,10 @@
         .module('milesBoard')
         .controller('UserProfileModalController', UserProfileModalController);
 
-    UserProfileModalController.$inject = ['$filter','$localStorage', '$scope', 'Flash', 'MilesBoardApi', 'MilesBoardImages',  
+    UserProfileModalController.$inject = ['$filter','$localStorage', '$q', '$scope', 'Flash', 'MilesBoardApi', 'MilesBoardImages',  
                                           'RunsDisplayConfig', 'TeamDisplayConfig', '$uibModalInstance'];
 
-    function UserProfileModalController($filter, $localStorage, $scope, Flash, MilesBoardApi, MilesBoardImages, 
+    function UserProfileModalController($filter, $localStorage, $q, $scope, Flash, MilesBoardApi, MilesBoardImages, 
                                         RunsDisplayConfig, TeamDisplayConfig, $uibModalInstance) {
         let vm = this;
         let PROFILE_MODAL_FLASH = 'profile-modal-flash';
@@ -45,55 +45,57 @@
             vm.RunsDisplayConfig.hideSearch = true;
 
             vm.showCreateTeamButton = getShowCreateTeamButton();
-            vm.showUpdateProfileButton = vm.user.email.includes('milesboardimport') && (vm.user.id === $localStorage.user.id || $scope.owner_ids.indexOf($localStorage.user.id) !== -1)
+            vm.showUpdateProfileButton = vm.user.email.includes('milesboardimport') && (vm.user.id === $localStorage.user.id || $scope.owner_ids.indexOf($localStorage.user.id) !== -1);
             vm.showNewMemberForm = false;
             vm.showCreateTeamForm = false;
 
             if (vm.user.type === userTypes.TEAM_OWNER) {
-                MilesBoardApi.TeamOwnersApi.get(vm.user.id).then(function(resp){
-                    vm.user = resp.user;
-                    //vm.user.teams = owner.user.teams;
-                    for (let i = 0; i < vm.TeamDisplayConfig.headers.length; i++) {
-                        if (vm.TeamDisplayConfig.headers[i].text !== 'Name') {
-                            vm.TeamDisplayConfig.headers[i].hidden = true;
-                        }
-                    }
+                return getTeamOwnerProfile(vm.user.id);
 
-                    vm.teams_board_display = {
-                        displayObjData: buildDisplayObject(vm.user.teams, TeamDisplayConfig),
-                        displayConfig: TeamDisplayConfig,
-                        rowCallback: null
-                    }
-
-                    vm.runs_board_display = {
-                        displayObjData: buildDisplayObject(vm.user.runs, RunsDisplayConfig),
-                        displayConfig: RunsDisplayConfig,
-                        rowCallback: null
-                    }
-
-                    vm.setTab(0);
-                }, function(reason) {
-
-                });
             } else {
-                for (let i = 0; i < vm.TeamDisplayConfig.headers.length; i++) {
-                    if (vm.TeamDisplayConfig.headers[i].text !== 'Name') {
-                        vm.TeamDisplayConfig.headers[i].hidden = true;
-                    }
-                }
+                initializeUserProfile({ user: vm.user });
+            }
+        }
 
-                vm.teams_board_display = {
-                    displayObjData: buildDisplayObject(vm.user.teams, TeamDisplayConfig),
-                    displayConfig: TeamDisplayConfig,
-                    rowCallback: null
-                }
+        function getTeamOwnerProfile(user_id) {
+            var deferred = $q.defer();
+           return MilesBoardApi.TeamOwnersApi.get(user_id).then(function (resp) {
+                initializeUserProfile(resp);
+                deferred.resolve(resp, initializeUserProfile);
+                return deferred.promise;
+            }, function (reason) {
+                deferred.reject(reason, initializeUserProfileFail);
+                return deferred.promise;
+            });
+            
+        }
 
-                vm.runs_board_display = {
-                    displayObjData: buildDisplayObject(vm.user.runs, RunsDisplayConfig),
-                    displayConfig: RunsDisplayConfig,
-                    rowCallback: null
+        function initializeUserProfile(user) {
+            vm.user = user.user;
+            //vm.user.teams = owner.user.teams;
+            for (var i = 0; i < vm.TeamDisplayConfig.headers.length; i++) {
+                if (vm.TeamDisplayConfig.headers[i].text !== 'Name') {
+                    vm.TeamDisplayConfig.headers[i].hidden = true;
                 }
-                vm.setTab(0);
+            }
+
+            vm.teams_board_display = setupDisplay(vm.user.teams, TeamDisplayConfig, null);
+            vm.runs_board_display = setupDisplay(vm.user.runs, RunsDisplayConfig, null);
+
+            vm.setTab(0);
+        }
+
+        function initializeUserProfileFail() {
+            close();
+            let message = 'Whoops... something went wrong while finding the user\'s profile. Please try again later.';
+            Flash.create('danger', message, 5000, { container: 'index_flash' }, true);
+        }
+
+        function setupDisplay(obj, config, rowcallback) {
+            return {
+                displayObjData: buildDisplayObject(obj, config),
+                displayConfig: config,
+                rowCallback: rowcallback
             }
         }
 
