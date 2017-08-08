@@ -9,31 +9,12 @@ class TeamsController < ApplicationController
   def show
     users = []
     @team.users.each do |user|
-      tmp = {}
-      tmp[:id] = user.id
-      tmp[:first_name] = user.first_name
-      tmp[:last_name] = user.last_name
-      team_distance = 0
-      team_run_count = 0
-      user.runs.each do |run|
-        if run.team_id == @team.id
-          team_distance += run.distance
-          team_run_count += 1
-        end
-      end
+      next if user.type == 'TeamOwner'
+      users.push(get_user_data(user))
+    end
 
-      imported = ImportedUserDatum.where(user_id: user.id, team_id: @team.id).order(created_at: :asc).first
-      if !imported.nil?
-        base_miles = imported[:team_miles].to_i
-        base_runs = imported[:num_team_runs].to_i
-      else
-        base_miles = 0
-        base_runs = 0
-      end
-
-      tmp[:team_distance] = team_distance + base_miles
-      tmp[:team_run_count] = team_run_count + base_runs
-      users.push(tmp)
+    @team.team_owners.each do |owner|
+      users.push(get_user_data(owner))
     end
 
     render(json: { team: @team.as_json(only: %i(id name users team_owner_id location),
@@ -42,7 +23,7 @@ class TeamsController < ApplicationController
                                                         include: {
                                                           custom_filters: { only: %i(id filter_field filter_value comparator) }
                                                         } },
-                                         team_owners: { only: %i(id first_name last_name) } 
+                                         team_owners: { only: %i(id first_name last_name type) }
                                        }), users: users },
            status: 200) && return
   end
@@ -87,6 +68,34 @@ class TeamsController < ApplicationController
 
   def team_params
     params.permit(:name, :team_owner_id, :location, :contact_email)
+  end
+
+  def get_user_data(user)
+    tmp = {}
+    tmp[:id] = user.id
+    tmp[:first_name] = user.first_name
+    tmp[:last_name] = user.last_name
+    team_distance = 0
+    team_run_count = 0
+    user.runs.each do |run|
+      if run.team_id == @team.id
+        team_distance += run.distance
+        team_run_count += 1
+      end
+    end
+
+    imported = ImportedUserDatum.where(user_id: user.id, team_id: @team.id).order(created_at: :asc).first
+    if !imported.nil?
+      base_miles = imported[:team_miles].to_i
+      base_runs = imported[:num_team_runs].to_i
+    else
+      base_miles = 0
+      base_runs = 0
+    end
+
+    tmp[:team_distance] = team_distance + base_miles
+    tmp[:team_run_count] = team_run_count + base_runs
+    tmp
   end
 
   # def teams_params

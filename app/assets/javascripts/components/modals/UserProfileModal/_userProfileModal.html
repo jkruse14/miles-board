@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <div id="userProfile" class="row profile_modal" ng-show="!vm.showNewMemberForm">
+                <div id="userProfile" class="row profile_modal" ng-show="!vm.showNewMemberForm && !vm.showCreateTeamForm && !vm.showEditRunModal && !vm.showConfirmationDialog">
                     <div class="board-title" class="col-sm-12">
                         <span>{{vm.user.first_name + ' ' + vm.user.last_name}}</span>
                     </div>
@@ -20,7 +20,10 @@
                         </uib-tabset>
                     </section>
                     <section id='user-runs-board' class="col-sm-9">
-                        <board display-obj-data="vm.runs_board_display.displayObjData" display-obj-config="vm.runs_board_display.displayConfig" row-callback="vm.rowCallback">
+                        <board display-obj-data="vm.runs_board_display.displayObjData" 
+                                display-obj-config="vm.runs_board_display.displayConfig" 
+                                row-callback="[vm.showEditRunModalClick, vm.showDeleteRunConfirmation]"
+                                 show-callback-conditions="vm.showCallbackConditions">
                     </section>
                 </div>
                 <div id="newMemberForm-container" ng-show="vm.showNewMemberForm === true" >
@@ -29,10 +32,25 @@
                 <div id="createTeamForm-container" ng-show="vm.showCreateTeamForm">
                     <ng-include src="'components/modals/CreateTeamModal/_createTeamForm.html'"></ng-include>
                 </div>
+                <div id="editRunForm-container" ng-show="vm.showEditRunModal">
+                    <ng-include src="'components/modals/EditRunModal/_editRunForm.html'"></ng-include>
+                </div>
+                <div id="createTeamForm-container" ng-show="vm.showConfirmationDialog">
+                    <ng-include src="'components/modals/ConfirmationModal/_confirmationModal.html'"></ng-include>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">{{vm.showNewMemberForm || vm.showCreateTeamForm ? 'Cancel' : 'Close'}}</button>
-                <button type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.showNewMemberForm || vm.showCreateTeamForm">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">{{vm.showNewMemberForm || 
+                                                                                                           vm.showCreateTeamForm || 
+                                                                                                           vm.showEditRunModal || 
+                                                                                                           vm.showConfirmationDialog ? 'Cancel' : 'Close'}}</button>
+                <button type="button" class="btn btn-primary" 
+                                      ng-class="{'btn-danger' : vm.showConfirmationDialog === true}" 
+                                      ng-click="vm.save()" 
+                                      ng-show="vm.showNewMemberForm || 
+                                               vm.showCreateTeamForm || 
+                                               vm.showEditRunModal || 
+                                               vm.showConfirmationDialog">{{vm.showConfirmationDialog ? 'Confirm' : 'Save'}}</button>
             </div>
         </div>
         <flash-message name="profile-modal-flash" class="modal-flash"></flash-message>
