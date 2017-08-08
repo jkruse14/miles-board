@@ -1,5 +1,5 @@
 class RunsController < ApplicationController
-  before_action :set_run, only: [:show, :update, :destroy]
+  before_action :set_run, only: [:show, :update, :delete]
   skip_before_action  :verify_authenticity_token
 
   def index
@@ -62,6 +62,12 @@ class RunsController < ApplicationController
   end
 
   def delete
+    @run.destroy
+    if @run.destroyed?
+      render json: { id: @run[:id] }, status: 200 && return
+    else
+      render json: { error: 'delete failed' }, status: :unprocessable_entity && return
+    end
   end
 
   private
