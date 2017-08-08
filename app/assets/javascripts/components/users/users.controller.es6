@@ -34,6 +34,8 @@
             vm.setTab = setTab;
             vm.showCreateTeamModal = showCreateTeamModal;
             vm.showUpdateProfileModal = showUpdateProfileModal;
+            vm.showEditRunModal = showEditRunModal;
+            vm.showDeleteRunConfirmation = showDeleteRunConfirmation;
 
             function onInit() {
                 if($state.params['reset']) {
@@ -173,13 +175,7 @@
                     controller: 'EditRunModalController',
                     controllerAs: 'vm',
                     size: 'md',
-                    //appendTo: parentElem,
                     scope: $scope
-                    // resolve: {
-                    //     items: function () {
-                    //         return vm.items;
-                    //     }
-                    // }
                 });
 
                 modalInstance.result.then(function (result) {
@@ -202,6 +198,40 @@
                         }
                         vm.displayObjData = buildDisplayObject(vm.user.runs, RunsDisplayConfig)
                     })
+                }, function () { });
+            }
+
+            function showDeleteRunConfirmation(run){
+                $scope.editing_run = run;
+                $scope.message = 'Delete this run?';
+                $scope.messageObj = run.Distance.text + ' miles on ' + moment(run['Run Date']).format('MMMM D, YYYY') + ' with ' + run.Team.text;
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'components/modals/ConfirmationModal/_confirmationModal.html',
+                    controller: 'confirmationController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    backdrop: 'static',
+                    scope: $scope
+                });
+
+                modalInstance.result.then(function (result) {
+                    if(result === true) {
+                        MilesBoardApi.remove('runs', run.id.text).then(function(resp){
+                            for(let i = 0; i < vm.user.runs.length; i++){
+                                if(vm.user.runs[i].id === parseInt(run.id.text)){
+                                    vm.user.runs.splice(i,1);
+                                    break;
+                                }
+                            }
+                            vm.runs_board_display = {
+                                displayObjData: buildDisplayObject(vm.user.runs, RunsDisplayConfig),
+                                displayConfig: RunsDisplayConfig,
+                            }
+                        });
+                    }
                 }, function () { });
             }
 

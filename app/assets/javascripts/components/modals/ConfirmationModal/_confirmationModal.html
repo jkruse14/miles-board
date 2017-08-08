@@ -1,0 +1,10 @@
+<div id='confirmation_modal'>
+    <div class='modal-body'>
+        <p class='confirm-msg'>{{vm.message}}</p>
+        <p class='confirm-obj'>{{vm.messageObj}}</p>
+    </div>
+    <div class='modal-footer' ng-show='vm.showFooter'>
+        <button type='button' class='btn btn-primary' ng-click="vm.close(true)">Confirm</button>
+        <button type='button' class='btn btn-default' ng-click="vm.close(false)">Cancel</button>
+    </div>
+</div>

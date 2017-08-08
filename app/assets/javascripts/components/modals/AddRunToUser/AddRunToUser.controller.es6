@@ -18,7 +18,7 @@
             vm.cal_opened = false;
             vm.run = {
                 user_id: '',
-                distance: 0,
+                distance: '',
                 run_date: new Date(),
             };
             vm.dateOptions = {
