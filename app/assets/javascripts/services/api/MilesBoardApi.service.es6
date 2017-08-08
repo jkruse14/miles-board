@@ -23,6 +23,7 @@
         
         self.errorReader = errorReader;
         self.put = put;
+        self.remove = remove;
 
         function errorReader(errors) {
             const keys = Object.keys(errors);
@@ -40,7 +41,11 @@
         }
 
         function put(obj_type, obj) {
-            return Restangular.all(obj_type).customPUT(obj);
+            return Restangular.one(obj_type, obj.id).customPUT(obj);
+        }
+
+        function remove(obj_type, obj) {
+            return Restangular.one(obj_type, obj.id).remove();
         }
 
         return self;

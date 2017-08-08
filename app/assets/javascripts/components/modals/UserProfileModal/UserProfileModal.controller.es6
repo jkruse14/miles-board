@@ -6,10 +6,10 @@
         .controller('UserProfileModalController', UserProfileModalController);
 
     UserProfileModalController.$inject = ['$filter','$localStorage', '$q', '$scope', 'Flash', 'MilesBoardApi', 'MilesBoardImages',  
-                                          'RunsDisplayConfig', 'TeamDisplayConfig', '$uibModalInstance'];
+                                          'RunsDisplayConfig', 'TeamDisplayConfig', '$uibModalInstance', '$rootScope'];
 
     function UserProfileModalController($filter, $localStorage, $q, $scope, Flash, MilesBoardApi, MilesBoardImages, 
-                                        RunsDisplayConfig, TeamDisplayConfig, $uibModalInstance) {
+                                        RunsDisplayConfig, TeamDisplayConfig, $uibModalInstance, $rootScope) {
         let vm = this;
         let PROFILE_MODAL_FLASH = 'profile-modal-flash';
         vm.user = $scope.user.user;
@@ -32,6 +32,9 @@
         vm.setTab = setTab;
         vm.close = close;
         vm.save = save;
+        vm.showCallbackConditions = showCallbackConditions;
+        vm.showEditRunModalClick = showEditRunModalClick;
+        vm.showDeleteRunConfirmation = showDeleteRunConfirmation;
 
         function onInit() {
             vm.TeamDisplayConfig = TeamDisplayConfig;
@@ -41,13 +44,15 @@
             vm.TeamDisplayConfig.hideSearch = true;
             vm.TeamDisplayConfig.hideHeaderRow = true;
 
-            vm.RunsDisplayConfig.showCallback = false;
+            vm.RunsDisplayConfig.showCallback = vm.myProfile;
             vm.RunsDisplayConfig.hideSearch = true;
 
             vm.showCreateTeamButton = getShowCreateTeamButton();
             vm.showUpdateProfileButton = vm.user.email.includes('milesboardimport') && (vm.user.id === $localStorage.user.id || $scope.owner_ids.indexOf($localStorage.user.id) !== -1);
             vm.showNewMemberForm = false;
             vm.showCreateTeamForm = false;
+            vm.showEditRunModal = false;
+            vm.showConfirmationDialog = false;
 
             if (vm.user.type === userTypes.TEAM_OWNER) {
                 return getTeamOwnerProfile(vm.user.id);
@@ -175,12 +180,37 @@
             return (vm.loggedIn && vm.user.id === $localStorage.user.id && $localStorage.user.type === 'TeamOwner');
         }
 
+        function showCallbackConditions(row){
+            if(vm.myProfile){
+                return true;
+            } else if($localStorage.user.type === 'TeamOwner') {
+                let user = $localStorage.user;
+                for(let i = 0; i < user.teams.length; i++) {
+                    if(user.teams[i].id === row.Team.team_id) {
+                        for(let j = 0; j < user.teams[i].team_owners.length; j++) {
+                            if(user.id === user.teams[i].team_owners[j].id) {
+                                vm.RunsDisplayConfig.showCallback = true;
+                                return true
+                            }
+                        }
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+        }
+
         function close() {
             if(vm.showNewMemberForm === true) {
                 vm.showNewMemberForm = false;
             } else if(vm.showCreateTeamForm === true) {
                 vm.showCreateTeamForm = false;
-            } else {
+            } else if(vm.showEditRunModal === true) {
+                vm.showEditRunModal = false;
+            } else if(vm.showConfirmationDialog){
+                vm.showConfirmationDialog = false;
+            }else {
                 let result = null;
                 if(vm.user_updated === true) {
                     result = vm.user;
@@ -223,11 +253,79 @@
                             Flash.create('danger', message, 5000, { container: PROFILE_MODAL_FLASH }, true);
                         });
                     }
+                    vm.newMember = undefined;
                 }
                 vm.showNewMemberForm = false;
             } else if (vm.showCreateTeamForm) {
                 vm.showCreateTeamForm = false;
+            } else if(vm.showEditRunModal) {
+                vm.showEditRunModal = false; 
+                saveEditRun(vm.run);
+                vm.run = undefined;
+            } else if(vm.showConfirmationDialog === true) {
+                deleteRun(vm.run);
+                vm.run = undefined;
+                vm.messageObj = '';
+                vm.showConfirmationDialog = false;
             }
+        }
+
+        function showEditRunModalClick(row) {
+            vm.run = getRunFromRow(row);
+            vm.dateOptions = {
+                maxDate: new Date(),
+            };
+            vm.showEditRunModal = true;
+        }
+
+        function saveEditRun(data) {
+            let updates = {
+                run_date: moment(data.run_date).format('YYYY-MM-DD'),
+                distance: parseInt(data.distance),
+                id: data.id
+                //user_id: vm.user.id,
+                //team_id: data['team id'].text
+            }
+
+            MilesBoardApi.put('runs',updates).then(function (response) {
+                for(let i = 0; i < vm.user.runs.length; i++) {
+                    if(updates.id === vm.user.runs[i].id) {
+                        vm.user.runs[i].run_date = updates.run_date;
+                        vm.user.runs[i].distance = updates.distance;
+                        break;
+                    }
+                }
+                vm.runs_board_display = setupDisplay(vm.user.runs, RunsDisplayConfig, null);
+            })
+        }
+
+        function showDeleteRunConfirmation(row) {
+            vm.run = getRunFromRow(row);
+            vm.message = 'Delete this run?';
+            vm.messageObj = vm.run.distance + ' miles on ' + moment(vm.run.run_date).format('MMMM D, YYYY') + ' with ' + row.Team.text;
+            vm.showFooter = false;
+            vm.showConfirmationDialog = true;
+        }
+
+        function deleteRun(run){
+                MilesBoardApi.remove('runs', run).then(function(resp){
+                    for(let i = 0; i < vm.user.runs.length; i++){
+                        if(vm.user.runs[i].id === run.id){
+                            vm.user.runs.splice(i,1);
+                            break;
+                        }
+                    }
+                    vm.runs_board_display = setupDisplay(vm.user.runs, RunsDisplayConfig, null);
+                    $rootScope.$broadcast('RUN_DELETED', vm.user.id, run.distance);
+                });
+        }
+
+        function getRunFromRow(row){
+            return {
+                    distance: parseInt(row.Distance.text),
+                    run_date: new Date(row['Run Date'].text),
+                    id: row.id.text
+                };
         }
     }
 })();

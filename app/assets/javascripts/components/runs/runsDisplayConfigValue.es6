@@ -11,6 +11,7 @@
                     {text:'Distance', hidden:false}, 
                     {text:'Team', hidden:false, uiSref:'team'},
                     {text: 'team id', hidden: true}],
-        'rowCallbackText': 'Edit Run'
+        'rowCallbackText': ['Edit', 'Delete'],
+        'showCallback': true
     });
 })();

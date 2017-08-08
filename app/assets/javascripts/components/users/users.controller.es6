@@ -34,6 +34,8 @@
             vm.setTab = setTab;
             vm.showCreateTeamModal = showCreateTeamModal;
             vm.showUpdateProfileModal = showUpdateProfileModal;
+            vm.showEditRunModal = showEditRunModal;
+            vm.showDeleteRunConfirmation = showDeleteRunConfirmation;
 
             function onInit() {
                 if($state.params['reset']) {
@@ -173,13 +175,7 @@
                     controller: 'EditRunModalController',
                     controllerAs: 'vm',
                     size: 'md',
-                    //appendTo: parentElem,
                     scope: $scope
-                    // resolve: {
-                    //     items: function () {
-                    //         return vm.items;
-                    //     }
-                    // }
                 });
 
                 modalInstance.result.then(function (result) {
@@ -202,6 +198,34 @@
                         }
                         vm.displayObjData = buildDisplayObject(vm.user.runs, RunsDisplayConfig)
                     })
+                }, function () { });
+            }
+
+            function showDeleteRunConfirmation(run){
+                $scope.message = 'Delete run? (' + run.distance + ' miles on ' + run.run_date + ')'; 
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'components/modals/EditRunModal/_editRunModal.html',
+                    controller: 'EditRunModalController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    backdrop: 'static',
+                    scope: $scope
+                });
+
+                modalInstance.result.then(function (result) {
+                    if(result === true) {
+                        MilesBoardApi.remove('runs', run.id).then(function(resp){
+                            for(let i = 0; i < vm.user.runs.length; i++){
+                                if(vm.user.runs[i].id === run.id){
+                                    vm.user.runs = vm.user.runs.splice(i,1)
+                                }
+                            }
+                            vm.displayObjData = buildDisplayObject(vm.user.runs, RunsDisplayConfig)
+                        });
+                    }
                 }, function () { });
             }
 

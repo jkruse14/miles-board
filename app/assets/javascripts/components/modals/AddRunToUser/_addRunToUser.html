@@ -6,7 +6,7 @@
                 <h4 class="modal-title">Add Run</h4>
             </div>
             <div class="modal-body">
-                <form id="addRunToUserForm" name="addRunToUserForm">
+                <form id="addRunToUserForm" name="addRunToUserForm" >
                     <div class="form-group">
                         <label for="distance">Distance</label>
                         <input type="number" class="form-control" id="distance" ng-model="vm.run.distance" placeholder="Enter distance" autofocus>
@@ -26,11 +26,12 @@
                             </span>
                         </p>
                     </div>
+                    <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" ng-click="vm.save()">Save</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-                <button type="button" class="btn btn-primary" ng-click="vm.save()">Save</button>
+                
             </div>
         </div>
         <!-- /.modal-content -->

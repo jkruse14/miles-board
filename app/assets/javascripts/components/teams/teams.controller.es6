@@ -5,11 +5,23 @@ angular
     .module('milesBoard')
     .controller('TeamsController', TeamsController);
 
-TeamsController.$inject = ['$localStorage', '$scope', '$stateParams', 'boardFilterFilter', 'Flash', 
-                           'MilesBoardApi', 'team', 'teams', 'TeamDisplayConfig', 'TeamsDisplayConfig', 
-                           '$uibModal','UsersDisplayConfig'];
+TeamsController.$inject = [
+    '$localStorage',
+    '$rootScope',
+    '$scope',
+    '$stateParams',
+    'boardFilterFilter',
+    'Flash',
+    'MilesBoardApi',
+    'team',
+    'teams',
+    'TeamDisplayConfig',
+    'TeamsDisplayConfig',
+    '$uibModal',
+    'UsersDisplayConfig'
+];
 
-function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter, Flash, 
+function TeamsController($localStorage, $rootScope, $scope, $stateParams, boardFilterFilter, Flash,
                           MilesBoardApi, team, teams, TeamDisplayConfig, TeamsDisplayConfig, 
                         $uibModal, UsersDisplayConfig) {
         let vm = this;
@@ -28,6 +40,19 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
         vm.showJoinTeamButton = showJoinTeamButton;
         vm.joinTeam = joinTeam;
         vm.showAddTeamOwnerModal = showAddTeamOwnerModal;
+
+        $rootScope.$on('RUN_DELETED', function(event, user_id, distance) {
+            if(vm.team){
+                for(let i = 0; i < vm.team.users.length; i++){
+                    if(user_id === vm.team.users[i].id) {
+                        vm.team.users[i].team_distance -= distance;
+                        vm.team.users[i].team_run_count -= 1;
+                        break;
+                    }
+                }
+                vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig);
+            }
+        })
 
         function onInit() {
             if ($stateParams.team_id) {
@@ -82,9 +107,7 @@ function TeamsController($localStorage, $scope, $stateParams, boardFilterFilter,
                 }
                 
                 displayObj.push(item);
-                item.id.text == 568 ? count += 1 : '';
             }
-            console.log(count);
             return displayObj;
         }
 

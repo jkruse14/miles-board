@@ -15,6 +15,7 @@
         ])
         .config(EnvironmentConfig)
         .config(authConfig)
+        //.config(ApiConfig)
         .run();
 
     authConfig.$inject = ['$authProvider','envServiceProvider'];
@@ -75,5 +76,13 @@
 
     function ApiConfig(RestangularProvider) {
         RestangularProvider.setDefaultHttpFields({ cache: true });
+
+        RestangularProvider.addRequestInterceptor(function(elem, operation, what, url) {
+            if (operation === "remove") {
+                console.log(elem, operation, what , url);
+               // url = url + '/' + elem.id;
+            } 
+            return elem;
+        });
     }
 })();

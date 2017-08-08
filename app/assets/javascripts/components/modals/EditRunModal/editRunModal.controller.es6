@@ -10,8 +10,8 @@
     function EditRunModalController($scope, $uibModalInstance) {
         let vm = this;
 
-        vm.distance = parseInt($scope.editing_run.Distance.text);
-        vm.run_date = $scope.editing_run['Run Date'].text === '--' ? new Date() : moment($scope.editing_run['Run Date'].text);
+        vm.run.distance = parseInt($scope.editing_run.Distance.text);
+        vm.run.run_date = $scope.editing_run['Run Date'].text === '--' ? new Date() : moment($scope.editing_run['Run Date'].text);
 
 
         vm.$onInit = onInit;
@@ -21,8 +21,8 @@
         function save() {
             $uibModalInstance.close({id:parseInt($scope.editing_run.id.text),
                                      team_id: parseInt($scope.editing_run.Team.team_id),
-                                     distance: vm.distance,
-                                     run_date: vm.run_date});
+                                     distance: vm.run.distance,
+                                     run_date: vm.run.run_date});
         }
 
         function cancel() {
@@ -30,8 +30,8 @@
         }
         
         function onInit() {
-            vm.distance = parseInt($scope.editing_run.Distance.text);
-            vm.run_date = $scope.editing_run['Run Date'].text === '--' ? new Date() : moment($scope.editing_run['Run Date'].text);
+            vm.run.distance = parseInt($scope.editing_run.Distance.text);
+            vm.run.run_date = $scope.editing_run['Run Date'].text === '--' ? new Date() : moment($scope.editing_run['Run Date'].text);
             
             vm.today = moment();
             vm.dateOptions = {
