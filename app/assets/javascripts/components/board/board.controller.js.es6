@@ -5,32 +5,34 @@ angular
     .module('milesBoard')
     .controller('BoardController', BoardController);
 
-BoardController.$inject = ['$localStorage','$scope', '$stateParams'];
+BoardController.$inject = ['$localStorage','$scope'];
 
 function BoardController($localStorage, $scope) {
     var vm = this;
-    vm.$onInit = onInit;
-    vm.maxPageSize = 50;
-    vm.maxSize = 10;
-    vm.currentPage = 1;
-
-    vm.showActions = $localStorage.user ? true : false;
-    vm.loggedInUserId = $localStorage.user ? $localStorage.user.id : null;
-    vm.setOrdering = setOrdering;
-    vm.getValueForOrdering = getValueForOrdering;
-    
+        
     const ASC = 'asc';
     const DSC = 'dsc';
-    vm.DSC = DSC;
-
-    vm.ordering = {
-        col: 'Name',
-        dir: ASC
-    }
-
-    
+       
+    vm.$onInit = onInit;
 
     function onInit() {
+        
+        vm.maxPageSize = 50;
+        vm.maxSize = 10;
+        vm.currentPage = 1;
+
+        vm.DSC = DSC;
+
+        vm.ordering = {
+            col: 'Name',
+            dir: ASC
+        }
+
+        vm.showActions = $localStorage.user ? true : false;
+        vm.loggedInUserId = $localStorage.user ? $localStorage.user.id : null;
+        vm.setOrdering = setOrdering;
+        vm.getValueForOrdering = getValueForOrdering;
+
         if(vm.rowCallback instanceof Array){
             vm.callbacks = vm.rowCallback;
         } else {

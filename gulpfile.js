@@ -22,7 +22,8 @@ var directives = glob.sync('./app/assets/javascripts/directives/**/*.{js,es6}');
 var filters =    glob.sync('./app/assets/javascripts/filters/**/*.{js,es6}');
 var providers =  glob.sync('./app/assets/javascripts/providers/**/*.{js,es6}');
 var services =   glob.sync('./app/assets/javascripts/services/**/*.{js,es6}');
-var appfiles =  glob.sync('./app/assets/javascripts/app.*.{js,es6}');
+var appfiles =  glob.sync('./app/assets/javascripts/app.?*.{js,es6}');
+console.log(appfiles)
 
 function compile(watch) {
     var files = appfiles.concat(components, directives, filters, providers, services);
