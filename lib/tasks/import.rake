@@ -15,7 +15,7 @@ namespace :import do
           
           user.runs.destroy_all if args[:clear_existing_runs] == "true"
           
-          existing_data = ImportedUserDatum.where(user_id: user.id, team_id: row[:team_id])[0]
+          existing_data = ImportedUserDatum.where(user_id: user.id, team_id: args[:team_id])[0]
           existing_data.destroy unless existing_data.nil?
 
           base_data = create_base_data(row, args[:team_id], user.id)
