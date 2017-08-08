@@ -308,7 +308,7 @@
         }
 
         function deleteRun(run){
-                MilesBoardApi.remove('runs', run).then(function(resp){
+                MilesBoardApi.remove('runs', run.id).then(function(resp){
                     for(let i = 0; i < vm.user.runs.length; i++){
                         if(vm.user.runs[i].id === run.id){
                             vm.user.runs.splice(i,1);

@@ -10,6 +10,7 @@
         function confirmationController($scope, $uibModalInstance) {
             let vm = this;
             vm.message = $scope.message;
+            vm.messageObj = $scope.messageObj;
             vm.showFooter = true;
 
             vm.close = close;

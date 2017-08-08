@@ -44,8 +44,8 @@
             return Restangular.one(obj_type, obj.id).customPUT(obj);
         }
 
-        function remove(obj_type, obj) {
-            return Restangular.one(obj_type, obj.id).remove();
+        function remove(obj_type, obj_id) {
+            return Restangular.one(obj_type, obj_id).remove();
         }
 
         return self;
