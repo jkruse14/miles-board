@@ -84,7 +84,6 @@
     "test": "karma start --single-run",
     "start": "rails s",
     "postinstall": "./node_modules/bower/bin/bower install"
-    //"heroku-postbuild": "webpack"
   },
   "repository": {
     "type": "git",
