@@ -56,3 +56,5 @@ bower.json
 /config/application.yml
 
 npm-debug.log
+/public/packs
+/node_modules

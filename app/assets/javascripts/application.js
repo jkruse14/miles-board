@@ -27,5 +27,5 @@
 //= require ngstorage/ngStorage.js
 //= require angular-environment/dist/angular-environment.js
 //= require angular-flash-alert/dist/angular-flash.js
-//= app.js
+//= app-bundle.js
 //= require_tree .
