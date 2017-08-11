@@ -52,7 +52,7 @@
     </div>
         <div ng-if="vm.updating === false" id="waiver-container">
             <div id="waiver">
-                <p ng-include ng-show="vm.showWaiver" src="'waivers/1/waiver.txt'"></p>
+                <p ng-include ng-show="vm.showWaiver" src="vm.waiverUrl"></p>
                 <a ng-model="vm.showWaiver" ng-click="vm.showWaiver = !vm.showWaiver">{{vm.showWaiver === true ? 'Hide Waiver' : 'View Waiver'}}</a>
             </div>
             <div class="form-group">

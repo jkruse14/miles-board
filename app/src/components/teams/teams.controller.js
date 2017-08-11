@@ -14,6 +14,7 @@ angular
     .controller('TeamsController', TeamsController);
 
 TeamsController.$inject = [
+    '$document',
     '$localStorage',
     '$rootScope',
     '$scope',
@@ -21,17 +22,30 @@ TeamsController.$inject = [
     'boardFilterFilter',
     'Flash',
     'MilesBoardApi',
+    'MilesBoardImages',
     'team',
     'teams',
     'TeamDisplayConfig',
     'TeamsDisplayConfig',
     '$uibModal',
-    'UsersDisplayConfig'
+    'UsersDisplayConfig',
 ];
 
-function TeamsController($localStorage, $rootScope, $scope, $stateParams, boardFilterFilter, Flash,
-                          MilesBoardApi, team, teams, TeamDisplayConfig, TeamsDisplayConfig, 
-                        $uibModal, UsersDisplayConfig) {
+function TeamsController($document,
+                         $localStorage, 
+                         $rootScope, 
+                         $scope, 
+                         $stateParams, 
+                         boardFilterFilter, 
+                         Flash,
+                         MilesBoardApi,
+                         MilesBoardImages,
+                         team,
+                         teams,
+                         TeamDisplayConfig,
+                         TeamsDisplayConfig,
+                         $uibModal, 
+                         UsersDisplayConfig) {
         let vm = this;
         vm.team = $stateParams.team_id ? team.plain().team : null;
         vm.teams = teams ? teams.plain() : null;
@@ -48,6 +62,7 @@ function TeamsController($localStorage, $rootScope, $scope, $stateParams, boardF
         vm.showJoinTeamButton = showJoinTeamButton;
         vm.joinTeam = joinTeam;
         vm.showAddTeamOwnerModal = showAddTeamOwnerModal;
+        vm.setLogo = setLogo;
 
         $rootScope.$on('RUN_DELETED', function(event, user_id, distance) {
             if(vm.team){
@@ -61,8 +76,9 @@ function TeamsController($localStorage, $rootScope, $scope, $stateParams, boardF
                 vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig);
             }
         })
-
         function onInit() {
+            vm.logoSrc = MilesBoardImages.getLogo($stateParams.team_id);
+
             if ($stateParams.team_id) {
                 vm.team.users = team.plain().users;
 
@@ -80,6 +96,12 @@ function TeamsController($localStorage, $rootScope, $scope, $stateParams, boardF
 
         function onChanges(changes) {
             setUpTable();
+        }
+
+        function setLogo() {
+           if(!angular.element(document.getElementById('logo_img'))[0].attributes.getNamedItem('src').value){
+                vm.logoSrc = null;
+           }
         }
 
         function setUpTable() {

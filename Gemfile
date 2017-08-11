@@ -65,7 +65,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-gem "foreman"
 group :production, :staging do
   gem "rails_12factor"
   gem "rails_stdout_logging"

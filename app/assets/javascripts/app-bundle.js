@@ -85,8 +85,8 @@ module.exports = path;
 /* 2 */
 /***/ (function(module, exports) {
 
-var path = '/components/modals/AddOwnerModal/_addOwnerModal.html';
-var html = "<div id=\"newMemberModal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" aria-label=\"Close\" ng-click=\"vm.close()\"><span aria-hidden=\"true\">&times;</span></button>\n                <h4 class=\"modal-title\">Add Owner</h4>\n            </div>\n            <div class=\"modal-body\">\n                <input id=\"table_filter\" type='text' \n                        placeholder=\"Search By Name...\" \n                        ng-model=\"query\"\n                        ng-model-options=\"{ debounce: 200 }\" />\n                \n                <table id=\"board\" class=\"table table-responsive table-striped\">\n                    <tr ng-hide=\"vm.displayObjConfig.hideHeaderRow === true\">\n                        <th>Name</th>\n                        <th></th>\n                    </tr>\n                    <tr ng-repeat=\"row in vm.users | namesFilter:query track by row.id\">\n                        <td>\n                            <span>{{row.first_name + ' ' + row.last_name}}</span>\n                        </td>\n                        <td>\n                            <button class=\"btn\" ng-click=\"vm.updateOwnersList(row)\"\n                                                ng-class=\"[{'btn-primary': vm.owner_ids.indexOf(row.id) === -1,\n                                                            'btn-danger': vm.owner_ids.indexOf(row.id) !== -1}]\">\n                                {{vm.owner_ids.indexOf(row.id) === -1 ? 'Add as Owner' : 'Remove as Owner'}}\n                            </button>\n\n                        </td>\n                    </tr>\n                </table>\n            </div>\n            <div class=\"modal-footer\">\n                <div id=\"form-actions\">\n                    <button type=\"submit\" class='btn btn-primary' ng-click='vm.save()'>Submit</button>\n                    <button class='btn btn-primary' ng-click='vm.close()'> Close</button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+var path = '/components/modals/newMemberModal/_newMemberForm.html';
+var html = "<form id=\"newMemberForm\" name=\"newMemberForm\" novalidate>\n    <div class=\"form-group\">\n        <label for=\"first_name\">First Name *</label>\n        <input type=\"text\" id=\"first_name\" name=\"first_name\" class=\"form-control\" ng-class=\"{'field-invalid': !newMemberForm.first_name.$pristine && newMemberForm.first_name.$invalid}\"\n            ng-model=\"vm.newMember.first_name\" ng-change='vm.handleFieldUpate()' placeholder=\"{{vm.user && vm.user.first_name? vm.user.first_name : 'Enter first name'}}\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"last_name\" >Last Name *</label>\n        <input type=\"text\" class=\"form-control\" id=\"last_name\" ng-model=\"vm.newMember.last_name\" ng-change='vm.handleFieldUpate()' placeholder=\"{{vm.user && vm.user.last_name ? vm.user.last_name : 'Enter last name'}}\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"email\">Email address</label>\n        <input type=\"email\" class=\"form-control\" id=\"email\" aria-describedby=\"emailHelp\" ng-model=\"vm.newMember.email\" placeholder=\"Enter email\"\n            required>\n        <small id=\"emailHelp\" class=\"form-text text-muted\"><em>Optional</em>Your email will only be shared with the team owner for team related information</small>\n    </div>\n    <div class=\"form-group\" ng-if=\"vm.showPasswordFields\">\n        <label for=\"password\">Password</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" aria-describedby=\"passwordHelp\" ng-focus=\"vm.setFocusedField('newMemberForm', 'password')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.password.$invalid\n                                                                && (!newMemberForm.password.$pristine || newMemberForm.password.$touched)\n                                                                && vm.focused_field['newMemberForm']['password'] === false}]\"\n                ng-model=\"vm.newMember.password\" placeholder=\"Enter Password\" required>\n            <small id=\"passwordError\" class=\"form-text text-error\" ng-show=\"newMemberForm.password.$invalid && \n                                            (!newMemberForm.password.$pristine || newMemberForm.password.$touched) && \n                                            vm.focused_field['newMemberForm']['password'] === false\">\n                                    Invalid Password\n                            </small>\n        </div>\n        <small id=\"passwordHelp\" class=\"form-text text-muted\">Minimum of 6 characters</small>\n    </div>\n    <div class=\"form-group\" ng-if=\"vm.showPasswordFields\">\n        <label for=\"password_confirmation\">Password Confirmation</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password_confirmation\" name=\"password_confirmation\" ng-focus=\"vm.setFocusedField('newMemberForm', 'password_confirmation')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.password_confirmation.$invalid\n                                                              && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched)\n                                                              && vm.focused_field['newMemberForm']['password_confirmation'] === false}]\"\n                ng-model=\"vm.newMember.password_confirmation\" placeholder=\"Confirm Password\" required>\n            <small id=\"pwConfError\" class=\"form-text text-error\" ng-show=\"(newMemberForm.password_confirmation.$invalid || vm.newMember.password !== vm.newMember.password_confirmation)\n                                    && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched) && \n                                            vm.focused_field['newMemberForm']['password_confirmation'] === false\">\n                                    Invalid Password Confirmation or Password and Confirmation do not Match\n                            </small>\n        </div>\n        <!--<small id=\"passwordConfHelp\" class=\"form-text text-muted\">{{vm.passwordConfMessage}}</small>-->\n    </div>\n    <div class=\"form-group\">\n        <input id=\"add_email\" type=\"checkbox\" ng-model=\"vm.showEmailAndPasswordFields\" ng-change=\"vm.showPasswordFieldsChange()/>\n        <label for=\"add_email\">Add a password to login from anywhere <em>(optional)</em></label>\n    </div>\n        <div ng-if=\"vm.updating === false\" id=\"waiver-container\">\n            <div id=\"waiver\">\n                <p ng-include ng-show=\"vm.showWaiver\" src=\"vm.waiverUrl\"></p>\n                <a ng-model=\"vm.showWaiver\" ng-click=\"vm.showWaiver = !vm.showWaiver\">{{vm.showWaiver === true ? 'Hide Waiver' : 'View Waiver'}}</a>\n            </div>\n            <div class=\"form-group\">\n                <input id=\"waiver_check\" type=\"checkbox\" ng-model=\"vm.waiverAgree\" ng-change='vm.handleFieldUpate()' required/>\n                <label for=\"waiver_check\">I have read and agree to the above waiver</label>\n            </div>\n    </div>\n</form>";
 window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 
@@ -114,11 +114,11 @@ __webpack_require__(11);
 
 __webpack_require__(13);
 
-__webpack_require__(14);
+__webpack_require__(16);
 
-__webpack_require__(18);
+__webpack_require__(19);
 
-__webpack_require__(31);
+__webpack_require__(33);
 
 /***/ }),
 /* 5 */
@@ -331,7 +331,7 @@ module.exports = path;
 /***/ (function(module, exports) {
 
 var path = '/components/teams/_team.html';
-var html = "<div id=\"team\">\n    <flash-message name=\"team_flash\"></flash-message>\n    <div id=\"team_header\" class=\"board-title\">\n        <span>{{vm.team.name}}</span>\n        \n        <div class='board-header-btn-container'>\n            <div class=\"btn-group\">\n                <button type=\"button\" class=\"btn btn-primary addMemberBtn\" ng-click=\"vm.showAddTeamMemberModal()\" ng-show='vm.isTeamOwner'>\n                    Add Team Member\n                </button>\n                <button type=\"button\" class=\"btn btn-primary addMemberBtn\" ng-click=\"vm.showAddTeamOwnerModal()\" ng-show='vm.isTeamOwner'>\n                    Add Team Owner\n                </button> \n            </div>\n        </div>\n    </div>\n    <uib-tabset>\n        <uib-tab index=\"0\" heading=\"All\" ng-click=\"vm.showFilteredTable(0)\" ng-show=\"vm.team.custom_tabs.length > 0\"></uib-tab>\n        <uib-tab index=\"$index+1\" ng-repeat=\"tab in vm.team.custom_tabs\" heading=\"{{tab.heading}}\" ng-click=\"vm.showFilteredTable($index+1)\"></uib-tab>\n        <uib-tab index=\"vm.team.custom_tabs.length+2\" heading=\"Add Tab\" ng-click=\"vm.showCustomTabsModal('add')\" ng-if=\"vm.isTeamOwner\" class=\"action-tab\"></uib-tab>\n        <uib-tab index=\"vm.team.custom_tabs.length+3\" heading=\"Edit Tabs\" ng-click=\"vm.showCustomTabsModal('edit')\" ng-if=\"vm.isTeamOwner\" ng-show=\"vm.team.custom_tabs.length > 0\" class=\"action-tab\"></uib-tab>\n    </uib-tabset>\n    <board display-obj-data=\"vm.displayObjData\" display-obj-config=\"vm.displayConfig\" \n           row-callback=\"[vm.showAddRunToUser, vm.showUserProfileModal]\" is-owner=\"vm.isTeamOwner\"\n           show-callback-conditions=\"vm.showAddRunButton\"></board>\n</div>";
+var html = "<div id=\"team\">\n    <flash-message name=\"team_flash\"></flash-message>\n    <div id=\"team_header\" class=\"board-title\">\n        <span ng-show=\"vm.logoSrc === null\">{{vm.team.name}}</span>\n        <div id='logo_img_container'>\n            <img id='logo_img'  no-image-src='vm.setLogo()' ng-src=\"{{vm.logoSrc}}\" ng-hide=\"!vm.logoSrc\"/>\n        </div>\n        <div class='board-header-btn-container'>\n            <div class=\"btn-group\">\n                <button type=\"button\" class=\"btn btn-primary addMemberBtn\" ng-click=\"vm.showAddTeamMemberModal()\" ng-show='vm.isTeamOwner'>\n                    Add Team Member\n                </button>\n                <button type=\"button\" class=\"btn btn-primary addMemberBtn\" ng-click=\"vm.showAddTeamOwnerModal()\" ng-show='vm.isTeamOwner'>\n                    Add Team Owner\n                </button> \n            </div>\n        </div>\n    </div>\n    <uib-tabset>\n        <uib-tab index=\"0\" heading=\"All\" ng-click=\"vm.showFilteredTable(0)\" ng-show=\"vm.team.custom_tabs.length > 0\"></uib-tab>\n        <uib-tab index=\"$index+1\" ng-repeat=\"tab in vm.team.custom_tabs\" heading=\"{{tab.heading}}\" ng-click=\"vm.showFilteredTable($index+1)\"></uib-tab>\n        <uib-tab index=\"vm.team.custom_tabs.length+2\" heading=\"Add Tab\" ng-click=\"vm.showCustomTabsModal('add')\" ng-if=\"vm.isTeamOwner\" class=\"action-tab\"></uib-tab>\n        <uib-tab index=\"vm.team.custom_tabs.length+3\" heading=\"Edit Tabs\" ng-click=\"vm.showCustomTabsModal('edit')\" ng-if=\"vm.isTeamOwner\" ng-show=\"vm.team.custom_tabs.length > 0\" class=\"action-tab\"></uib-tab>\n    </uib-tabset>\n    <board display-obj-data=\"vm.displayObjData\" display-obj-config=\"vm.displayConfig\" \n           row-callback=\"[vm.showAddRunToUser, vm.showUserProfileModal]\" is-owner=\"vm.isTeamOwner\"\n           show-callback-conditions=\"vm.showAddRunButton\"></board>\n</div>";
 window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 
@@ -439,6 +439,10 @@ __webpack_require__(12);
 "use strict";
 
 
+__webpack_require__(14);
+
+__webpack_require__(15);
+
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -446,12 +450,89 @@ __webpack_require__(12);
 "use strict";
 
 
-__webpack_require__(15);
+(function () {
+    'use strict';
 
-__webpack_require__(16);
+    angular.module('milesBoard').directive('noImageSrc', noImage);
+
+    noImage.$inject = ['$parse', 'settingsFactory'];
+
+    function noImage($parse, settingsFactory) {
+        function setDefaultImage(el) {
+            if (el) {
+                el.attr('src', settingsFactory.noImageUrl);
+            }
+        }
+
+        return {
+            restrict: 'A',
+            priority: 99,
+            link: function link($scope, el, attr) {
+                $scope.$watch(function () {
+                    return attr.ngSrc;
+                }, function () {
+                    var src = attr.ngSrc;
+
+                    if (!src) {
+                        setDefaultImage(el);
+                    }
+                });
+
+                el.bind('error', function () {
+                    var cb = $parse(attr.noImageSrc);
+                    if (el.attr('src') !== settingsFactory.noImageUrl) {
+                        el.attr('src', settingsFactory.noImageUrl);
+                        if (typeof cb === 'function') {
+                            $scope.$apply(function () {
+                                cb($scope);
+                            });
+                        }
+                    }
+                });
+            }
+        };
+    }
+})();
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function () {
+    'use strict';
+
+    angular.module('milesBoard').directive('elementReady', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            priority: 1,
+            link: function link($scope, elem, attrs) {
+                elem.ready(function () {
+                    $scope.$apply(function () {
+                        var cb = $parse(attrs.elementReady);
+                        cb($scope);
+                    });
+                });
+            }
+        };
+    }]);
+})();
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(17);
+
+__webpack_require__(18);
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -505,7 +586,7 @@ __webpack_require__(16);
 })();
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -538,14 +619,11 @@ __webpack_require__(16);
 })();
 
 /***/ }),
-/* 17 */,
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-__webpack_require__(19);
 
 __webpack_require__(20);
 
@@ -569,8 +647,33 @@ __webpack_require__(29);
 
 __webpack_require__(30);
 
+__webpack_require__(31);
+
+__webpack_require__(32);
+
 /***/ }),
-/* 19 */
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function () {
+    'use strict';
+
+    angular.module('milesBoard').factory('settingsFactory', settings);
+
+    settings.$inject = [];
+
+    function settings() {
+        return {
+            noImageUrl: ''
+        };
+    }
+})();
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -589,7 +692,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -608,7 +711,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -627,7 +730,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -646,7 +749,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -665,7 +768,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -722,7 +825,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -747,7 +850,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -766,7 +869,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -801,7 +904,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -820,7 +923,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -839,7 +942,7 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1003,45 +1106,45 @@ __webpack_require__(30);
 })();
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-__webpack_require__(32);
-
-__webpack_require__(35);
-
-__webpack_require__(39);
-
-__webpack_require__(43);
-
-__webpack_require__(47);
-
-__webpack_require__(49);
-
-__webpack_require__(52);
-
-__webpack_require__(62);
-
-__webpack_require__(64);
-
-__webpack_require__(74);
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(33);
 
 __webpack_require__(34);
 
+__webpack_require__(37);
+
+__webpack_require__(41);
+
+__webpack_require__(45);
+
+__webpack_require__(49);
+
+__webpack_require__(51);
+
+__webpack_require__(54);
+
+__webpack_require__(67);
+
+__webpack_require__(69);
+
+__webpack_require__(80);
+
 /***/ }),
-/* 33 */
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(35);
+
+__webpack_require__(36);
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1071,7 +1174,7 @@ __webpack_require__(34);
 })();
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1094,24 +1197,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-__webpack_require__(36);
 
 __webpack_require__(38);
 
+__webpack_require__(40);
+
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _board = __webpack_require__(37);
+var _board = __webpack_require__(39);
 
 var _board2 = _interopRequireDefault(_board);
 
@@ -1135,7 +1238,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports) {
 
 var path = '/components/board/_board.html';
@@ -1144,7 +1247,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1217,18 +1320,18 @@ module.exports = path;
 })();
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(40);
+__webpack_require__(42);
 
-__webpack_require__(41);
+__webpack_require__(43);
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1286,13 +1389,13 @@ __webpack_require__(41);
 })();
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _customFilter = __webpack_require__(42);
+var _customFilter = __webpack_require__(44);
 
 var _customFilter2 = _interopRequireDefault(_customFilter);
 
@@ -1321,7 +1424,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports) {
 
 var path = '/components/CustomFilters/_customFilter.html';
@@ -1330,24 +1433,24 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-__webpack_require__(44);
 
 __webpack_require__(46);
 
+__webpack_require__(48);
+
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _header = __webpack_require__(45);
+var _header = __webpack_require__(47);
 
 var _header2 = _interopRequireDefault(_header);
 
@@ -1364,7 +1467,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports) {
 
 var path = '/components/header/_header.html';
@@ -1373,7 +1476,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1458,16 +1561,16 @@ module.exports = path;
 })();
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(48);
+__webpack_require__(50);
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1490,18 +1593,18 @@ __webpack_require__(48);
 })();
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(50);
+__webpack_require__(52);
 
-__webpack_require__(51);
+__webpack_require__(53);
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1518,7 +1621,7 @@ __webpack_require__(51);
 })();
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1670,15 +1773,11 @@ __webpack_require__(51);
 })();
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-__webpack_require__(53);
-
-__webpack_require__(54);
 
 __webpack_require__(55);
 
@@ -1694,8 +1793,12 @@ __webpack_require__(60);
 
 __webpack_require__(61);
 
+__webpack_require__(62);
+
+__webpack_require__(63);
+
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1747,7 +1850,7 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1791,7 +1894,7 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1819,7 +1922,7 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1858,7 +1961,7 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2064,7 +2167,7 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2110,7 +2213,7 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2239,13 +2342,13 @@ __webpack_require__(61);
 })();
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _newMemberForm = __webpack_require__(78);
+var _newMemberForm = __webpack_require__(2);
 
 var _newMemberForm2 = _interopRequireDefault(_newMemberForm);
 
@@ -2260,7 +2363,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         var vm = this;
         vm.teamMemberForm = _newMemberForm2.default;
         vm.showPasswordFields = false;
-        vm.waiverUrl = 'waivers/' + $scope.team_id + '/waiver.txt';
+        vm.waiverUrl = 'teams/' + $scope.team_id + '/waiver.txt';
         vm.showWaiver = false;
         vm.waiverAgree = false;
         vm.updating = $scope.$parent.profileAction === 'edit';
@@ -2383,25 +2486,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _newMemberForm = __webpack_require__(78);
+var _newMemberForm = __webpack_require__(2);
 
 var _newMemberForm2 = _interopRequireDefault(_newMemberForm);
 
-var _createTeamModal = __webpack_require__(79);
+var _createTeamModal = __webpack_require__(64);
 
 var _createTeamModal2 = _interopRequireDefault(_createTeamModal);
 
-var _editRunForm = __webpack_require__(80);
+var _editRunForm = __webpack_require__(65);
 
 var _editRunForm2 = _interopRequireDefault(_editRunForm);
 
-var _confirmationModal = __webpack_require__(81);
+var _confirmationModal = __webpack_require__(66);
 
 var _confirmationModal2 = _interopRequireDefault(_confirmationModal);
 
@@ -2737,16 +2840,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 62 */
+/* 64 */
+/***/ (function(module, exports) {
+
+var path = '/components/modals/CreateTeamModal/_createTeamModal.html';
+var html = "<div id=\"newTeamModal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" ng-click=\"vm.cancel()\"><span aria-hidden=\"true\">&times;</span></button>\n                <h4 class=\"modal-title\">Create New Team</h4>\n            </div>\n            <div class=\"modal-body\">\n                <ng-include src=\"'components/modals/CreateTeamModal/_createTeamForm.html'\"></ng-include>\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ng-click=\"vm.cancel()\">Cancel</button>\n                <button type=\"button\" class=\"btn btn-primary\" ng-click=\"vm.save()\">Save</button>\n            </div>\n        </div>\n        <!-- /.modal-content -->\n    </div>\n    <!-- /.modal-dialog -->\n</div>\n<!-- /.modal -->";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports) {
+
+var path = '/components/modals/EditRunModal/_editRunForm.html';
+var html = "<form id=\"editRunForm\" name=\"editRunForm\">\n    <div class=\"form-group\">\n        <label for=\"distance\">Distance</label>\n        <input type=\"number\" min=\"0\" class=\"form-control\" id=\"distance\" ng-model=\"vm.run.distance\" placeholder=\"Edit Distance\">\n    </div>\n    <div class=\"form-group\">\n        <label for=\"run_date\">Date</label>\n        <p class='input-group'>\n            <input uib-datepicker-popup type=\"text\" class=\"form-control\" id=\"run_date\" is-open=\"vm.cal_opened\" datepicker-options=\"vm.dateOptions\"\n                ng-required=\"true\" ng-model=\"vm.run.run_date\" ng-click=\"vm.cal_opened = !vm.cal_opened\" placeholder=\"Select date\"\n            />\n            <span class=\"input-group-btn\">\n                <button type=\"button\" class=\"btn btn-default\" ng-click=\"vm.cal_opened = !vm.cal_opened\"><i class=\"fa fa-calendar\"></i></button>\n            </span>\n        </p>\n    </div>\n</form>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+var path = '/components/modals/ConfirmationModal/_confirmationModal.html';
+var html = "<div id='confirmation_modal'>\n    <div class='modal-body'>\n        <p class='confirm-msg'>{{vm.message}}</p>\n        <p class='confirm-obj'>{{vm.messageObj}}</p>\n    </div>\n    <div class='modal-footer' ng-show='vm.showFooter'>\n        <button type='button' class='btn btn-primary' ng-click=\"vm.close(true)\">Confirm</button>\n        <button type='button' class='btn btn-default' ng-click=\"vm.close(false)\">Cancel</button>\n    </div>\n</div>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(63);
+__webpack_require__(68);
 
 /***/ }),
-/* 63 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2765,22 +2895,22 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 64 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(65);
+__webpack_require__(70);
 
-__webpack_require__(66);
+__webpack_require__(71);
 
-__webpack_require__(67);
+__webpack_require__(72);
 
-__webpack_require__(73);
+__webpack_require__(79);
 
 /***/ }),
-/* 65 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2796,7 +2926,7 @@ angular.module('milesBoard').value('TeamDisplayConfig', {
 });
 
 /***/ }),
-/* 66 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2812,33 +2942,33 @@ angular.module('milesBoard').value('TeamsDisplayConfig', {
 });
 
 /***/ }),
-/* 67 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _addOwnerModal = __webpack_require__(2);
+var _addOwnerModal = __webpack_require__(73);
 
 var _addOwnerModal2 = _interopRequireDefault(_addOwnerModal);
 
-var _newMemberModal = __webpack_require__(68);
+var _newMemberModal = __webpack_require__(74);
 
 var _newMemberModal2 = _interopRequireDefault(_newMemberModal);
 
-var _addRunToUser = __webpack_require__(69);
+var _addRunToUser = __webpack_require__(75);
 
 var _addRunToUser2 = _interopRequireDefault(_addRunToUser);
 
-var _createTabModal = __webpack_require__(70);
+var _createTabModal = __webpack_require__(76);
 
 var _createTabModal2 = _interopRequireDefault(_createTabModal);
 
-var _editTabModal = __webpack_require__(71);
+var _editTabModal = __webpack_require__(77);
 
 var _editTabModal2 = _interopRequireDefault(_editTabModal);
 
-var _userProfileModal = __webpack_require__(72);
+var _userProfileModal = __webpack_require__(78);
 
 var _userProfileModal2 = _interopRequireDefault(_userProfileModal);
 
@@ -2849,9 +2979,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
     angular.module('milesBoard').controller('TeamsController', TeamsController);
 
-    TeamsController.$inject = ['$localStorage', '$rootScope', '$scope', '$stateParams', 'boardFilterFilter', 'Flash', 'MilesBoardApi', 'team', 'teams', 'TeamDisplayConfig', 'TeamsDisplayConfig', '$uibModal', 'UsersDisplayConfig'];
+    TeamsController.$inject = ['$document', '$localStorage', '$rootScope', '$scope', '$stateParams', 'boardFilterFilter', 'Flash', 'MilesBoardApi', 'MilesBoardImages', 'team', 'teams', 'TeamDisplayConfig', 'TeamsDisplayConfig', '$uibModal', 'UsersDisplayConfig'];
 
-    function TeamsController($localStorage, $rootScope, $scope, $stateParams, boardFilterFilter, Flash, MilesBoardApi, team, teams, TeamDisplayConfig, TeamsDisplayConfig, $uibModal, UsersDisplayConfig) {
+    function TeamsController($document, $localStorage, $rootScope, $scope, $stateParams, boardFilterFilter, Flash, MilesBoardApi, MilesBoardImages, team, teams, TeamDisplayConfig, TeamsDisplayConfig, $uibModal, UsersDisplayConfig) {
         var vm = this;
         vm.team = $stateParams.team_id ? team.plain().team : null;
         vm.teams = teams ? teams.plain() : null;
@@ -2868,6 +2998,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         vm.showJoinTeamButton = showJoinTeamButton;
         vm.joinTeam = joinTeam;
         vm.showAddTeamOwnerModal = showAddTeamOwnerModal;
+        vm.setLogo = setLogo;
 
         $rootScope.$on('RUN_DELETED', function (event, user_id, distance) {
             if (vm.team) {
@@ -2881,8 +3012,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
                 vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig);
             }
         });
-
         function onInit() {
+            vm.logoSrc = MilesBoardImages.getLogo($stateParams.team_id);
+
             if ($stateParams.team_id) {
                 vm.team.users = team.plain().users;
 
@@ -2900,6 +3032,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
         function onChanges(changes) {
             setUpTable();
+        }
+
+        function setLogo() {
+            if (!angular.element(document.getElementById('logo_img'))[0].attributes.getNamedItem('src').value) {
+                vm.logoSrc = null;
+            }
         }
 
         function setUpTable() {
@@ -3197,7 +3335,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 68 */
+/* 73 */
+/***/ (function(module, exports) {
+
+var path = '/components/modals/AddOwnerModal/_addOwnerModal.html';
+var html = "<div id=\"newMemberModal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" aria-label=\"Close\" ng-click=\"vm.close()\"><span aria-hidden=\"true\">&times;</span></button>\n                <h4 class=\"modal-title\">Add Owner</h4>\n            </div>\n            <div class=\"modal-body\">\n                <input id=\"table_filter\" type='text' \n                        placeholder=\"Search By Name...\" \n                        ng-model=\"query\"\n                        ng-model-options=\"{ debounce: 200 }\" />\n                \n                <table id=\"board\" class=\"table table-responsive table-striped\">\n                    <tr ng-hide=\"vm.displayObjConfig.hideHeaderRow === true\">\n                        <th>Name</th>\n                        <th></th>\n                    </tr>\n                    <tr ng-repeat=\"row in vm.users | namesFilter:query track by row.id\">\n                        <td>\n                            <span>{{row.first_name + ' ' + row.last_name}}</span>\n                        </td>\n                        <td>\n                            <button class=\"btn\" ng-click=\"vm.updateOwnersList(row)\"\n                                                ng-class=\"[{'btn-primary': vm.owner_ids.indexOf(row.id) === -1,\n                                                            'btn-danger': vm.owner_ids.indexOf(row.id) !== -1}]\">\n                                {{vm.owner_ids.indexOf(row.id) === -1 ? 'Add as Owner' : 'Remove as Owner'}}\n                            </button>\n\n                        </td>\n                    </tr>\n                </table>\n            </div>\n            <div class=\"modal-footer\">\n                <div id=\"form-actions\">\n                    <button type=\"submit\" class='btn btn-primary' ng-click='vm.save()'>Submit</button>\n                    <button class='btn btn-primary' ng-click='vm.close()'> Close</button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 74 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/newMemberModal/_newMemberModal.html';
@@ -3206,7 +3353,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 69 */
+/* 75 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/AddRunToUser/_addRunToUser.html';
@@ -3215,7 +3362,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 70 */
+/* 76 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/CustomTabsModal/_createTabModal.html';
@@ -3224,7 +3371,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 71 */
+/* 77 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/CustomTabsModal/_editTabModal.html';
@@ -3233,7 +3380,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 72 */
+/* 78 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/UserProfileModal/_userProfileModal.html';
@@ -3242,7 +3389,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 73 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3267,20 +3414,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 74 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(75);
+__webpack_require__(81);
 
-__webpack_require__(76);
+__webpack_require__(82);
 
-__webpack_require__(77);
+__webpack_require__(83);
 
 /***/ }),
-/* 75 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3299,7 +3446,7 @@ __webpack_require__(77);
 })();
 
 /***/ }),
-/* 76 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3599,7 +3746,7 @@ __webpack_require__(77);
 })();
 
 /***/ }),
-/* 77 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3617,42 +3764,6 @@ __webpack_require__(77);
         }
     });
 })();
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports) {
-
-var path = '/components/modals/newMemberModal/_newMemberForm.html';
-var html = "<form id=\"newMemberForm\" name=\"newMemberForm\" novalidate>\n    <div class=\"form-group\">\n        <label for=\"first_name\">First Name *</label>\n        <input type=\"text\" id=\"first_name\" name=\"first_name\" class=\"form-control\" ng-class=\"{'field-invalid': !newMemberForm.first_name.$pristine && newMemberForm.first_name.$invalid}\"\n            ng-model=\"vm.newMember.first_name\" ng-change='vm.handleFieldUpate()' placeholder=\"{{vm.user && vm.user.first_name? vm.user.first_name : 'Enter first name'}}\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"last_name\" >Last Name *</label>\n        <input type=\"text\" class=\"form-control\" id=\"last_name\" ng-model=\"vm.newMember.last_name\" ng-change='vm.handleFieldUpate()' placeholder=\"{{vm.user && vm.user.last_name ? vm.user.last_name : 'Enter last name'}}\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"email\">Email address</label>\n        <input type=\"email\" class=\"form-control\" id=\"email\" aria-describedby=\"emailHelp\" ng-model=\"vm.newMember.email\" placeholder=\"Enter email\"\n            required>\n        <small id=\"emailHelp\" class=\"form-text text-muted\"><em>Optional</em>Your email will only be shared with the team owner for team related information</small>\n    </div>\n    <div class=\"form-group\" ng-if=\"vm.showPasswordFields\">\n        <label for=\"password\">Password</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" aria-describedby=\"passwordHelp\" ng-focus=\"vm.setFocusedField('newMemberForm', 'password')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.password.$invalid\n                                                                && (!newMemberForm.password.$pristine || newMemberForm.password.$touched)\n                                                                && vm.focused_field['newMemberForm']['password'] === false}]\"\n                ng-model=\"vm.newMember.password\" placeholder=\"Enter Password\" required>\n            <small id=\"passwordError\" class=\"form-text text-error\" ng-show=\"newMemberForm.password.$invalid && \n                                            (!newMemberForm.password.$pristine || newMemberForm.password.$touched) && \n                                            vm.focused_field['newMemberForm']['password'] === false\">\n                                    Invalid Password\n                            </small>\n        </div>\n        <small id=\"passwordHelp\" class=\"form-text text-muted\">Minimum of 6 characters</small>\n    </div>\n    <div class=\"form-group\" ng-if=\"vm.showPasswordFields\">\n        <label for=\"password_confirmation\">Password Confirmation</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password_confirmation\" name=\"password_confirmation\" ng-focus=\"vm.setFocusedField('newMemberForm', 'password_confirmation')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.password_confirmation.$invalid\n                                                              && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched)\n                                                              && vm.focused_field['newMemberForm']['password_confirmation'] === false}]\"\n                ng-model=\"vm.newMember.password_confirmation\" placeholder=\"Confirm Password\" required>\n            <small id=\"pwConfError\" class=\"form-text text-error\" ng-show=\"(newMemberForm.password_confirmation.$invalid || vm.newMember.password !== vm.newMember.password_confirmation)\n                                    && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched) && \n                                            vm.focused_field['newMemberForm']['password_confirmation'] === false\">\n                                    Invalid Password Confirmation or Password and Confirmation do not Match\n                            </small>\n        </div>\n        <!--<small id=\"passwordConfHelp\" class=\"form-text text-muted\">{{vm.passwordConfMessage}}</small>-->\n    </div>\n    <div class=\"form-group\">\n        <input id=\"add_email\" type=\"checkbox\" ng-model=\"vm.showEmailAndPasswordFields\" ng-change=\"vm.showPasswordFieldsChange()/>\n        <label for=\"add_email\">Add a password to login from anywhere <em>(optional)</em></label>\n    </div>\n        <div ng-if=\"vm.updating === false\" id=\"waiver-container\">\n            <div id=\"waiver\">\n                <p ng-include ng-show=\"vm.showWaiver\" src=\"'waivers/1/waiver.txt'\"></p>\n                <a ng-model=\"vm.showWaiver\" ng-click=\"vm.showWaiver = !vm.showWaiver\">{{vm.showWaiver === true ? 'Hide Waiver' : 'View Waiver'}}</a>\n            </div>\n            <div class=\"form-group\">\n                <input id=\"waiver_check\" type=\"checkbox\" ng-model=\"vm.waiverAgree\" ng-change='vm.handleFieldUpate()' required/>\n                <label for=\"waiver_check\">I have read and agree to the above waiver</label>\n            </div>\n    </div>\n</form>";
-window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
-module.exports = path;
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports) {
-
-var path = '/components/modals/CreateTeamModal/_createTeamModal.html';
-var html = "<div id=\"newTeamModal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" ng-click=\"vm.cancel()\"><span aria-hidden=\"true\">&times;</span></button>\n                <h4 class=\"modal-title\">Create New Team</h4>\n            </div>\n            <div class=\"modal-body\">\n                <ng-include src=\"'components/modals/CreateTeamModal/_createTeamForm.html'\"></ng-include>\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ng-click=\"vm.cancel()\">Cancel</button>\n                <button type=\"button\" class=\"btn btn-primary\" ng-click=\"vm.save()\">Save</button>\n            </div>\n        </div>\n        <!-- /.modal-content -->\n    </div>\n    <!-- /.modal-dialog -->\n</div>\n<!-- /.modal -->";
-window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
-module.exports = path;
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports) {
-
-var path = '/components/modals/EditRunModal/_editRunForm.html';
-var html = "<form id=\"editRunForm\" name=\"editRunForm\">\n    <div class=\"form-group\">\n        <label for=\"distance\">Distance</label>\n        <input type=\"number\" min=\"0\" class=\"form-control\" id=\"distance\" ng-model=\"vm.run.distance\" placeholder=\"Edit Distance\">\n    </div>\n    <div class=\"form-group\">\n        <label for=\"run_date\">Date</label>\n        <p class='input-group'>\n            <input uib-datepicker-popup type=\"text\" class=\"form-control\" id=\"run_date\" is-open=\"vm.cal_opened\" datepicker-options=\"vm.dateOptions\"\n                ng-required=\"true\" ng-model=\"vm.run.run_date\" ng-click=\"vm.cal_opened = !vm.cal_opened\" placeholder=\"Select date\"\n            />\n            <span class=\"input-group-btn\">\n                <button type=\"button\" class=\"btn btn-default\" ng-click=\"vm.cal_opened = !vm.cal_opened\"><i class=\"fa fa-calendar\"></i></button>\n            </span>\n        </p>\n    </div>\n</form>";
-window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
-module.exports = path;
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports) {
-
-var path = '/components/modals/ConfirmationModal/_confirmationModal.html';
-var html = "<div id='confirmation_modal'>\n    <div class='modal-body'>\n        <p class='confirm-msg'>{{vm.message}}</p>\n        <p class='confirm-obj'>{{vm.messageObj}}</p>\n    </div>\n    <div class='modal-footer' ng-show='vm.showFooter'>\n        <button type='button' class='btn btn-primary' ng-click=\"vm.close(true)\">Confirm</button>\n        <button type='button' class='btn btn-default' ng-click=\"vm.close(false)\">Cancel</button>\n    </div>\n</div>";
-window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
-module.exports = path;
 
 /***/ })
 /******/ ]);

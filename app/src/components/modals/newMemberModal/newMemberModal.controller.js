@@ -10,7 +10,7 @@ import teamMemberForm from './_newMemberForm.html';
         let vm = this;
         vm.teamMemberForm = teamMemberForm;
         vm.showPasswordFields = false;
-        vm.waiverUrl = 'waivers/'+$scope.team_id+'/waiver.txt';
+        vm.waiverUrl = 'teams/'+$scope.team_id+'/waiver.txt';
         vm.showWaiver = false;
         vm.waiverAgree = false;
         vm.updating = $scope.$parent.profileAction === 'edit'
