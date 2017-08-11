@@ -1,8 +1,10 @@
 <div id="team">
     <flash-message name="team_flash"></flash-message>
     <div id="team_header" class="board-title">
-        <span>{{vm.team.name}}</span>
-        
+        <span ng-show="vm.logoSrc === null">{{vm.team.name}}</span>
+        <div id='logo_img_container'>
+            <img id='logo_img'  no-image-src='vm.setLogo()' ng-src="{{vm.logoSrc}}" ng-hide="!vm.logoSrc"/>
+        </div>
         <div class='board-header-btn-container'>
             <div class="btn-group">
                 <button type="button" class="btn btn-primary addMemberBtn" ng-click="vm.showAddTeamMemberModal()" ng-show='vm.isTeamOwner'>

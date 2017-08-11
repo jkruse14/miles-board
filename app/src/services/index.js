@@ -1,3 +1,4 @@
+import './settings.factory'
 import './api/CustomFiltersApi.service.js'
 import './api/InvitationCodesApi.service.js'
 import './api/TeamMemberListsApi.service.js'
