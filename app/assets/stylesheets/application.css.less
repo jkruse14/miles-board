@@ -29,6 +29,8 @@
 @darkgray: darkgray;
 @white: white;
 
+html, body { width: 100% }
+
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .page-container {
@@ -93,6 +95,13 @@
         }
 }
 
+ @media(max-width: 412px) {
+            #table_filter {
+            left: 92%;
+            top: 19%;
+            }
+        }
+
 #board-container {
     >#table_filter {
         position: absolute;
@@ -109,8 +118,12 @@
             left: 80%;
             top: 19%;
         }
-        @media(min-width: 376px) {
+        @media(max-width: 375px) {
             left: 92%;
+        }
+        @media(max-width: 360px) {
+            left: 90%;
+            top: 1%;
         }
 
         &::placeholder {
