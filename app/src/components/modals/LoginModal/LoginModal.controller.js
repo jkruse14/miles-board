@@ -78,10 +78,9 @@ import resendConfForm from '../../login/_resendConfirmationEmail.html';
                     $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
                 }
                 vm.submitting = false;
-                $uibModalInstance.close();
+                $state.go('user', { userId: resp.id }, { reload: true });
+                $uibModalInstance.close()
             });
-            $state.go('user', { userId: resp.id }, { reload: true });
-            $window.location.reload();
         }
 
         function loginFail(reason) {

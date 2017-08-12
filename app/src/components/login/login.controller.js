@@ -117,9 +117,8 @@ import resendConfForm from './_resendConfirmationEmail.html';
                     $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
                 }
                 vm.submitting = false;
+                $state.go('user', { userId: resp.id }, { reload: true });
             });
-            $state.go('user',{userId: resp.id, reset: true})
-            $window.location.reload();
         }
 
         function updatePassword() {

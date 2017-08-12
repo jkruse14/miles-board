@@ -78,13 +78,13 @@ import loginModal from '../modals/LoginModal/_loginModal.html'
                 .then(
                     function(resp){
                         $localStorage.$reset();
-                        $state.go('home')
-                        $window.location.reload();
+                        $state.go('home',{}, { reload: true })
+                        //$window.location.reload();
                     },
                     function(resp){
                         $localStorage.$reset();
                         $state.go('home', {}, { reload: true });
-                        $window.location.reload();
+                        //$window.location.reload();
                         console.error(resp);
                     });
         }
