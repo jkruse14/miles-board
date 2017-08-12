@@ -1,3 +1,9 @@
+import loginForm from './_loginForm.html';
+import regForm from './_registerForm.html';
+import resetPwForm from './_resetPassword.html';
+import updatePwForm from './_updatePassword.html';
+import resendConfForm from './_resendConfirmationEmail.html';
+
 (function() {
     'use strict';
 
