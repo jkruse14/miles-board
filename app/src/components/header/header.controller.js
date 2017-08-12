@@ -1,3 +1,5 @@
+import loginModal from '../modals/LoginModal/_loginModal.html'
+
 (function(){
     'use strict';
 
@@ -54,7 +56,7 @@
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'components/modals/LoginModal/_loginModal.html',
+                templateUrl: loginModal,
                 controller: 'LoginModalController',
                 controllerAs: 'vm',
                 size: 'lg',
