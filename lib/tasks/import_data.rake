@@ -5,7 +5,7 @@ namespace :import_data do
   desc 'Import users from a csv file'
   task :users, [:filename, :team_id] => :environment do |_t, args|
     puts '----- args -----'
-    puts args.inpect
+    puts args.inspect
 
     count = 0
     CSV.foreach(args[:filename], headers: true, header_converters: :symbol) do |row|
@@ -26,8 +26,9 @@ namespace :import_data do
         end
 
         begin
+          @user = User.new(new_user)
           @user.skip_confirmation!
-          @user = User.create(new_user)
+          @user.save!
 
           @tml = TeamMemberList.create([user_id: @user.id, team_id: args[:team_id]])
 

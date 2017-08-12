@@ -41,6 +41,7 @@ gem 'bcrypt',         '3.1.11'
 gem 'devise_token_auth', '~> 0.1.42'
 gem 'omniauth'
 gem 'figaro'
+gem 'foreman'
 gem 'activerecord-import', '>= 0.2.0'
 
 gem 'sprockets', '>= 3.0.0'
@@ -64,7 +65,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-gem "foreman"
 group :production, :staging do
   gem "rails_12factor"
   gem "rails_stdout_logging"

@@ -1,0 +1,43 @@
+<div id="board-container">
+    <input id="table_filter" type='text' 
+                             placeholder="Search By Name..."
+                             ng-hide="vm.displayObjConfig.hideSearch"
+                             ng-model="query" 
+                             ng-model-options="{ debounce: 200 }"
+                             ng-click="query = ''"/>
+    <table id="board" class="table table-responsive table-striped">
+        <tr ng-hide="vm.displayObjConfig.hideHeaderRow === true">
+            <th ng-repeat-start="header in vm.displayObjConfig.headers" ng-click="vm.setOrdering(header.text)" ng-hide="header.hidden">
+                {{::header.text}}<i class="fa" ng-class="[{'fa-sort-up':vm.ordering.dir !== vm.DSC && vm.ordering.col === header.text, 
+                                                         'fa-sort-down': vm.ordering.dir === vm.DSC && vm.ordering.col === header.text,
+                                                         'fa-sort': vm.ordering.col !== header.text}]" aria-hidden="true"></i>
+            </th>
+            <th ng-repeat-end ng-if="$last && 
+                                    vm.displayObjConfig.showCallback">
+            </th>
+        </tr>
+        <tr ng-repeat="row in vm.displayObjData | namesFilter:query | orderBy:vm.getValueForOrdering:vm.ordering.dir === vm.DSC track by row.id.text"
+            ng-if="$index >= vm.maxPageSize * (vm.currentPage - 1) && $index < (vm.maxPageSize * (vm.currentPage - 1)) + vm.maxPageSize">
+            <td ng-repeat-start="item in row" ng-hide="item.hidden">
+                <a ng-if="item.uiSref" ui-sref="{{item.uiSref}}" ui-sref-acitve="active">{{item.text}}</a>
+                <span ng-if="!item.uiSref">{{item.text}}</span>
+            </td>
+            <td ng-repeat-end ng-if="$last" >
+                <div ng-class="[{'btn-group': vm.rowCallback().length > 1}]">
+                    <button class="btn btn-primary btn-success" ng-repeat="cb in vm.rowCallback()" 
+                            ng-click="vm.callback(row, $index)" 
+                            ng-show="vm.showCallbackConditions()(row) && vm.showActions">
+                        {{::vm.displayObjConfig.rowCallbackText[$index]}}
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <ul uib-pagination total-items="vm.displayObjData.length"
+                       boundary-link-numbers="true"
+                       max-size="vm.maxSize"
+                       ng-model="vm.currentPage"  
+                       class="pagination-sm" 
+                       rotate="true"
+                       ng-show="vm.displayObjData.length > vm.maxPageSize"></ul>
+</div>

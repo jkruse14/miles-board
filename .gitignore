@@ -6,12 +6,10 @@ tmp/
 /log
 log/
 public/dev-assets/
-public/assets/
 vendor/assets/bower_components
 /db/*.sqlite3
 /db/*.sqlite3-journal
 public/dev-assets/
-public/assets/
 /public/system
 /coverage/
 /spec/tmp
@@ -19,6 +17,7 @@ public/assets/
 rerun.txt
 pickle-email-*.html
 
+npm-debug.log
 /node_modules
 /bower_components
 
@@ -57,3 +56,5 @@ bower.json
 /config/application.yml
 
 npm-debug.log
+/public/packs
+/node_modules

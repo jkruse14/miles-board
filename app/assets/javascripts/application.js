@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require angular/angular
-//= require angular-ui-router
+//= require @uirouter/angularjs/release/angular-ui-router.js
 //= require angular-cookie
 //= require angular-rails-templates
 //= require lodash/lodash.js
@@ -27,5 +27,5 @@
 //= require ngstorage/ngStorage.js
 //= require angular-environment/dist/angular-environment.js
 //= require angular-flash-alert/dist/angular-flash.js
-//= app.js
+//= app-bundle.js
 //= require_tree .
