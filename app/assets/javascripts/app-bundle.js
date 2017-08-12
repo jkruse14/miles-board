@@ -1120,17 +1120,17 @@ __webpack_require__(41);
 
 __webpack_require__(45);
 
-__webpack_require__(49);
+__webpack_require__(50);
 
-__webpack_require__(51);
+__webpack_require__(52);
 
-__webpack_require__(54);
+__webpack_require__(55);
 
-__webpack_require__(67);
+__webpack_require__(73);
 
-__webpack_require__(69);
+__webpack_require__(75);
 
-__webpack_require__(80);
+__webpack_require__(86);
 
 /***/ }),
 /* 34 */
@@ -1482,6 +1482,12 @@ module.exports = path;
 "use strict";
 
 
+var _loginModal = __webpack_require__(49);
+
+var _loginModal2 = _interopRequireDefault(_loginModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 (function () {
     'use strict';
 
@@ -1530,7 +1536,7 @@ module.exports = path;
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'components/modals/LoginModal/_loginModal.html',
+                templateUrl: _loginModal2.default,
                 controller: 'LoginModalController',
                 controllerAs: 'vm',
                 size: 'lg',
@@ -1562,15 +1568,24 @@ module.exports = path;
 
 /***/ }),
 /* 49 */
+/***/ (function(module, exports) {
+
+var path = '/components/modals/LoginModal/_loginModal.html';
+var html = "<div id=\"loginModal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body login-container\">\n                <uib-tabset active=\"vm.tab\" id=\"tabs-container\">\n                    <uib-tab index=\"0\" heading=\"Login\" ng-hide=\"(vm.tab === 2 || vm.tab === 3) && vm.inModal === true\" select=\"vm.setTab(0)\" class=\"{{vm.tab === 1 ? 'inactive' : ''}}\">\n                        <ng-include src=\"vm.loginForm\"></ng-include>\n                    </uib-tab>\n                    <uib-tab index=\"1\" heading=\"Register\" ng-hide=\"(vm.tab === 2 || vm.tab === 3) && vm.inModal === true\" select=\"vm.setTab(1)\" class=\"{{vm.tab === 0 ? 'inactive' : ''}}\">\n                        <ng-include src=\"vm.regForm\"></ng-include>\n                    </uib-tab>\n                    <uib-tab index=\"2\" ng-if=\"true\" heading=\"\" class=\"hidden-tab\">\n                        <ng-include src=\"vm.resendConfForm\"></ng-include>\n                    </uib-tab>\n                    <uib-tab index=\"3\" ng-if=\"true\" heading=\"\" class=\"hidden-tab\">\n                        <ng-include src=\"vm.resetPwForm\"></ng-include>\n                    </uib-tab>\n                </uib-tabset>\n                <flash-message name=\"loginModal_flash\"></flash-message>\n            </div>\n        </div>\n        <!-- /.modal-content -->\n    </div>\n    <!-- /.modal-dialog -->\n</div>\n<!-- /.modal -->";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(50);
+__webpack_require__(51);
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1593,18 +1608,18 @@ __webpack_require__(50);
 })();
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(52);
-
 __webpack_require__(53);
 
+__webpack_require__(54);
+
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1621,7 +1636,7 @@ __webpack_require__(53);
 })();
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1773,13 +1788,11 @@ __webpack_require__(53);
 })();
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-__webpack_require__(55);
 
 __webpack_require__(56);
 
@@ -1795,10 +1808,12 @@ __webpack_require__(61);
 
 __webpack_require__(62);
 
-__webpack_require__(63);
+__webpack_require__(68);
+
+__webpack_require__(69);
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1850,7 +1865,7 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1894,7 +1909,7 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1922,7 +1937,7 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1961,7 +1976,7 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2167,7 +2182,7 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2213,11 +2228,33 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+var _loginForm = __webpack_require__(63);
+
+var _loginForm2 = _interopRequireDefault(_loginForm);
+
+var _registerForm = __webpack_require__(64);
+
+var _registerForm2 = _interopRequireDefault(_registerForm);
+
+var _resetPassword = __webpack_require__(65);
+
+var _resetPassword2 = _interopRequireDefault(_resetPassword);
+
+var _updatePassword = __webpack_require__(66);
+
+var _updatePassword2 = _interopRequireDefault(_updatePassword);
+
+var _resendConfirmationEmail = __webpack_require__(67);
+
+var _resendConfirmationEmail2 = _interopRequireDefault(_resendConfirmationEmail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
     'use strict';
@@ -2228,17 +2265,26 @@ __webpack_require__(63);
 
     function LoginModalController($state, $localStorage, $uibModal, $uibModalInstance, $window, Flash, LoginFactory, MilesBoardApi) {
         var vm = this;
-        vm.inModal = true;
-        vm.submitting = false;
 
-        resetFocusedField();
-        resetUserInfo();
-
+        vm.$onInit = onInit;
         vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
         vm.handleCancel = handleCancel;
         vm.resetFocusedField = resetFocusedField;
         vm.setFocusedField = setFocusedField;
+
+        function onInit() {
+            vm.inModal = true;
+            vm.submitting = false;
+            vm.loginForm = _loginForm2.default;
+            vm.regForm = _registerForm2.default;
+            vm.resendConfForm = _resendConfirmationEmail2.default;
+            vm.resetPwForm = _resetPassword2.default;
+            vm.updatePwForm = _updatePassword2.default;
+
+            resetFocusedField();
+            resetUserInfo();
+        }
 
         function handleSubmitClick() {
             vm.submitting = true;
@@ -2342,7 +2388,52 @@ __webpack_require__(63);
 })();
 
 /***/ }),
-/* 62 */
+/* 63 */
+/***/ (function(module, exports) {
+
+var path = '/components/login/_loginForm.html';
+var html = "<form id=\"loginForm\" name=\"loginForm\">\n    <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <div class=\"input-and-message\">\n            <input id=\"email\" type=\"email\" name=\"email\" class=\"form-control\" \n                                                        ng-focus=\"vm.setFocusedField('loginForm', 'email')\"\n                                                        ng-blur=\"vm.resetFocusedField()\"\n                                                        ng-class=\"[{'field-invalid': loginForm.email.$invalid && \n                                                                                    !loginForm.email.$pristine &&\n                                                                                    vm.focused_field['loginForm']['email'] === false}]\" \n                                                        ng-model=\"vm.user_info.email\" \n                                                        aria-describedby=\"emailHelp\"\n                                                        placeholder=\"Enter email\"\n                                                        required >\n            <small id=\"emailError\" class=\"form-text text-error\"\n                    ng-show=\"loginForm.email.$invalid && \n                            !loginForm.email.$pristine && \n                            vm.focused_field['loginForm']['email'] === false\">\n                    Invalid Email Format\n            </small>\n        </div>\n        <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n        \n    </div>\n    <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <div class=\"input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" aria-describedby=\"passwordHelp\" \n                ng-model=\"vm.user_info.password\"\n                ng-focus=\"vm.setFocusedField('loginForm', 'password')\" \n                ng-blur=\"vm.resetFocusedField()\" \n                ng-class=\"[{'field-invalid': loginForm.password.$invalid && \n                                            loginForm.password.$touched && \n                                            vm.focused_field['loginForm']['password'] === false}]\"\n                placeholder=\"Enter Password\"\n                required>\n                <small id=\"passwordError\" class=\"form-text text-error\"\n                        ng-show=\"loginForm.password.$invalid &&  \n                                loginForm.password.$touched && \n                                vm.focused_field['loginForm']['password'] === false\">\n                                Please Enter Your Password\n                </small>\n        </div>\n            \n    </div>\n    <div id=\"form-actions\">\n        <button type=\"submit\" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled=\"vm.tab === 0 && loginForm.$invalid\">Submit</button>\n        <button class='btn btn-primary' ng-if=\"vm.inModal === true\" ng-click='vm.handleCancel()'> Close</button>\n    </div>\n    <div id=\"auth-actions\" class=\"pull-right\">\n        <span ng-click=\"vm.setTab(3)\"><a>Reset Password</a></span>\n        <span ng-click=\"vm.setTab(2)\"><a>Resend Confirmation Email</a></span>\n    <div>\n</form>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports) {
+
+var path = '/components/login/_registerForm.html';
+var html = "<flash-message name=\"regform_flash\"></flash-message>\n<form id=\"newMemberForm\" name=\"newMemberForm\">\n    <div class=\"form-group\">\n        <label for=\"first_name\">First Name</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"text\" class=\"form-control\" id=\"first_name\" name=\"first_name\"\n                                ng-focus=\"vm.setFocusedField('newMemberForm', 'first_name')\" \n                                ng-blur=\"vm.resetFocusedField()\" \n                                ng-class=\"[{'field-invalid': newMemberForm.first_name.$invalid\n                                                            && newMemberForm.first_name.$touched\n                                                            && vm.focused_field['newMemberForm']['first_name'] === false}]\"\n                                ng-model=\"vm.user_info.first_name\" \n                                placeholder=\"Enter first name\"\n                                required>\n            <small id=\"fnameError\" class=\"form-text text-error\" ng-show=\"newMemberForm.first_name.$invalid && \n                            newMemberForm.first_name.$touched && \n                            vm.focused_field['newMemberForm']['first_name'] === false\">\n                    Please Enter Your First Name\n            </small>\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"last_name\">Last Name</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"text\" class=\"form-control\" id=\"last_name\" name=\"last_name\"\n                                ng-focus=\"vm.setFocusedField('newMemberForm', 'last_name')\" \n                                ng-blur=\"vm.resetFocusedField()\" \n                                ng-class=\"[{'field-invalid': newMemberForm.last_name.$invalid\n                                                            && newMemberForm.last_name.$touched \n                                                            && vm.focused_field['newMemberForm']['last_name'] === false}]\"\n                                ng-model=\"vm.user_info.last_name\" \n                                placeholder=\"Enter last name\"\n                                required>\n            <small id=\"lnameError\" class=\"form-text text-error\" \n                            ng-show=\"newMemberForm.last_name.$invalid && \n                                     newMemberForm.last_name.$touched && \n                                     vm.focused_field['newMemberForm']['last_name'] === false\">\n                    Please Enter Your Last Name\n            </small>\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"email\">Email Address</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" aria-describedby=\"emailHelp\" \n                                ng-focus=\"vm.setFocusedField('newMemberForm', 'email')\" \n                                ng-blur=\"vm.resetFocusedField()\" \n                                ng-class=\"[{'field-invalid': newMemberForm.email.$invalid\n                                                            && (!newMemberForm.email.$pristine || newMemberForm.email.$touched)\n                                                            && vm.focused_field['newMemberForm']['email'] === false}]\"\n                                ng-model=\"vm.user_info.email\"\n                                placeholder=\"Enter email\"\n                                required>\n            <small id=\"emailError\" class=\"form-text text-error\" ng-show=\"newMemberForm.email.$invalid && \n                             (!newMemberForm.email.$pristine || newMemberForm.email.$touched) && \n                            vm.focused_field['newMemberForm']['email'] === false\">\n                    Invalid Email Format\n            </small>\n        </div>\n        <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" aria-describedby=\"passwordHelp\" \n                                    ng-focus=\"vm.setFocusedField('newMemberForm', 'password')\" \n                                    ng-blur=\"vm.resetFocusedField()\" \n                                    ng-class=\"[{'field-invalid': newMemberForm.password.$invalid\n                                                                && (!newMemberForm.password.$pristine || newMemberForm.password.$touched)\n                                                                && vm.focused_field['newMemberForm']['password'] === false}]\"\n                                    ng-model=\"vm.user_info.password\"\n                                    placeholder=\"Enter Password\"\n                                    required>\n            <small id=\"passwordError\" class=\"form-text text-error\" ng-show=\"newMemberForm.password.$invalid && \n                             (!newMemberForm.password.$pristine || newMemberForm.password.$touched) && \n                            vm.focused_field['newMemberForm']['password'] === false\">\n                    Invalid Password\n            </small>\n        </div>\n        <small id=\"passwordHelp\" class=\"form-text text-muted\">Minimum of 6 characters</small>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"password_confirmation\">Password Confirmation</label>\n        <div class=\"form-group input-and-message\">\n        <input type=\"password\" class=\"form-control\" id=\"password_confirmation\" name=\"password_confirmation\" \n                                 ng-focus=\"vm.setFocusedField('newMemberForm', 'password_confirmation')\" \n                                 ng-blur=\"vm.resetFocusedField()\" \n                                 ng-class=\"[{'field-invalid': newMemberForm.password_confirmation.$invalid\n                                                              && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched)\n                                                              && vm.focused_field['newMemberForm']['password_confirmation'] === false}]\"\n                                ng-model=\"vm.user_info.password_confirmation\"\n                                placeholder=\"Confirm Password\"\n                                required>\n            <small id=\"pwConfError\" class=\"form-text text-error\" \n                                    ng-show=\"(newMemberForm.password_confirmation.$invalid || vm.user_info.password !== vm.user_info.password_confirmation)\n                                    && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched) && \n                            vm.focused_field['newMemberForm']['password_confirmation'] === false\">\n                    Invalid Password Confirmation or Password and Confirmation do not Match\n            </small>\n        </div>\n        <!--<small id=\"passwordConfHelp\" class=\"form-text text-muted\">{{vm.passwordConfMessage}}</small>-->\n    </div>\n    <div class=\"form-group\">\n        <input type=\"checkbox\" class=\"form-control\" id=\"owner_tick\" ng-model=\"vm.isOwner\" />\n        <label id=\"owner_tick_label\" for=\"owner_tick\" ng-click=\"vm.isOwner = true\">I am a Team Owner</label>\n    </div>\n    <div class=\"form-group\">\n        <label id=\"ower_code_label\" for=\"owner_code\" ng-show=\"vm.isOwner === true\"> Enter Owner Invitation Code</label>\n        <input type=\"text\" class=\"form-control\" id=\"owner_code\" ng-show=\"vm.isOwner === true\" ng-model=\"vm.user_info.owner_confirmation_code\"/>\n    </div>\n    <button type=\"submit\" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled=\"(vm.tab === 1 && newMemberForm.$invalid) || \n                                                                                                  vm.registered === true || \n                                                                                                  (vm.isOwner && !vm.user_info.owner_confirmation_code)\">\n            Submit\n    </button>\n    <span class='btn btn-primary' ng-if=\"vm.inModal === true\" ng-click='vm.handleCancel()'>Close</span>\n</form>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports) {
+
+var path = '/components/login/_resetPassword.html';
+var html = "<flash-message name=\"resetform_flash\"></flash-message>\n<form id=\"resetPasswordForm\" name=\"resetPasswordForm\">\n    <div class=\"form-group\">\n        <label for=\"email\">Email Address of Account to Reset Password</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" aria-describedby=\"emailHelp\" ng-focus=\"vm.setFocusedField('resetPasswordForm', 'email')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': resetPasswordForm.email.$invalid\n                                                            && (!resetPasswordForm.email.$pristine || resetPasswordForm.email.$touched)\n                                                            && vm.focused_field['resetPasswordForm']['email'] === false}]\"\n                ng-model=\"vm.user_info.email\" placeholder=\"Enter email\" required>\n            <small id=\"emailError\" class=\"form-text text-error\" ng-show=\"resetPasswordForm.email.$invalid && \n                             (!resetPasswordForm.email.$pristine || resetPasswordForm.email.$touched) && \n                            vm.focused_field['resetPasswordForm']['email'] === false\">\n                    Invalid Email\n            </small>\n        </div>\n        <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n    </div>\n    <button type=\"submit\" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled=\"vm.registered === true || !vm.user_info.email\">Submit</button>\n    <span class='btn btn-primary' ng-if=\"vm.inModal === true\" ng-click='vm.setTab(0)'> Cancel</span>\n</form>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+var path = '/components/login/_updatePassword.html';
+var html = "<form name=\"updatePasswordForm\" role=\"form\">\n    <div class=\"form-group\">\n        <label for=\"email\">Email Address</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" aria-describedby=\"emailHelp\" ng-focus=\"vm.setFocusedField('newMemberForm', 'email')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.email.$invalid\n                                                            && (!newMemberForm.email.$pristine || newMemberForm.email.$touched)\n                                                            && vm.focused_field['newMemberForm']['email'] === false}]\" ng-model=\"vm.user_info.email\"\n                placeholder=\"Enter email\" required>\n            <small id=\"emailError\" class=\"form-text text-error\" ng-show=\"newMemberForm.email.$invalid && \n                             (!newMemberForm.email.$pristine || newMemberForm.email.$touched) && \n                            vm.focused_field['newMemberForm']['email'] === false\">\n                    Invalid Email Format\n            </small>\n        </div>\n        <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" aria-describedby=\"passwordHelp\" ng-focus=\"vm.setFocusedField('newMemberForm', 'password')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.password.$invalid\n                                                                && (!newMemberForm.password.$pristine || newMemberForm.password.$touched)\n                                                                && vm.focused_field['newMemberForm']['password'] === false}]\"\n                ng-model=\"vm.user_info.password\" placeholder=\"Enter Password\" required>\n            <small id=\"passwordError\" class=\"form-text text-error\" ng-show=\"newMemberForm.password.$invalid && \n                             (!newMemberForm.password.$pristine || newMemberForm.password.$touched) && \n                            vm.focused_field['newMemberForm']['password'] === false\">\n                    Invalid Password\n            </small>\n        </div>\n        <small id=\"passwordHelp\" class=\"form-text text-muted\">Minimum of 6 characters</small>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"password_confirmation\">Password Confirmation</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"password\" class=\"form-control\" id=\"password_confirmation\" name=\"password_confirmation\" ng-focus=\"vm.setFocusedField('newMemberForm', 'password_confirmation')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': newMemberForm.password_confirmation.$invalid\n                                                              && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched)\n                                                              && vm.focused_field['newMemberForm']['password_confirmation'] === false}]\"\n                ng-model=\"vm.user_info.password_confirmation\" placeholder=\"Confirm Password\" required>\n            <small id=\"pwConfError\" class=\"form-text text-error\" ng-show=\"(newMemberForm.password_confirmation.$invalid || vm.user_info.password !== vm.user_info.password_confirmation)\n                                    && (!newMemberForm.password_confirmation.$pristine || newMemberForm.password_confirmation.$touched) && \n                            vm.focused_field['newMemberForm']['password_confirmation'] === false\">\n                    Invalid Password Confirmation or Password and Confirmation do not Match\n            </small>\n        </div>\n        <!--<small id=\"passwordConfHelp\" class=\"form-text text-muted\">{{vm.passwordConfMessage}}</small>-->\n    </div>\n    <button type=\"submit\" ng-click=\"vm.updatePassword()\">Change your password</button>\n</form>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports) {
+
+var path = '/components/login/_resendConfirmationEmail.html';
+var html = "<flash-message name=\"resendform_flash\"></flash-message>\n<form id=\"resendEmailForm\" name=\"resendEmailForm\">\n    <div class=\"form-group\">\n        <label for=\"email\">Email address</label>\n        <div class=\"form-group input-and-message\">\n            <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" aria-describedby=\"emailHelp\" ng-focus=\"vm.setFocusedField('resendEmailForm', 'email')\"\n                ng-blur=\"vm.resetFocusedField()\" ng-class=\"[{'field-invalid': resendEmailForm.email.$invalid\n                                                            && (!resendEmailForm.email.$pristine || resendEmailForm.email.$touched)\n                                                            && vm.focused_field['resendEmailForm']['email'] === false}]\" ng-model=\"vm.user_info.email\"\n                placeholder=\"Enter email\" required>\n            <small id=\"emailError\" class=\"form-text text-error\" ng-show=\"resendEmailForm.email.$invalid && \n                             (!resendEmailForm.email.$pristine || resendEmailForm.email.$touched) && \n                            vm.focused_field['resendEmailForm']['email'] === false\">\n                    Invalid Email\n            </small>\n        </div>\n        <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n    </div>\n    <button type=\"submit\" class='btn btn-primary' ng-click='vm.handleSubmitClick()' ng-disabled=\"vm.registered === true || !vm.user_info.email\">Submit</button>\n    <span class='btn btn-primary' ng-if=\"vm.inModal === true\" ng-click='vm.registered === true ? vm.handleCancel() : vm.setTab(0)'> Cancel</span>\n</form>";
+window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(path, html) }]);
+module.exports = path;
+
+/***/ }),
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2486,7 +2577,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 63 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2496,15 +2587,15 @@ var _newMemberForm = __webpack_require__(2);
 
 var _newMemberForm2 = _interopRequireDefault(_newMemberForm);
 
-var _createTeamModal = __webpack_require__(64);
+var _createTeamModal = __webpack_require__(70);
 
 var _createTeamModal2 = _interopRequireDefault(_createTeamModal);
 
-var _editRunForm = __webpack_require__(65);
+var _editRunForm = __webpack_require__(71);
 
 var _editRunForm2 = _interopRequireDefault(_editRunForm);
 
-var _confirmationModal = __webpack_require__(66);
+var _confirmationModal = __webpack_require__(72);
 
 var _confirmationModal2 = _interopRequireDefault(_confirmationModal);
 
@@ -2840,7 +2931,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 64 */
+/* 70 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/CreateTeamModal/_createTeamModal.html';
@@ -2849,7 +2940,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 65 */
+/* 71 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/EditRunModal/_editRunForm.html';
@@ -2858,7 +2949,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 66 */
+/* 72 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/ConfirmationModal/_confirmationModal.html';
@@ -2867,16 +2958,16 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 67 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(68);
+__webpack_require__(74);
 
 /***/ }),
-/* 68 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2895,22 +2986,22 @@ __webpack_require__(68);
 })();
 
 /***/ }),
-/* 69 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(70);
+__webpack_require__(76);
 
-__webpack_require__(71);
+__webpack_require__(77);
 
-__webpack_require__(72);
+__webpack_require__(78);
 
-__webpack_require__(79);
+__webpack_require__(85);
 
 /***/ }),
-/* 70 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2926,7 +3017,7 @@ angular.module('milesBoard').value('TeamDisplayConfig', {
 });
 
 /***/ }),
-/* 71 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2942,33 +3033,33 @@ angular.module('milesBoard').value('TeamsDisplayConfig', {
 });
 
 /***/ }),
-/* 72 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _addOwnerModal = __webpack_require__(73);
+var _addOwnerModal = __webpack_require__(79);
 
 var _addOwnerModal2 = _interopRequireDefault(_addOwnerModal);
 
-var _newMemberModal = __webpack_require__(74);
+var _newMemberModal = __webpack_require__(80);
 
 var _newMemberModal2 = _interopRequireDefault(_newMemberModal);
 
-var _addRunToUser = __webpack_require__(75);
+var _addRunToUser = __webpack_require__(81);
 
 var _addRunToUser2 = _interopRequireDefault(_addRunToUser);
 
-var _createTabModal = __webpack_require__(76);
+var _createTabModal = __webpack_require__(82);
 
 var _createTabModal2 = _interopRequireDefault(_createTabModal);
 
-var _editTabModal = __webpack_require__(77);
+var _editTabModal = __webpack_require__(83);
 
 var _editTabModal2 = _interopRequireDefault(_editTabModal);
 
-var _userProfileModal = __webpack_require__(78);
+var _userProfileModal = __webpack_require__(84);
 
 var _userProfileModal2 = _interopRequireDefault(_userProfileModal);
 
@@ -3335,7 +3426,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 73 */
+/* 79 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/AddOwnerModal/_addOwnerModal.html';
@@ -3344,7 +3435,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 74 */
+/* 80 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/newMemberModal/_newMemberModal.html';
@@ -3353,7 +3444,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 75 */
+/* 81 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/AddRunToUser/_addRunToUser.html';
@@ -3362,7 +3453,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 76 */
+/* 82 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/CustomTabsModal/_createTabModal.html';
@@ -3371,7 +3462,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 77 */
+/* 83 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/CustomTabsModal/_editTabModal.html';
@@ -3380,7 +3471,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 78 */
+/* 84 */
 /***/ (function(module, exports) {
 
 var path = '/components/modals/UserProfileModal/_userProfileModal.html';
@@ -3389,7 +3480,7 @@ window.angular.module('milesBoard').run(['$templateCache', function(c) { c.put(p
 module.exports = path;
 
 /***/ }),
-/* 79 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3414,20 +3505,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 80 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(81);
+__webpack_require__(87);
 
-__webpack_require__(82);
+__webpack_require__(88);
 
-__webpack_require__(83);
+__webpack_require__(89);
 
 /***/ }),
-/* 81 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3446,7 +3537,7 @@ __webpack_require__(83);
 })();
 
 /***/ }),
-/* 82 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3746,7 +3837,7 @@ __webpack_require__(83);
 })();
 
 /***/ }),
-/* 83 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
