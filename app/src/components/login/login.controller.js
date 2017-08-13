@@ -12,9 +12,9 @@ import resendConfForm from './_resendConfirmationEmail.html';
         .run()
         .controller('LoginController', LoginController);
     
-    LoginController.$inject = ['$state','$localStorage','$window', 'Flash','LoginFactory', 'MilesBoardApi'];
+    LoginController.$inject = ['$rootScope','$state','$localStorage','$window', 'Flash','LoginFactory', 'MilesBoardApi'];
 
-    function LoginController($state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi) {
+function LoginController($rootScope, $state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi) {
         let vm = this;
 
         let PW_CONF_MSG = {
@@ -117,6 +117,7 @@ import resendConfForm from './_resendConfirmationEmail.html';
                     $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
                 }
                 vm.submitting = false;
+                $rootScope.$broadcast('auth:user-loaded', response.user.id)
                 $state.go('user', { userId: resp.id }, { reload: true });
             });
         }
