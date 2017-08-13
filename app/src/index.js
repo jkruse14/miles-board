@@ -1,4 +1,5 @@
 import './app.js'
+import './modules'
 import './app.routes'
 import './app.run'
 import './constants'

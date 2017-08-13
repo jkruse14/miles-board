@@ -11,7 +11,8 @@
             'ui.bootstrap',
             'ng-token-auth',
             'ngStorage',
-            'ngFlash'
+            'ngFlash',
+            'loading'
         ])
         .config(EnvironmentConfig)
         .config(authConfig)

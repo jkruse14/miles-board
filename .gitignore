@@ -5,6 +5,7 @@ ra-*.html
 tmp/
 /log
 log/
+app/assets/javascripts/app-bundle.js
 public/dev-assets/
 vendor/assets/bower_components
 app/assets/javascripts/app-bundle.js

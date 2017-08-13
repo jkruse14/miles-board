@@ -1,3 +1,9 @@
+import loginForm from '../../login/_loginForm.html';
+import regForm from '../../login/_registerForm.html';
+import resetPwForm from '../../login/_resetPassword.html';
+import updatePwForm from '../../login/_updatePassword.html';
+import resendConfForm from '../../login/_resendConfirmationEmail.html'; 
+
 (function() {
     'use strict';
 
@@ -5,21 +11,31 @@
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$state', '$localStorage', '$uibModal', '$uibModalInstance', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
+    LoginModalController.$inject = ['$rootScope','$state', '$localStorage', '$uibModal', '$uibModalInstance', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
 
-    function LoginModalController($state, $localStorage, $uibModal, $uibModalInstance, $window, Flash, LoginFactory, MilesBoardApi){
+function LoginModalController($rootScope, $state, $localStorage, $uibModal, $uibModalInstance, $window, Flash, LoginFactory, MilesBoardApi) {
         let vm = this;
-        vm.inModal = true;
-        vm.submitting = false;
-        
-        resetFocusedField();
-        resetUserInfo();
 
+        vm.$onInit = onInit;
         vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
         vm.handleCancel = handleCancel;
         vm.resetFocusedField = resetFocusedField;
         vm.setFocusedField = setFocusedField;
+
+        function onInit() {
+            vm.inModal = true;
+            vm.submitting = false;
+            vm.loginForm = loginForm;
+            vm.regForm = regForm;
+            vm.resendConfForm = resendConfForm;
+            vm.resetPwForm = resetPwForm;
+            vm.updatePwForm = updatePwForm;
+
+            resetFocusedField();
+            resetUserInfo();
+
+        }
 
         function handleSubmitClick() {
             vm.submitting = true;
@@ -62,10 +78,10 @@
                     $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
                 }
                 vm.submitting = false;
-                $uibModalInstance.close();
+                $rootScope.$broadcast('auth:user-loaded', response.user.id)
+                $state.go('user', { userId: response.user.id }, { reload: true });
+                $uibModalInstance.close()
             });
-            $state.go('user', { userId: resp.id }, { reload: true });
-            $window.location.reload();
         }
 
         function loginFail(reason) {
