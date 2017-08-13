@@ -1,3 +1,9 @@
+import loginForm from './_loginForm.html';
+import regForm from './_registerForm.html';
+import resetPwForm from './_resetPassword.html';
+import updatePwForm from './_updatePassword.html';
+import resendConfForm from './_resendConfirmationEmail.html';
+
 (function() {
     'use strict';
 
@@ -6,9 +12,9 @@
         .run()
         .controller('LoginController', LoginController);
     
-    LoginController.$inject = ['$state','$localStorage','$window', 'Flash','LoginFactory', 'MilesBoardApi'];
+    LoginController.$inject = ['$rootScope','$state','$localStorage','$window', 'Flash','LoginFactory', 'MilesBoardApi'];
 
-    function LoginController($state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi) {
+function LoginController($rootScope, $state, $localStorage, $window, Flash, LoginFactory, MilesBoardApi) {
         let vm = this;
 
         let PW_CONF_MSG = {
@@ -111,9 +117,9 @@
                     $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
                 }
                 vm.submitting = false;
+                $rootScope.$broadcast('auth:user-loaded', response.user.id)
+                $state.go('user', { userId: resp.id }, { reload: true });
             });
-            $state.go('user',{userId: resp.id, reset: true})
-            $window.location.reload();
         }
 
         function updatePassword() {

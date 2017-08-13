@@ -18,18 +18,6 @@
                  USER: 'User'
             }
 
-            vm.user = user.user ? user.user : MilesBoardApi.UsersApi.get($state.params['userId']);
-
-            vm.loggedIn = $localStorage.user ? true : false;
-            vm.profileImageSrc = MilesBoardImages.road_runner;
-            vm.myProfile = (vm.loggedIn && vm.user.id === $localStorage.user.id);
-           
-
-            vm.tabs = [
-                { title: 'Teams', hidden: false},
-                { title: 'Owned Teams', hidden: vm.user.type !== userTypes.TEAM_OWNER }
-            ];
-
             vm.$onInit = onInit;
             vm.setTab = setTab;
             vm.showCreateTeamModal = showCreateTeamModal;
@@ -38,6 +26,11 @@
             vm.showDeleteRunConfirmation = showDeleteRunConfirmation;
 
             function onInit() {
+                vm.loggedIn = $localStorage.user ? true : false;
+                vm.profileImageSrc = MilesBoardImages.road_runner;
+                vm.loading = false;
+                loadUser();
+
                 if($state.params['reset']) {
                     let message = 'Password successfully reset!';
                     Flash.create('success', message, 5000, { container: 'profile_flash' }, true)
@@ -160,6 +153,28 @@
                     }
                 }
                 return false;
+            }
+
+            function loadUser() {
+                if(user.user) {
+                    vm.user = user.user;
+                    vm.tabs = [
+                        { title: 'Teams', hidden: false},
+                        { title: 'Owned Teams', hidden: vm.user.type !== userTypes.TEAM_OWNER }
+                    ];
+                    vm.myProfile = (vm.loggedIn && vm.user.id === $localStorage.user.id);
+                } else {
+                    vm.loading = true;
+                    MilesBoardApi.UsersApi.get($state.params['userId']).then(function(resp){
+                        vm.user = resp.user;
+                        vm.tabs = [
+                            { title: 'Teams', hidden: false},
+                            { title: 'Owned Teams', hidden: vm.user.type !== userTypes.TEAM_OWNER }
+                        ];
+                        vm.myProfile = (vm.loggedIn && vm.user.id === $localStorage.user.id);
+                        vm.loading = false;
+                    });
+                }
             }
 
             ///// MODALS /////
