@@ -77,6 +77,7 @@ function TeamsController($document,
             }
         })
         function onInit() {
+            vm.loading = false;
             vm.logoSrc = MilesBoardImages.getLogo($stateParams.team_id);
 
             if ($stateParams.team_id) {
@@ -105,6 +106,7 @@ function TeamsController($document,
         }
 
         function setUpTable() {
+            vm.loading = true;
             if ($stateParams.team_id) {
                 vm.displayConfig = UsersDisplayConfig;
                 vm.displayObjData = buildDisplayObject(vm.team.users, UsersDisplayConfig);
@@ -112,6 +114,7 @@ function TeamsController($document,
                 vm.displayConfig = TeamsDisplayConfig;
                 vm.displayObjData = buildDisplayObject(vm.teams, TeamsDisplayConfig)
             }
+            vm.loading = false;
         }
 
         function buildDisplayObject(obj, config) {
