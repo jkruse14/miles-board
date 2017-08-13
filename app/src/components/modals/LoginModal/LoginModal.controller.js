@@ -11,9 +11,9 @@ import resendConfForm from '../../login/_resendConfirmationEmail.html';
         .module('milesBoard')
         .controller('LoginModalController', LoginModalController);
 
-    LoginModalController.$inject = ['$state', '$localStorage', '$uibModal', '$uibModalInstance', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
+    LoginModalController.$inject = ['$rootScope','$state', '$localStorage', '$uibModal', '$uibModalInstance', '$window', 'Flash', 'LoginFactory', 'MilesBoardApi']
 
-    function LoginModalController($state, $localStorage, $uibModal, $uibModalInstance, $window, Flash, LoginFactory, MilesBoardApi){
+function LoginModalController($rootScope, $state, $localStorage, $uibModal, $uibModalInstance, $window, Flash, LoginFactory, MilesBoardApi) {
         let vm = this;
 
         vm.$onInit = onInit;
@@ -78,10 +78,10 @@ import resendConfForm from '../../login/_resendConfirmationEmail.html';
                     $localStorage.user.team_ids.push($localStorage.user.teams[i].id);
                 }
                 vm.submitting = false;
-                $uibModalInstance.close();
+                $rootScope.$broadcast('auth:user-loaded', response.user.id)
+                $state.go('user', { userId: response.user.id }, { reload: true });
+                $uibModalInstance.close()
             });
-            $state.go('user', { userId: resp.id }, { reload: true });
-            $window.location.reload();
         }
 
         function loginFail(reason) {

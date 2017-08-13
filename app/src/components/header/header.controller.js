@@ -7,9 +7,9 @@ import loginModal from '../modals/LoginModal/_loginModal.html'
         .module('milesBoard')
         .controller('HeaderController',HeaderController);
     
-    HeaderController.$inject = ['$auth', '$document', '$localStorage', '$rootScope', '$scope','$state','$uibModal', '$window'];
+    HeaderController.$inject = ['$auth', '$document', '$localStorage', '$rootScope', '$scope','$state','$stateParams' ,'$uibModal', '$window'];
 
-    function HeaderController($auth, $document, $localStorage, $rootScope, $scope, $state, $uibModal, $window) {
+    function HeaderController($auth, $document, $localStorage, $rootScope, $scope, $state, $stateParams, $uibModal, $window) {
         let vm = this;
 
         
@@ -24,15 +24,17 @@ import loginModal from '../modals/LoginModal/_loginModal.html'
         vm.logout = logout;
         vm.onProfileClick = onProfileClick;
 
-        $rootScope.$on('auth:login-success', function () {
+        $rootScope.$on('auth:user-loaded', function () {
             $localStorage.user_nav = 'show-logout';
             vm.showLogoutLink = true;
             vm.user_id = $localStorage.user ? $localStorage.user.id : null;
+            onInit();
         });
 
         $rootScope.$on('auth:logout-success', function() {
             vm.showLogoutLink = false;
             vm.user_id = null;
+            onInit();
         })
 
         $rootScope.$on('auth.validation-success', function () {
@@ -78,13 +80,13 @@ import loginModal from '../modals/LoginModal/_loginModal.html'
                 .then(
                     function(resp){
                         $localStorage.$reset();
-                        $state.go('home')
-                        $window.location.reload();
+                        $state.go('home',{}, { reload: true })
+                        //$window.location.reload();
                     },
                     function(resp){
                         $localStorage.$reset();
                         $state.go('home', {}, { reload: true });
-                        $window.location.reload();
+                        //$window.location.reload();
                         console.error(resp);
                     });
         }

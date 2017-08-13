@@ -5,8 +5,10 @@ ra-*.html
 tmp/
 /log
 log/
+app/assets/javascripts/app-bundle.js
 public/dev-assets/
 vendor/assets/bower_components
+app/assets/javascripts/app-bundle.js
 /db/*.sqlite3
 /db/*.sqlite3-journal
 public/dev-assets/
