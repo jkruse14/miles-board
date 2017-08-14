@@ -3,6 +3,7 @@ import homeTmpl from './components/home/_home.html';
 import teamsTmpl from './components/teams/_teams.html';
 import teamTmpl from './components/teams/_team.html';
 import userTmpl from './components/users/_users.html'
+import loginTmpl from './components/login/_login.html';
 
 (function() {
      'use strict';
@@ -28,14 +29,15 @@ import userTmpl from './components/users/_users.html'
             name: 'home',
             url: '/home',
             templateUrl: homeTmpl,
-            controller: 'MainController',
+            controller: 'MainController as vm',
         };
 
         var loginState = {
             name: 'login',
             url: '/login?reset_token',
-            template: 'components/login/_login.html',
-            controller: 'LoginController as vm'
+            //template: loginTmpl,
+            //controller: 'LoginController as vm'
+            component: 'login'
         };
 
         var teamsState = {

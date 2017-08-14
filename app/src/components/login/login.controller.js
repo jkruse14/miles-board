@@ -22,14 +22,6 @@ function LoginController($rootScope, $state, $localStorage, $window, Flash, Logi
             NO_MATCH: {text: 'Your passwords do not match...', className: 'pwNoMatch'}
         }
 
-        let loginFormUrl = "'components/login/_loginForm.html'";
-        let registerFormUrl = "'components/login/_registerForm.html'";
-
-        vm.tabs = [{title:'Login', 
-                    content: '<ng-include src="'+loginFormUrl+'"></ng-include>'}, 
-                   {title: 'Register',
-                    content:'<ng-include src="'+registerFormUrl+'"></ng-include>'}];
-
         vm.$onInit = onInit;
         vm.setTab = setTab;
         vm.handleSubmitClick = handleSubmitClick;
@@ -38,9 +30,21 @@ function LoginController($rootScope, $state, $localStorage, $window, Flash, Logi
         vm.updatePassword = updatePassword;
 
         function onInit(){
+            //redirect home if already logged in
+            if($localStorage.user) {
+                $state.go('home');
+            }
+
             vm.inModal = false;
             vm.submitting = false;
             vm.registered = false;
+
+            vm.loginForm = loginForm;
+            vm.regForm = regForm;
+            vm.resetPwForm = resetPwForm;
+            vm.resendConfForm = resendConfForm;
+            vm.updatePwForm = updatePwForm;
+
             resetUserInfo()
 
             vm.tab = 0;
