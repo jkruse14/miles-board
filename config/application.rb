@@ -17,6 +17,7 @@ module MilesBoard
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('node_modules')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'bootstrap', 'less')
+    config.assets.paths << Rails.root.join('bower_components')
     #config.assets.paths << Rails.root.join('assets', 'stylesheets', 'teams.css.less')
 
     config.assets.precompile << /.*.(?:eot|svg|ttf|woff|woff2|eps|es6)$/
