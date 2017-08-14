@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  #config.assets.paths << Rails.root.join('bower_components')
+  config.assets.paths << Rails.root.join('bower_components')
   config.assets.prefix = "/assets"
   # Code is not reloaded between requests.
   config.cache_classes = true
