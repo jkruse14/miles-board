@@ -5,9 +5,9 @@ angular
     .module('milesBoard')
     .controller('BoardController', BoardController);
 
-BoardController.$inject = ['$localStorage','$scope'];
+BoardController.$inject = ['$localStorage','$scope', 'namesFilterFilter'];
 
-function BoardController($localStorage, $scope) {
+function BoardController($localStorage, $scope, namesFilter) {
     var vm = this;
         
     const ASC = 'asc';
@@ -15,11 +15,14 @@ function BoardController($localStorage, $scope) {
        
     vm.$onInit = onInit;
 
+    $scope.$watch('query', onFilterChange)
+
     function onInit() {
         
         vm.maxPageSize = 50;
         vm.maxSize = 10;
         vm.currentPage = 1;
+        vm.filteredResults = vm.displayObjData;
 
         vm.DSC = DSC;
 
@@ -62,6 +65,14 @@ function BoardController($localStorage, $scope) {
 
     function getValueForOrdering(item) {
         return parseInt(item[vm.ordering.col].text);
+    }
+
+    function onFilterChange(){
+        if($scope.query){
+            vm.filteredResults = namesFilter(vm.displayObjData, $scope.query)
+        } else {
+            vm.filteredResults = vm.displayObjData;
+        }
     }
 }
 })();

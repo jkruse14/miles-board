@@ -16,7 +16,7 @@
                                     vm.displayObjConfig.showCallback">
             </th>
         </tr>
-        <tr ng-repeat="row in vm.displayObjData | namesFilter:query | orderBy:vm.getValueForOrdering:vm.ordering.dir === vm.DSC track by row.id.text"
+        <tr ng-repeat="row in vm.filteredResults | orderBy:vm.getValueForOrdering:vm.ordering.dir === vm.DSC track by row.id.text"
             ng-if="$index >= vm.maxPageSize * (vm.currentPage - 1) && $index < (vm.maxPageSize * (vm.currentPage - 1)) + vm.maxPageSize">
             <td ng-repeat-start="item in row" ng-hide="item.hidden">
                 <a ng-if="item.uiSref" ui-sref="{{item.uiSref}}" ui-sref-acitve="active">{{item.text}}</a>
@@ -33,11 +33,11 @@
             </td>
         </tr>
     </table>
-    <ul uib-pagination total-items="vm.displayObjData.length"
+    <ul uib-pagination total-items="vm.filteredResults.length"
                        boundary-link-numbers="true"
                        max-size="vm.maxSize"
                        ng-model="vm.currentPage"  
                        class="pagination-sm" 
                        rotate="true"
-                       ng-show="vm.displayObjData.length > vm.maxPageSize"></ul>
+                       ng-show="vm.filteredResults.length > vm.maxPageSize"></ul>
 </div>
