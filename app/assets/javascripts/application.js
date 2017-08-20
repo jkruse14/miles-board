@@ -12,15 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require angular/angular
+//= require bootstrap/dist/js/bootstrap.min.js
 //= require @uirouter/angularjs/release/angular-ui-router.js
 //= require angular-cookie
 //= require angular-rails-templates
 //= require lodash/lodash.js
 //= require angular-animate/angular-animate.js
-//= require angular-bootstrap/ui-bootstrap.js
-//= require angular-bootstrap/ui-bootstrap-tpls.js
+//= require angular-ui-bootstrap/dist/ui-bootstrap.js
+//= require angular-ui-bootstrap/dist/ui-bootstrap-tpls.js
 //= require restangular
 //= require moment/moment.js
 //= require ng-token-auth/dist/ng-token-auth.js
