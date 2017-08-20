@@ -49,6 +49,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params.except(:id, :team_id))
 
     puts @user.inspect
+    send_confirmation = true;
 
     if @user[:email].empty?
       new_user = {}
@@ -61,6 +62,7 @@ class UsersController < ApplicationController
 
       @user = User.new(new_user)
       @user.skip_confirmation!
+      send_confirmation = false;
     elsif @user[:password].nil? && @user[:password_confirmation].nil?
       new_user = {}
       new_user[:email] = user_params[:email]
@@ -84,7 +86,9 @@ class UsersController < ApplicationController
         # Tell the Mailer to send a welcome email after save
         puts @user.inspect
         # RegistrationMailer.registration_success(@user).deliver!
-        Devise::Mailer.confirmation_instructions(@user, @user.confirmation_token).deliver!
+        if send_confirmation
+          Devise::Mailer.confirmation_instructions(@user, @user.confirmation_token).deliver!
+        end
         render(json: { id: @user.id }, status: :created) && return
       end
     rescue ActiveRecord::RecordInvalid => invalid

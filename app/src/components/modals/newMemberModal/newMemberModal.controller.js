@@ -21,6 +21,7 @@ import teamMemberForm from './_newMemberForm.html';
                             email:'',
                             password: '',
                             password_confirmation: '',
+                            team_id: $scope.team_id
                         } : 
                         $scope.user_for_modal;
         
