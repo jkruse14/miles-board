@@ -8,7 +8,6 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
-gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'responders'
@@ -45,8 +44,6 @@ gem 'foreman'
 gem 'activerecord-import', '>= 0.2.0'
 
 gem 'sprockets', '>= 3.0.0'
-gem 'sprockets-es6'
-gem 'babel-transpiler'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
