@@ -61,7 +61,7 @@ function BoardController($localStorage, $scope) {
     }
 
     function getValueForOrdering(item) {
-        return item[vm.ordering.col];
+        return parseInt(item[vm.ordering.col].text);
     }
 }
 })();

@@ -19,7 +19,7 @@ module MilesBoard
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'bootstrap', 'less')
     #config.assets.paths << Rails.root.join('assets', 'stylesheets', 'teams.css.less')
 
-    config.assets.precompile << /.*.(?:eot|svg|ttf|woff|woff2|eps|es6)$/
+    config.assets.precompile << /.*.(?:eot|svg|ttf|woff|woff2|eps)$/
 
     # config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
   end

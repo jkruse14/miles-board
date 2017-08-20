@@ -180,9 +180,7 @@
             ///// MODALS /////
             function showEditRunModal(data) {
                 $scope.editing_run = data;
-                // var parentElem = parentSelector ?
-                //     angular.element($document[0].querySelector('.page-container ' + parentSelector)) : undefined;
-                var modalInstance = $uibModal.open({
+                let modalInstance = $uibModal.open({
                     animation: true,
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
