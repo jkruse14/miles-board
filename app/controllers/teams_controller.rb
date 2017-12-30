@@ -77,8 +77,9 @@ class TeamsController < ApplicationController
     tmp[:last_name] = user.last_name
     team_distance = 0
     team_run_count = 0
+    cur_year = Time.now.strftime('%Y')
     user.runs.each do |run|
-      if run.team_id == @team.id
+      if run.team_id == @team.id && run.run_date.year == cur_year
         team_distance += run.distance
         team_run_count += 1
       end
