@@ -33,6 +33,9 @@ class RunsController < ApplicationController
     # .new() creates but does not save
     # .create() creates, saves, and returns the object
     @run = Run.create(run_params.except(:id))
+    if @run.run_date.nil?
+      @run.run_date = DateTime.now()
+    end
     if @run.valid?
       render json: { id: @run.id }, status: :created and return
     else
