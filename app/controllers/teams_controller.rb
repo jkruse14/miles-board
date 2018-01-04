@@ -79,6 +79,9 @@ class TeamsController < ApplicationController
     team_run_count = 0
     cur_year = Time.now.strftime('%Y')
     user.runs.each do |run|
+      if run.run_date.nil?
+        run.run_date = DateTime.new(2017, 1, 1);
+      end
       if run.team_id == @team.id && !run.run_date.nil? && run.run_date.year == cur_year
         team_distance += run.distance
         team_run_count += 1
