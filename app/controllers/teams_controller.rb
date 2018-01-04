@@ -79,17 +79,17 @@ class TeamsController < ApplicationController
     team_run_count = 0
     cur_year = Time.now.strftime('%Y')
     user.runs.each do |run|
-      if run.run_date.nil?
-        run.run_date = DateTime.new(2017, 1, 1);
-      end
-      if run.team_id == @team.id && !run.run_date.nil? && run.run_date.year == cur_year
+      # if run.run_date.nil?
+      #   run.run_date = DateTime.new(2017, 1, 1);
+      # end
+      if run.team_id == @team.id #&& !run.run_date.nil? && run.run_date.year == cur_year
         team_distance += run.distance
         team_run_count += 1
       end
     end
 
     imported = ImportedUserDatum.where(user_id: user.id, team_id: @team.id).order(created_at: :asc).first
-    if !imported.nil?
+    if !imported.nil? #imported.created_at.year = cur_year
       base_miles = imported[:team_miles].to_i
       base_runs = imported[:num_team_runs].to_i
     else
