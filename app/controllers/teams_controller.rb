@@ -78,6 +78,11 @@ class TeamsController < ApplicationController
     team_distance = 0
     team_run_count = 0
     cur_year = Time.now.strftime('%Y')
+    cur_date = new Date();
+    begin_date = new Date(cur_year,1,1)
+    user_runs = Run.where(user_id: user.id, team_id: @team['id'], ["run_date >= '?' AND run_date <= '?'", begin_date, cur_date])
+    puts 'user runs len'
+    puts user_runs.length
     user.runs.each do |run|
       if run.run_date.nil?
         run.run_date = run.created_at;
