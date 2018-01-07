@@ -80,7 +80,7 @@ class TeamsController < ApplicationController
     cur_year = Time.now.strftime('%Y')
     cur_date = Date.today.to_s
     begin_date = Date.parse(cur_year.to_s+"/1/1").to_s
-    user_runs = Run.where(user_id: user.id, team_id: @team['id'], ["run_date >= '?' AND run_date <= '?'", begin_date, cur_date])
+    user_runs = Run.where(user_id: user.id, team_id: @team['id'])
     puts 'user runs len'
     puts user_runs.length
     user_runs.each do |run|
