@@ -78,8 +78,8 @@ class TeamsController < ApplicationController
     team_distance = 0
     team_run_count = 0
     cur_year = Time.now.strftime('%Y')
-    cur_date = new Date.today.to_s
-    begin_date = new Date(cur_year,1,1).to_s
+    cur_date = Date.today.to_s
+    begin_date = Date.new(cur_year,1,1).to_s
     user_runs = Run.where(user_id: user.id, team_id: @team['id'])
     puts 'user runs len'
     puts user_runs.length
