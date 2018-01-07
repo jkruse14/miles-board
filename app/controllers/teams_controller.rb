@@ -80,7 +80,7 @@ class TeamsController < ApplicationController
     cur_year = Time.now.strftime('%Y')
     user.runs.each do |run|
       if run.run_date.nil?
-        run.run_date = DateTime.new(2017, 1, 1);
+        run.run_date = run.created_at;
       end
       
       if run.team_id == @team.id && !run.run_date.nil? && run.run_date.to_date.year == cur_year
