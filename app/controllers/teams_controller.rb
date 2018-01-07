@@ -82,7 +82,9 @@ class TeamsController < ApplicationController
       if run.run_date.nil?
         run.run_date = DateTime.new(2017, 1, 1);
       end
-      if run.team_id == @team.id && !run.run_date.nil? && run.run_date.year == cur_year
+      puts run.run_date
+      puts run.run_date.to_date.year
+      if run.team_id == @team.id && !run.run_date.nil? && run.run_date.to_date.year == cur_year
         team_distance += run.distance
         team_run_count += 1
       end
