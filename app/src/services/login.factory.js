@@ -45,9 +45,9 @@
             let new_user = {
                 first_name: user_info.first_name,
                 last_name: user_info.last_name,
-                password: user_info.password,
+                password: user_info.reg_password,
                 password_confirmation: user_info.password_confirmation,
-                email: user_info.email
+                email: user_info.reg_email
             }
 
             let auth_config = isOwner ? 'team_owner' : 'user';
@@ -76,7 +76,7 @@
         }
 
         function resendEmailConfirmation(user_info) {
-            Restangular.all('users').customGET('resend_confirmation', { email: user_info.email })
+            Restangular.all('users').customGET('resend_confirmation', { email: user_info.resend_email })
                 .then(registrationSuccess(resp),
                 function (resp) {
                     let message = 'Whoops... something went wrong while sending your confirmation email'
@@ -131,7 +131,7 @@
 
         function resetPassword(user) {
             Flash.clear();
-            let u = { email: user.email }
+            let u = { email: user.reset_email }
             $auth.requestPasswordReset(u)
                 .then(function (resp) {
                     let message = "Success!<br />An email has been sent to reset your password"
@@ -148,9 +148,9 @@
             let message = 'Updating...'
             Flash.create('info', message, 0, { container: 'reset_form' }, true)
             $auth.updatePassword({
-                password: user_info.password,
+                password: user_info.update_password,
                 password_confirmation: user_info.password_confirmation,
-                email: user_info.email,
+                email: user_info.update_email,
                 reset_password_token: $state.params['reset_token']
             })
                 .then(function (resp) {

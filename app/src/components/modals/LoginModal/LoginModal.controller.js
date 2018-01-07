@@ -105,7 +105,7 @@ function LoginModalController($rootScope, $state, $localStorage, $uibModal, $uib
             vm.submitting = false;
 
             if(vm.user_info.code_id){
-                Restangular.all('invitation_codes').customPUT({ code: vm.user_info.owner_confirmation_code, used: true });
+                InvitationCodesApi.put(vm.user_info.code_id, {used: true});
             }
         }
 

@@ -1,3 +1,5 @@
+import createTeamModalTmpl from '../modals/CreateTeamModal/_createTeamModal.html'
+
 (function() {
     'use strict';
 
@@ -256,7 +258,7 @@
                     animation: true,
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
-                    templateUrl: 'components/modals/CreateTeamModal/_createTeamModal.html',
+                    templateUrl: createTeamModalTmpl,
                     controller: 'CreateTeamModalController',
                     controllerAs: 'vm',
                     size: 'md',

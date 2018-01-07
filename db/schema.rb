@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(version: 20170706230217) do
   end
 
   create_table "team_member_lists", force: :cascade do |t|
+    t.integer  "team_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.integer  "team_id"
   end
 
   create_table "team_members", force: :cascade do |t|
@@ -128,4 +128,7 @@ ActiveRecord::Schema.define(version: 20170706230217) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
+  add_foreign_key "runs", "teams"
+  add_foreign_key "runs", "users"
+  add_foreign_key "teams", "users", column: "team_owner_id"
 end
