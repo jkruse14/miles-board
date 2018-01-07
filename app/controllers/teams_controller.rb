@@ -88,10 +88,10 @@ class TeamsController < ApplicationController
         run.run_date = run.created_at;
       end
       
-      if run.team_id == @team.id && !run.run_date.nil? && run.run_date.to_date.year == cur_year
+      # if run.run_date.to_date.year == cur_year
         team_distance += run.distance
         team_run_count += 1
-      end
+      # end
     end
 
     imported = ImportedUserDatum.where(user_id: user.id, team_id: @team.id).order(created_at: :asc).first
