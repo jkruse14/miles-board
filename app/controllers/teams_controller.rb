@@ -82,8 +82,7 @@ class TeamsController < ApplicationController
       if run.run_date.nil?
         run.run_date = DateTime.new(2017, 1, 1);
       end
-      puts run.run_date
-      puts run.run_date.to_date.year
+      
       if run.team_id == @team.id && !run.run_date.nil? && run.run_date.to_date.year == cur_year
         team_distance += run.distance
         team_run_count += 1
@@ -91,7 +90,7 @@ class TeamsController < ApplicationController
     end
 
     imported = ImportedUserDatum.where(user_id: user.id, team_id: @team.id).order(created_at: :asc).first
-    if !imported.nil? && imported.created_at.year = cur_year
+    if !imported.nil? && imported.created_at.year == cur_year
       base_miles = imported[:team_miles].to_i
       base_runs = imported[:num_team_runs].to_i
     else
